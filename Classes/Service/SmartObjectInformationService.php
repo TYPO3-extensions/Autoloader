@@ -41,7 +41,7 @@ class SmartObjectInformationService {
 		// disable complete table generation
 		// for extending existing tables
 		if ($tableNameReflect = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
-			return $this->generateSQLQuery($tableName, array($custom));
+			return $this->generateSQLQuery($tableName, $custom);
 		}
 		return $this->generateCompleteSQLQuery($tableName, $custom);
 	}
@@ -76,7 +76,7 @@ class SmartObjectInformationService {
 
 			/** @var Mapper $mapper */
 			$mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
-			$field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name']);
+			$field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name'], $label);
 
 			$searchFields[] = $info['name'];
 
@@ -273,7 +273,7 @@ class SmartObjectInformationService {
 			}
 			$fields[] = $info['name'] . ' ' . $info['db'];
 		}
-		return implode(',' . LF, $fields);
+		return $fields;
 	}
 
 	/**
@@ -323,13 +323,16 @@ class SmartObjectInformationService {
 
 	/**
 	 * Generae SQL Query
-	 *
+	 *custom
 	 * @param string $tableName
 	 * @param array  $fields
 	 *
 	 * @return string
 	 */
 	protected function generateSQLQuery($tableName, $fields) {
+		if(!$fields) {
+			return '';
+		}
 		return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
 	}
 
@@ -337,7 +340,7 @@ class SmartObjectInformationService {
 	 * Generate complete SQL Query
 	 *
 	 * @param string $tableName
-	 * @param string $custom
+	 * @param array $custom
 	 *
 	 * @return string
 	 */
@@ -346,8 +349,10 @@ class SmartObjectInformationService {
 		$fields[] = 'uid int(11) NOT NULL auto_increment';
 		$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
 
-		if (strlen($custom)) {
-			$fields[] = $custom;
+		if ($custom) {
+			foreach($custom as $field) {
+				$fields[] = $field;
+			}
 		}
 
 		$fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
