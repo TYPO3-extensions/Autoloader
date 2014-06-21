@@ -1,0 +1,136 @@
+<?php
+/**
+ * ExtensionTypoScriptSetup
+ *
+ * @category   Extension
+ * @package    Autoloader
+ * @subpackage Loader
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ */
+
+
+namespace HDNET\Autoloader\Loader;
+
+use HDNET\Autoloader\Loader;
+use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\SmartObjectManager;
+use HDNET\Autoloader\Utility\ModelUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+/**
+ * ExtensionTypoScriptSetup
+ *
+ * @package    Autoloader
+ * @subpackage Loader
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ */
+class ExtensionTypoScriptSetup implements LoaderInterface {
+
+	/**
+	 * Get all the complex data for the loader.
+	 * This return value will be cached and stored in the database
+	 * There is no file monitoring for this cache
+	 *
+	 * @param Loader  $loader
+	 * @param integer $type
+	 *
+	 * @return array
+	 */
+	public function prepareLoader(Loader $loader, $type) {
+		// Only prepare for ext_tables configuration
+		if ($type !== LoaderInterface::EXT_TABLES) {
+			return array();
+		}
+
+		// We don't have to prepare anything if the extension has no smart objects
+		if (!$this->extensionHasSmartObjects($loader->getExtensionKey())) {
+			return array();
+		}
+
+		return $this->generateTypoScriptSetup($loader->getExtensionKey());
+	}
+
+	/**
+	 * Run the loading process for the ext_tables.php file
+	 *
+	 * @param Loader $loader
+	 * @param array  $loaderInformation
+	 *
+	 * @return NULL
+	 */
+	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
+		if ($loaderInformation) {
+			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
+		}
+		return;
+	}
+
+	/**
+	 * Run the loading process for the ext_localconf.php file
+	 *
+	 * @param Loader $loader
+	 * @param array  $loaderInformation
+	 *
+	 * @return NULL
+	 */
+	public function loadExtensionConfiguration(Loader $loader, array $loaderInformation) {
+		if ($loaderInformation) {
+			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
+		}
+		return;
+	}
+
+	/**
+	 * Generate the TypoScript setup for the smart objects defined within the extension
+	 *
+	 *
+	 * @param string $extensionKey
+	 *
+	 * @return array
+	 */
+	private function generateTypoScriptSetup($extensionKey) {
+		$setup = array();
+		foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
+			$table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
+			$recordType = ModelUtility::getRecordTypeFieldByModelReflection($className);
+			$parentClass = ModelUtility::getParentClassByModelReflection($className);
+			if ($table) {
+				$setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
+			}
+			if ($recordType) {
+				$setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.recordType = ' . $recordType;
+			}
+			if ($parentClass) {
+				$setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
+			}
+		}
+		return $setup;
+	}
+
+	/**
+	 * Check if the extension has smart objects
+	 *
+	 * @param string $extensionKey
+	 *
+	 * @return boolean
+	 */
+	private function extensionHasSmartObjects($extensionKey) {
+		if (array_key_exists($extensionKey, SmartObjectManager::getSmartObjectRegister())) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get the smart objects for the given extension
+	 *
+	 * @param $extensionKey
+	 *
+	 * @return mixed
+	 */
+	private function getSmartObjectsForExtensionKey($extensionKey) {
+		$smartObjects = SmartObjectManager::getSmartObjectRegister();
+		return $smartObjects[$extensionKey];
+	}
+
+}
