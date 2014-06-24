@@ -38,6 +38,9 @@ class Xclass implements LoaderInterface {
 	 */
 	public function prepareLoader(Loader $loader, $type) {
 		$return = array();
+		if ($type === LoaderInterface::EXT_TABLES) {
+			retrun $return;
+		}
 		$xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';
 		$xClasses = FileUtility::getBaseFilesInDir($xClassesPath, 'php');
 
