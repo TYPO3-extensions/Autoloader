@@ -177,9 +177,8 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
                 vendorName = ' . $loader->getVendorName() . '
             }
         }
-        plugin.tx_' . $loader->getExtensionKey() . '.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content
-        config.tx_extbase.persistence.classes.' . $config['modelClass'] . ' < plugin.tx_' . $loader->getExtensionKey() . '.persistence.classes.' . $config['modelClass'] . '
-    '), 43);
+                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content')
+			, 43);
 		}
 
 		return NULL;
