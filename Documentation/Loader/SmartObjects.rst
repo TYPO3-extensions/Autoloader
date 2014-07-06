@@ -1,0 +1,5 @@
+SmartObjects
+^^^^^^^^^^^^
+
+Check and translate:
+SmartObjects stellen die Basis für die ContentObjects und helfen dabei, Modelle schneller zu entwickeln welche in der Persistenz-Schicht abgelegt werden sollen. Die Zentrale Annotation dafür ist “@db”. Steht ein “@db” an einem Model, ist dies ein SmartObject und die Datenbank wird entsprechend der Properties angelegt. Steht ein “@db” an einer Property, wird anhand des Variablen-Typ der Datenbank-Typ ermittelt, sodass die SQL CREATE-TABLE Abfrage vollständig ist. Sowohl mit dem “@db” am Model als auch an der Property, kann entweder die Ziel-Datenbank geändert werden (ContentObjects: “@db tt_content”) oder an den Properties der Datenbank-Typ für komplexe Datentypen bestimmt werden (“@db int(11) NOT NULL”). Die Datenbanken werden mittels eines Slots innerhalb des “SqlExpectedSchemaService” integriert, weshalb es somit keine ext_tables.sql Datei mehr geben muss (ist zusätzlich natürlich weiterhin möglich).
