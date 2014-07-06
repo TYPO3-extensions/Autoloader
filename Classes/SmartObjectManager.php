@@ -24,52 +24,17 @@ use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 class SmartObjectManager implements SingletonInterface {
 
 	/**
-	 * Register for smart object information
-	 *
-	 * @var array
-	 */
-	protected static $smartObjectRegistry = array();
-
-	/**
-	 * Add a model to the register
-	 *
-	 * @param $modelName
-	 *
-	 * @return null
-	 */
-	static public function registerSmartObject($modelName) {
-		$extKey = self::getExtensionKeyByModel($modelName);
-		if (!isset(self::$smartObjectRegistry[$extKey])) {
-			self::$smartObjectRegistry[$extKey] = array();
-		}
-		if (!in_array($modelName, self::$smartObjectRegistry[$extKey])) {
-			self::$smartObjectRegistry[$extKey][] = $modelName;
-		}
-	}
-
-	/**
-	 * Get the register content
-	 *
-	 * @return array
-	 */
-	static public function getSmartObjectRegister() {
-		return self::$smartObjectRegistry;
-	}
-
-	/**
 	 * Return the SQL String for all registered smart objects
 	 *
 	 * @return string
 	 */
 	static public function getSmartObjectRegisterSql() {
 		$informationService = new \HDNET\Autoloader\Service\SmartObjectInformationService();
-		$register = self::getSmartObjectRegister();
+		$register = SmartObjectRegister::getRegister();
 
 		$output = array();
-		foreach ($register as $extensionConfiguration) {
-			foreach ($extensionConfiguration as $modelName) {
-				$output[] = $informationService->getDatabaseInformation($modelName);
-			}
+		foreach ($register as $modelName) {
+			$output[] = $informationService->getDatabaseInformation($modelName);
 		}
 		return implode(LF, $output);
 	}
@@ -121,12 +86,20 @@ class SmartObjectManager implements SingletonInterface {
 	 * disable this for better performance
 	 */
 	static public function checkAndCreateTcaInformation() {
-		$register = self::getSmartObjectRegister();
+		$register = SmartObjectRegister::getRegister();
 
-		foreach ($register as $extensionKey => $models) {
-			foreach ($models as $model) {
-				if (strpos($model, '\\Content\\') !== FALSE) {
-					continue;
+		foreach ($register as $model) {
+			if (strpos($model, '\\Content\\') !== FALSE) {
+				continue;
+			}
+			$extensionKey = self::getExtensionKeyByModel($model);
+			$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model) ? : ModelUtility::getTableNameByModelName($model);
+			$tcaFileName = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/' . $tableName . '.php';
+
+			if (!is_file($tcaFileName)) {
+				$dir = dirname($tcaFileName);
+				if (!is_dir($dir)) {
+					GeneralUtility::mkdir_deep($dir);
 				}
 				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model) ? : ModelUtility::getTableNameByModelName($model);
 				$tcaFileName = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/' . $tableName . '.php';

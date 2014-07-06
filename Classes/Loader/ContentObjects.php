@@ -13,6 +13,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectManager;
+use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -103,7 +104,7 @@ class ContentObjects implements LoaderInterface {
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		// content register
 		foreach ($loaderInformation as $e => $config) {
-			SmartObjectManager::registerSmartObject($config['modelClass']);
+			SmartObjectRegister::register($config['modelClass']);
 
 			ExtensionManagementUtility::addPlugin(array(
 				TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()),

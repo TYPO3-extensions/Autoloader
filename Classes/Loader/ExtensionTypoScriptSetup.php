@@ -14,6 +14,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectManager;
+use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -115,7 +116,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @return boolean
 	 */
 	private function extensionHasSmartObjects($extensionKey) {
-		if (array_key_exists($extensionKey, SmartObjectManager::getSmartObjectRegister())) {
+		if ($this->getSmartObjectsForExtensionKey($extensionKey)) {
 			return TRUE;
 		}
 		return FALSE;
@@ -129,8 +130,15 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @return mixed
 	 */
 	private function getSmartObjectsForExtensionKey($extensionKey) {
-		$smartObjects = SmartObjectManager::getSmartObjectRegister();
-		return $smartObjects[$extensionKey];
+		$smartObjects = SmartObjectRegister::getRegister();
+		$extensionSmartObjects = array();
+		foreach ($smartObjects as $className) {
+			$objectExtension = SmartObjectManager::getExtensionKeyByModel($className);
+			if ($objectExtension === $extensionKey) {
+				$extensionSmartObjects[] = $className;
+			}
+		}
+		return $extensionSmartObjects;
 	}
 
 }

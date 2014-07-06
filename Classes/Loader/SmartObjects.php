@@ -14,6 +14,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectManager;
+use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -92,7 +93,7 @@ class SmartObjects implements LoaderInterface {
 	 */
 	protected function addClassesToSmartRegister($classNames) {
 		foreach ($classNames as $className) {
-			SmartObjectManager::registerSmartObject($className);
+			SmartObjectRegister::register($className);
 		}
 	}
 }
