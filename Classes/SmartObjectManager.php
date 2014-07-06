@@ -131,7 +131,7 @@ class SmartObjectManager implements SingletonInterface {
 				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model) ? : ModelUtility::getTableNameByModelName($model);
 				$tcaFileName = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/' . $tableName . '.php';
 
-				if (!file_exists($tcaFileName)) {
+				if (!is_file($tcaFileName)) {
 					$dir = dirname($tcaFileName);
 					if (!is_dir($dir)) {
 						GeneralUtility::mkdir_deep($dir);

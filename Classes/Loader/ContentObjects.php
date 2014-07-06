@@ -122,7 +122,7 @@ class ContentObjects implements LoaderInterface {
 ';
 
 			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
-			if (file_exists(ExtensionManagementUtility::extPath($loader->getExtensionKey(), 'ext_icon.gif'))) {
+			if (is_file(ExtensionManagementUtility::extPath($loader->getExtensionKey(), 'ext_icon.gif'))) {
 				$icon .= 'ext_icon.gif';
 			} else {
 				$icon .= 'ext_icon.png';

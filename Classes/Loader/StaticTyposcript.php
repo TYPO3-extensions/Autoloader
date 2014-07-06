@@ -45,7 +45,7 @@ class StaticTyposcript implements LoaderInterface {
 		$extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
 		foreach ($typoScriptFolder as $folder) {
-			if (file_exists($folder . 'setup.txt') || file_exists($folder . 'constants.txt')) {
+			if (is_file($folder . 'setup.txt') || is_file($folder . 'constants.txt')) {
 				$extensionName = $extensionName . '/' . str_replace($baseDir, '', $folder);
 				$extensionName = implode(' - ', GeneralUtility::trimExplode('/', $extensionName, TRUE));
 				$folder = str_replace($extPath, '', $folder);
