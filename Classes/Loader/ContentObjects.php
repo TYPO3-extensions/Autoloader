@@ -41,7 +41,7 @@ class ContentObjects implements LoaderInterface {
 
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
-		if (sizeof($models)) {
+		if ($models) {
 			TranslateUtility::assureLabel('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey(), $loader->getExtensionKey() . ' (Header)', NULL, 'xml');
 		}
 		foreach ($models as $model) {
@@ -140,7 +140,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
 
 		}
 
-		if (sizeof($loaderInformation)) {
+		if ($loaderInformation) {
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 	show = *
