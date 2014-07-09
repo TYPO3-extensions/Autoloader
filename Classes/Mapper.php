@@ -30,7 +30,12 @@ class Mapper implements SingletonInterface {
 	 * @return array
 	 */
 	public function getTcaConfiguration($type, $fieldName, $overWriteLabel = FALSE) {
-		$mapper = $this->getMapperByType($type);
+		try {
+			$mapper = $this->getMapperByType($type);
+		} catch (Exception $exception) {
+			// always return a valid mapper
+			$mapper = $this->getMapperByType('String');
+		}
 		return $mapper->getTcaConfiguration($fieldName, $overWriteLabel);
 	}
 
