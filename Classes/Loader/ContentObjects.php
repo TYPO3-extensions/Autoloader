@@ -111,7 +111,7 @@ class ContentObjects implements LoaderInterface {
 				$loader->getExtensionKey() . '_' . $e
 			), 'CType');
 
-			$GLOBALS['TCA']['tt_content']['types'][$loader->getExtensionKey() . '_' . $e]['showitem'] = '
+			$baseTcaConfiguration = '
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general,
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.header;header,
     --div--;Inhaltsdaten,
@@ -119,8 +119,13 @@ class ContentObjects implements LoaderInterface {
     --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.access;access,
-    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.extended,tx_gridelements_container, tx_gridelements_columns
-';
+    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.extended';
+
+			if (ExtensionManagementUtility::isLoaded('gridelements')) {
+				$baseTcaConfiguration .= ',tx_gridelements_container,tx_gridelements_columns';
+			}
+
+			$GLOBALS['TCA']['tt_content']['types'][$loader->getExtensionKey() . '_' . $e]['showitem'] = $baseTcaConfiguration;
 
 			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
 			if (is_file(ExtensionManagementUtility::extPath($loader->getExtensionKey(), 'ext_icon.gif'))) {
