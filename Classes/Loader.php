@@ -65,13 +65,29 @@ class Loader implements SingletonInterface {
 	protected $disableFirstCall = FALSE;
 
 	/**
+	 * Default cache configuration
+	 *
+	 * @var array
+	 */
+	protected $defaultCacheConfiguration = array(
+		'backend'  => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
+		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
+		'groups'   => array(
+			'system',
+		),
+		'options'  => array(
+			'defaultLifetime' => 0,
+		),
+	);
+
+	/**
 	 * Build up the object. If there is no valid cache in the LocalConfiguration add one
 	 */
 	public function __construct() {
 		if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {
 			/** @var \TYPO3\CMS\Core\Configuration\ConfigurationManager $configurationManager */
 			$configurationManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
-			$configurationManager->setLocalConfigurationValueByPath('SYS/caching/cacheConfigurations/autoloader', $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_core']);
+			$configurationManager->setLocalConfigurationValueByPath('SYS/caching/cacheConfigurations/autoloader', $this->defaultCacheConfiguration);
 			$this->disableFirstCall = TRUE;
 		}
 	}
@@ -205,7 +221,7 @@ class Loader implements SingletonInterface {
 
 		/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
 		$cache = $this->getCacheManager()
-		              ->getCache('autoloader');
+			->getCache('autoloader');
 		if ($cache->has($cacheIdentifier)) {
 			return $cache->requireOnce($cacheIdentifier);
 		}
