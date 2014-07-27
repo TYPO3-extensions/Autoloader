@@ -193,7 +193,7 @@ class SmartObjectInformationService {
 		// extension icon
 		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
 		$tableIconRelPath = ExtensionManagementUtility::extRelPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png';
-		$tableDefaultIconRelPath = ExtensionManagementUtility::extRelPath('hdnet') . 'ext_icon.gif';
+		$tableDefaultIconRelPath = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
 		$tableIcon = is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIconRelPath;
 
 		// title
