@@ -31,4 +31,15 @@ class SmartDatabase {
 		$sqlString[] = SmartObjectManager::getSmartObjectRegisterSql();
 		return array('sqlString' => $sqlString);
 	}
+
+	/**
+	 * Add the smart object SQL string the the signal below
+	 *
+	 * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
+	 * @signalName tablesDefinitionIsBeingBuilt
+	 */
+	public function updateSmartObjectTables(array $sqlString, $extensionKey) {
+		$sqlString[] = SmartObjectManager::getSmartObjectRegisterSql();
+		return array('sqlString' => $sqlString, 'extensionKey' => $extensionKey);
+	}
 }
