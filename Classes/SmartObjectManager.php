@@ -65,20 +65,39 @@ class SmartObjectManager implements SingletonInterface {
 	 * @param string|object $modelClassName
 	 *
 	 * @return string
+	 * @throws \HDNET\Autoloader\Exception
 	 */
 	static public function getExtensionKeyByModel($modelClassName) {
+		$matches = array();
+
 		if (is_object($modelClassName)) {
 			$modelClassName = get_class($modelClassName);
 		}
-		$parts = GeneralUtility::trimExplode('\\', $modelClassName, TRUE);
-		foreach ($parts as $part) {
-			if (strtoupper($part) !== $part) {
-				return GeneralUtility::camelCaseToLowerCaseUnderscored($part);
+
+		if (strpos($modelClassName, '\\') !== FALSE) {
+			if (substr($modelClassName, 0, 9) === 'TYPO3\\CMS') {
+				$extensionName = '^(?P<vendorName>[^\\\\]+\\\[^\\\\]+)\\\(?P<extensionName>[^\\\\]+)';
+			} else {
+				$extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
 			}
+			preg_match(
+				'/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z\\\\]+)$/ix',
+				$modelClassName,
+				$matches
+			);
+		} else {
+			preg_match(
+				'/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z_]+)$/ix',
+				$modelClassName,
+				$matches
+			);
 		}
 
-		// Fallback
-		return GeneralUtility::camelCaseToLowerCaseUnderscored($parts[1]);
+		if(empty($matches)) {
+			throw new Exception('Could not determine extension key for: ' . $modelClassName, 1406577758);
+		}
+
+		return GeneralUtility::camelCaseToLowerCaseUnderscored($matches['extensionName']);
 	}
 
 	/**
