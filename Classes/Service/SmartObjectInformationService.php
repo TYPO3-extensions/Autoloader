@@ -47,21 +47,16 @@ class SmartObjectInformationService {
 	}
 
 	/**
-	 * Pre build TCA information for the given model
-	 *
-	 * @param string $modelClassName
+	 * @param       $modelClassName
+	 * @param array $searchFields
 	 *
 	 * @return array
 	 */
-	public function getTcaInformation($modelClassName) {
-
+	public function getCustomModelFieldTca($modelClassName, &$searchFields = array()){
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-		$reflectionTableName = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName);
 		$tableName = ModelUtility::getTableNameByModelName($modelClassName);
-
 		$customFieldInformation = $this->getCustomModelFields($modelClassName);
-
 		$searchFields = array();
 		$customFields = array();
 		foreach ($customFieldInformation as $info) {
@@ -82,6 +77,26 @@ class SmartObjectInformationService {
 
 			$customFields[$info['name']] = $field;
 		}
+
+		return $customFields;
+	}
+
+	/**
+	 * Pre build TCA information for the given model
+	 *
+	 * @param string $modelClassName
+	 *
+	 * @return array
+	 */
+	public function getTcaInformation($modelClassName) {
+
+		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
+		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
+		$reflectionTableName = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName);
+		$tableName = ModelUtility::getTableNameByModelName($modelClassName);
+
+		$searchFields = array();
+		$customFields = $this->getCustomModelFieldTca($modelClassName, $searchFields);
 
 		if ($reflectionTableName !== FALSE) {
 			$customConfiguration = array(

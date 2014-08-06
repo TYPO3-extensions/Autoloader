@@ -13,9 +13,12 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -39,25 +42,33 @@ class SmartObjects implements LoaderInterface {
 	 * @return array
 	 */
 	public function prepareLoader(Loader $loader, $type) {
-		$classNames = array();
+		$configuration = array();
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/';
 		if (!is_dir($modelPath)) {
-			return $classNames;
+			return $configuration;
 		}
-
+		$smartObjectInformationService = new SmartObjectInformationService();
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 
 		foreach ($models as $model) {
 			$className = $loader->getVendorName() . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey())) . '\\Domain\\Model\\' . $model;
 			if (SmartObjectManager::isSmartObjectClass($className)) {
-				$classNames[] = $className;
+				$entry = array(
+					'className' => $className,
+				);
+				if ($type === LoaderInterface::EXT_TABLES) {
+					if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
+						$entry['additionalTca'] = $smartObjectInformationService->getCustomModelFieldTca($className);
+						$entry['tableName'] = ModelUtility::getTableName($className);
+					}
+				}
+				$configuration[] = $entry;
 			}
 		}
 		// already add for the following processes
-		$this->addClassesToSmartRegister($classNames);
+		$this->addClassesToSmartRegister($configuration);
 
-		return $classNames;
-
+		return $configuration;
 	}
 
 	/**
@@ -70,6 +81,14 @@ class SmartObjects implements LoaderInterface {
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		$this->addClassesToSmartRegister($loaderInformation);
+
+		foreach ($loaderInformation as $configuration) {
+			if ($configuration['additionalTca']) {
+				$tableName = $configuration['tableName'];
+				$GLOBALS['TCA'][$tableName]['columns'] = \TYPO3\CMS\Extbase\Utility\ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $configuration['additionalTca']);
+			}
+		}
+
 		return NULL;
 	}
 
@@ -89,11 +108,11 @@ class SmartObjects implements LoaderInterface {
 	/**
 	 * Add the given classes to the SmartObject Register
 	 *
-	 * @param array $classNames
+	 * @param array $loaderInformation
 	 */
-	protected function addClassesToSmartRegister($classNames) {
-		foreach ($classNames as $className) {
-			SmartObjectRegister::register($className);
+	protected function addClassesToSmartRegister($loaderInformation) {
+		foreach ($loaderInformation as $configuration) {
+			SmartObjectRegister::register($configuration['className']);
 		}
 	}
 }

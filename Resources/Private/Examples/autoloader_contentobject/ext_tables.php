@@ -13,5 +13,6 @@ if (!defined('TYPO3_MODE')) {
 
 \HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader_contentobject', array(
 	'ContentObjects',
-	'TcaFiles'
+	'TcaFiles',
+	'SmartObjects'
 ));
