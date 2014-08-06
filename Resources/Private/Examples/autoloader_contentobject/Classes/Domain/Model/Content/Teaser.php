@@ -27,6 +27,14 @@ class Teaser extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	protected $bodytext;
 
 	/**
+	 * A complete new field incl. the db annotation
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $newField;
+
+	/**
 	 * Set bodytext
 	 *
 	 * @param string $bodytext
@@ -42,6 +50,24 @@ class Teaser extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function getBodytext() {
 		return $this->bodytext;
+	}
+
+	/**
+	 * Set new Field
+	 *
+	 * @param string $newField
+	 */
+	public function setNewField($newField) {
+		$this->newField = $newField;
+	}
+
+	/**
+	 * Get new Field
+	 *
+	 * @return string
+	 */
+	public function getNewField() {
+		return $this->newField;
 	}
 
 } 
