@@ -204,16 +204,14 @@ class SmartObjectInformationService {
 		}
 		try {
 			TranslateUtility::assureLabel($tableName, $extensionName);
-			$title = TranslateUtility::getLllString($tableName, $extensionName);
 		} catch (\Exception $ex) {
-			$title = 'Table: ' . $tableName;
 		}
 
 
 		$columns = ArrayUtility::mergeRecursiveDistinct($defaultColumns, $customFields);
 		return array(
 			'ctrl'      => array(
-				'title'                           => $title,
+				'title'                           => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
 				'label'                           => $labelField,
 				'tstamp'                          => 'tstamp',
 				'crdate'                          => 'crdate',
