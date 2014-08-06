@@ -64,6 +64,10 @@ class ExtendedUtility {
 	 */
 	static public function addXclass($source, $target) {
 		if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source])) {
+			if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
+				$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = array();
+			}
+			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = 'Double registration of Xclass for ' . $source . ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
 			return FALSE;
 		}
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source] = array(
