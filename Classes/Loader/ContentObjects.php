@@ -12,7 +12,6 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
@@ -60,10 +59,21 @@ class ContentObjects implements LoaderInterface {
 				$fieldConfiguration = $this->getClassProperties($className);
 			}
 
+			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
+			$extPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
+			if (is_file($extPath . 'ext_icon.png')) {
+				$icon .= 'ext_icon.png';
+			} else if (is_file($extPath . 'ext_icon.gif')) {
+				$icon .= 'ext_icon.gif';
+			} else {
+				$icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
+			}
+
 			$loaderInformation[$key] = array(
 				'fieldConfiguration' => implode(',', $fieldConfiguration),
 				'modelClass'         => $className,
-				'model'              => $model
+				'model'              => $model,
+				'icon'               => $icon,
 			);
 		}
 
@@ -85,7 +95,7 @@ class ContentObjects implements LoaderInterface {
 		foreach ($classReflection->getProperties() as $property) {
 			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
 			if ($property->getDeclaringClass()
-			             ->getName() === $classReflection->getName()
+					->getName() === $classReflection->getName()
 			) {
 				$properties[] = $property->getName();
 			}
@@ -107,8 +117,9 @@ class ContentObjects implements LoaderInterface {
 			SmartObjectRegister::register($config['modelClass']);
 
 			ExtensionManagementUtility::addPlugin(array(
-				TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()),
-				$loader->getExtensionKey() . '_' . $e
+				TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()),
+				$loader->getExtensionKey() . '_' . $e,
+				$config['icon']
 			), 'CType');
 
 			$baseTcaConfiguration = '
@@ -127,18 +138,11 @@ class ContentObjects implements LoaderInterface {
 
 			$GLOBALS['TCA']['tt_content']['types'][$loader->getExtensionKey() . '_' . $e]['showitem'] = $baseTcaConfiguration;
 
-			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
-			if (is_file(ExtensionManagementUtility::extPath($loader->getExtensionKey(), 'ext_icon.gif'))) {
-				$icon .= 'ext_icon.gif';
-			} else {
-				$icon .= 'ext_icon.png';
-			}
-
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
-    icon = ' . $icon . '
-    title = ' . TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()) . '
-    description = ' . TranslateUtility::getLllString('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
+    icon = ' . $config['icon'] . '
+    title = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()) . '
+    description = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
         CType = ' . $loader->getExtensionKey() . '_' . $e . '
     }
@@ -150,7 +154,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 	show = *
-	header = ' . TranslateUtility::getLllString('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()) . '
+	header = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()) . '
 }');
 		}
 
@@ -183,8 +187,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
                 vendorName = ' . $loader->getVendorName() . '
             }
         }
-                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content')
-			, 43);
+                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content'), 43);
 		}
 
 		return NULL;

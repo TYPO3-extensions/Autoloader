@@ -11,6 +11,7 @@
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * TranslateUtility
@@ -51,6 +52,20 @@ class TranslateUtility {
 	}
 
 	/**
+	 * @param $key
+	 * @param $extensionKey
+	 *
+	 * @return string
+	 */
+	public static function getLllOrHelpMessage($key, $extensionKey) {
+		$lllString = self::getLllString($key, $extensionKey);
+		if (self::getLll($key, $extensionKey) === NULL) {
+			$lllString = self::getLll('pleaseSet', 'autoloader') . $lllString;
+		}
+		return $lllString;
+	}
+
+	/**
 	 * Get the correct LLL string for the given key and extension
 	 *
 	 * @param        $key
@@ -61,6 +76,18 @@ class TranslateUtility {
 	 */
 	static public function getLllString($key, $extensionKey, $file = 'locallang.xml') {
 		return 'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/' . $file . ':' . $key;
+	}
+
+	/**
+	 * Get the translation for the given key
+	 *
+	 * @param string $key
+	 * @param string $extensionKey
+	 *
+	 * @return string
+	 */
+	static public function getLll($key, $extensionKey) {
+		return LocalizationUtility::translate($key, $extensionKey);
 	}
 
 }

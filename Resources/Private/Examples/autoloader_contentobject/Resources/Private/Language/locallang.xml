@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description></description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tt_content.teaser"><![CDATA[Teaser]]></label>
+			<label index="tt_content.teaser.description"><![CDATA[Teaser description here...]]></label>
+			<label index="tt_content.autoloader_contentobject.header"><![CDATA[Example Content Object]]></label>
+		</languageKey>
+	</data>
+</T3locallang>
