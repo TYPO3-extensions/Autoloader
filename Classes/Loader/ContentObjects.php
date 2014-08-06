@@ -56,7 +56,7 @@ class ContentObjects implements LoaderInterface {
 			if ($type === LoaderInterface::EXT_TABLES) {
 				TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)', NULL, 'xml');
 				TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(), $key . ' (Description)', NULL, 'xml');
-				$fieldConfiguration = $this->getClassProperties($className);
+				$fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
 			}
 
 			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
@@ -78,6 +78,22 @@ class ContentObjects implements LoaderInterface {
 		}
 
 		return $loaderInformation;
+	}
+
+	/**
+	 * Same as getClassProperties, but the fields are in LowerCaseUnderscored
+	 *
+	 * @param $className
+	 *
+	 * @return array
+	 * @see getClassProperties
+	 */
+	protected function getClassPropertiesInLowerCaseUnderscored($className) {
+		$properties = $this->getClassProperties($className);
+		foreach ($properties as $key => $value) {
+			$properties[$key] = GeneralUtility::camelCaseToLowerCaseUnderscored($value);
+		}
+		return $properties;
 	}
 
 	/**
