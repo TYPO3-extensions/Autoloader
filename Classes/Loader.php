@@ -41,6 +41,7 @@ class Loader implements SingletonInterface {
 		'FlexForms',
 		'CommandController',
 		'StaticTyposcript',
+		'ExtensionId',
 	);
 
 	/**
