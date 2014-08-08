@@ -42,21 +42,34 @@ class SmartObjectManager implements SingletonInterface {
 	/**
 	 * Check if the given class is a smart object
 	 *
+	 * Also add a work around, because the static_info_tables SPL Autoloader
+	 * get into a conflict with different classes.
+	 *
 	 * @param string $className
 	 *
 	 * @return bool
 	 */
 	static public function isSmartObjectClass($className) {
+		$riskAutoLoader = array(
+			'SJBR\\StaticInfoTables\\Cache\\CachedClassLoader',
+			'autoload'
+		);
+		$registerAutoLoader = spl_autoload_unregister($riskAutoLoader);
+
 		if (!class_exists($className)) {
-			return FALSE;
+			$return = FALSE;
+		} else {
+			/** @var ClassReflection $classReflection */
+			// do not object factory here, to take care of the loading in the ext_localconf
+			$classReflection = new ClassReflection($className);
+			$return = !(bool)(!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db'));
 		}
-		/** @var ClassReflection $classReflection */
-		// do not object factory here, to take care of the loading in the ext_localconf
-		$classReflection = new ClassReflection($className);
-		if (!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db')) {
-			return FALSE;
+
+		if ($registerAutoLoader) {
+			spl_autoload_register($riskAutoLoader, TRUE, TRUE);
 		}
-		return TRUE;
+
+		return $return;
 	}
 
 	/**
