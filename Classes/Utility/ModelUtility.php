@@ -86,8 +86,8 @@ class ModelUtility {
 	static public function getRecordTypeFieldByModelReflection($modelClassName) {
 		$classReflection = new ClassReflection($modelClassName);
 		if ($classReflection->isTaggedWith('record_type')) {
-			$record_type = $classReflection->getTagValues('record_type');
-			$value = trim($record_type[0]);
+			$recordType = $classReflection->getTagValues('record_type');
+			$value = trim($recordType[0]);
 			return $value === '' ? FALSE : $value;
 		}
 		return FALSE;

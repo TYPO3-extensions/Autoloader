@@ -13,15 +13,14 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
-use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
-use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Reflection\ClassReflection;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -121,8 +120,8 @@ class ContentObjects implements LoaderInterface {
 	 */
 	protected function getClassProperties($className) {
 		$properties = array();
-		/** @var \TYPO3\CMS\Extbase\Reflection\ClassReflection $classReflection */
-		$classReflection = new \TYPO3\CMS\Extbase\Reflection\ClassReflection($className);
+		/** @var ClassReflection $classReflection */
+		$classReflection = new ClassReflection($className);
 		foreach ($classReflection->getProperties() as $property) {
 			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
 			if ($property->getDeclaringClass()
@@ -149,7 +148,7 @@ class ContentObjects implements LoaderInterface {
 
 			if ($config['additionalTca']) {
 				$tableName = $config['tableName'];
-				$GLOBALS['TCA'][$tableName]['columns'] = \TYPO3\CMS\Extbase\Utility\ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $config['additionalTca']);
+				$GLOBALS['TCA'][$tableName]['columns'] = ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $config['additionalTca']);
 			}
 
 			ExtensionManagementUtility::addPlugin(array(

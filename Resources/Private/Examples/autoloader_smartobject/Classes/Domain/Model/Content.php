@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db         tt_content
  */
-class Test extends AbstractEntity {
+class Content extends AbstractEntity {
 
 	/**
 	 * Bodytext

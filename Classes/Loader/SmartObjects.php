@@ -16,11 +16,11 @@ use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
-use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 
 /**
  * Loading SmartObjects
@@ -85,7 +85,7 @@ class SmartObjects implements LoaderInterface {
 		foreach ($loaderInformation as $configuration) {
 			if ($configuration['additionalTca']) {
 				$tableName = $configuration['tableName'];
-				$GLOBALS['TCA'][$tableName]['columns'] = \TYPO3\CMS\Extbase\Utility\ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $configuration['additionalTca']);
+				$GLOBALS['TCA'][$tableName]['columns'] = ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $configuration['additionalTca']);
 			}
 		}
 

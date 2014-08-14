@@ -40,20 +40,20 @@ class ArrayUtility {
 				// The node or its ancestors may not exist yet.
 				$keys = explode($separator, $name);
 				// Set the root of the tree.
-				$opt_tree =& $array;
+				$optTree =& $array;
 				// Start traversing the tree using the specified keys.
 				while ($key = array_shift($keys)) {
 					// If there are more keys after the current one.
 					if ($keys) {
-						if (!isset($opt_tree[$key]) || !is_array($opt_tree[$key])) {
+						if (!isset($optTree[$key]) || !is_array($optTree[$key])) {
 							// Create this node if it doesn't already exist.
-							$opt_tree[$key] = array();
+							$optTree[$key] = array();
 						}
 						// Redefine the "root" of the tree to this node (assign by reference) then process the next key.
-						$opt_tree =& $opt_tree[$key];
+						$optTree =& $optTree[$key];
 					} else {
 						// This is the last key to check, so assign the value.
-						$opt_tree[$key] = $value;
+						$optTree[$key] = $value;
 					}
 				}
 			}

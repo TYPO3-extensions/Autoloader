@@ -37,10 +37,10 @@ class FlexForms implements LoaderInterface {
 	 */
 	public function prepareLoader(Loader $loader, $type) {
 		$flexForms = array();
-		$FlexFormPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/FlexForms/';
+		$flexFormPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/FlexForms/';
 		$extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
-		$FlexForms = FileUtility::getBaseFilesInDir($FlexFormPath, 'xml');
-		foreach ($FlexForms as $fileKey) {
+		$flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath, 'xml');
+		foreach ($flexFormsFiles as $fileKey) {
 			$pluginSignature = strtolower($extensionName . '_' . $fileKey);
 			$flexForms[] = array(
 				'pluginSignature' => $pluginSignature,

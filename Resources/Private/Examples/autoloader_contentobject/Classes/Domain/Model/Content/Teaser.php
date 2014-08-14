@@ -9,6 +9,8 @@
 
 namespace HDNET\AutoloaderContentobject\Domain\Model\Content;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Example Teaser Model
  *
@@ -17,7 +19,7 @@ namespace HDNET\AutoloaderContentobject\Domain\Model\Content;
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db         tt_content
  */
-class Teaser extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class Teaser extends AbstractEntity {
 
 	/**
 	 * Bodytext (already exists, so no db annotation)

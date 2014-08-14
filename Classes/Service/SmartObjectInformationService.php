@@ -40,7 +40,7 @@ class SmartObjectInformationService {
 
 		// disable complete table generation
 		// for extending existing tables
-		if ($tableNameReflect = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
+		if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
 			return $this->generateSQLQuery($tableName, $custom);
 		}
 		return $this->generateCompleteSQLQuery($tableName, $custom);
