@@ -52,8 +52,10 @@ class TranslateUtility {
 	}
 
 	/**
-	 * @param $key
-	 * @param $extensionKey
+	 * Get the given LLL String or render a help message for the user
+	 *
+	 * @param string $key
+	 * @param string $extensionKey
 	 *
 	 * @return string
 	 */

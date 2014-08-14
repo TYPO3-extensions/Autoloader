@@ -41,6 +41,8 @@ class Content extends AbstractEntity {
 	protected $otherField;
 
 	/**
+	 * Set bodytext
+	 *
 	 * @param string $bodytext
 	 */
 	public function setBodytext($bodytext) {
@@ -48,6 +50,8 @@ class Content extends AbstractEntity {
 	}
 
 	/**
+	 * Get bodytext
+	 *
 	 * @return string
 	 */
 	public function getBodytext() {
@@ -55,6 +59,8 @@ class Content extends AbstractEntity {
 	}
 
 	/**
+	 * Set other field
+	 *
 	 * @param string $otherField
 	 */
 	public function setOtherField($otherField) {
@@ -62,6 +68,8 @@ class Content extends AbstractEntity {
 	}
 
 	/**
+	 * Get other field
+	 *
 	 * @return string
 	 */
 	public function getOtherField() {

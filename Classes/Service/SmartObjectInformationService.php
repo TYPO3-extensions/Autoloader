@@ -47,12 +47,14 @@ class SmartObjectInformationService {
 	}
 
 	/**
+	 * Get the custom Model field TCA structure
+	 *
 	 * @param       $modelClassName
 	 * @param array $searchFields
 	 *
 	 * @return array
 	 */
-	public function getCustomModelFieldTca($modelClassName, &$searchFields = array()){
+	public function getCustomModelFieldTca($modelClassName, &$searchFields = array()) {
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
 		$tableName = ModelUtility::getTableNameByModelName($modelClassName);
@@ -337,13 +339,14 @@ class SmartObjectInformationService {
 	/**
 	 * Generae SQL Query
 	 *custom
+	 *
 	 * @param string $tableName
 	 * @param array  $fields
 	 *
 	 * @return string
 	 */
 	protected function generateSQLQuery($tableName, $fields) {
-		if(!$fields) {
+		if (!$fields) {
 			return '';
 		}
 		return LF . 'CREATE TABLE ' . $tableName . ' (' . LF . implode(',' . LF, $fields) . LF . ');' . LF;
@@ -353,7 +356,7 @@ class SmartObjectInformationService {
 	 * Generate complete SQL Query
 	 *
 	 * @param string $tableName
-	 * @param array $custom
+	 * @param array  $custom
 	 *
 	 * @return string
 	 */
@@ -363,7 +366,7 @@ class SmartObjectInformationService {
 		$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
 
 		if ($custom) {
-			foreach($custom as $field) {
+			foreach ($custom as $field) {
 				$fields[] = $field;
 			}
 		}
