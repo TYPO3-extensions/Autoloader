@@ -256,7 +256,7 @@ class SmartObjectInformationService {
 				'showRecordFieldList' => implode(',', array_keys($columns)),
 			),
 			'types'     => array(
-				'1' => array('showitem' => implode(',', array_keys($customFields)) . ',--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,--palette--;LLL:EXT:cms/locallang_tca.xlf:pages.palettes.access;access,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended'),
+				'1' => array('showitem' => implode(',', array_keys($customFields)) . ',--palette--;LLL:EXT:lang/locallang_general.xlf:LGL.language;language, --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,--palette--;LLL:EXT:cms/locallang_tca.xlf:pages.palettes.access;access,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended'),
 			),
 			'palettes'  => array(
 				'access'   => array('showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'),
