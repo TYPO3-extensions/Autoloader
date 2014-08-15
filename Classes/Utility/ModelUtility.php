@@ -10,6 +10,7 @@
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
 /**
@@ -74,6 +75,23 @@ class ModelUtility {
 			$tableName = strtolower($className);
 		}
 		return $tableName;
+	}
+
+	/**
+	 * get the smart exclude values e.g. language,workspace,enableFields from the given model
+	 *
+	 * @param string $name
+	 *
+	 * @return array
+	 */
+	static public function getSmartExcludesByModelName($name) {
+		$classReflection = new ClassReflection($name);
+		if ($classReflection->isTaggedWith('smartExclude')) {
+			$smartExclude = $classReflection->getTagValues('smartExclude');
+			return GeneralUtility::trimExplode(',', $smartExclude[0]);
+		}
+		return array();
+
 	}
 
 	/**
