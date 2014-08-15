@@ -48,7 +48,8 @@ class Float implements MapperInterface {
 			'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
 			'config'  => array(
 				'type' => 'input',
-				'eval' => 'double2'
+				'eval' => 'double2',
+				'size' => 8,
 			),
 		);
 	}

@@ -48,7 +48,8 @@ class Int implements MapperInterface {
 			'label'   => $overWriteLabel ? $overWriteLabel : $fieldName,
 			'config'  => array(
 				'type' => 'input',
-				'eval' => 'int'
+				'eval' => 'int',
+				'size' => 8,
 			),
 		);
 	}
