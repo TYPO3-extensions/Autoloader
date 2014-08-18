@@ -24,7 +24,7 @@ class ClassNamingUtility {
 	 *
 	 * @param string $modelName The model name to be exploded
 	 *
-	 * @return string Extension name
+	 * @return array Parts of the object model name
 	 * @see \TYPO3\CMS\Core\Utility\ClassNamingUtility::explodeObjectControllerName
 	 */
 	static public function explodeObjectModelName($modelName) {
