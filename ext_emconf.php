@@ -10,10 +10,10 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title'              => 'Autoloader',
-	'description'        => 'Automatic components loading of ExtBase extensions to get more time for coffee in the company ;)',
+	'description'        => 'Automatic components loading of ExtBase extensions to get more time for coffee in the company ;) Loads CommandController, Xclass, Hooks, Aspects, FlexForms, Slots...',
 	'category'           => 'misc',
 	'shy'                => 0,
-	'version'            => '1.1.0',
+	'version'            => '1.1.1',
 	'dependencies'       => '',
 	'conflicts'          => '',
 	'loadOrder'          => '',
