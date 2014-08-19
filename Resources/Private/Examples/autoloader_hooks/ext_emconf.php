@@ -9,7 +9,7 @@
 
 
 $EM_CONF[$_EXTKEY] = array(
-	'title'              => 'Autoloader (Hooks - You see a addional message in the recordList view in the footer)',
+	'title'              => 'Autoloader (Hooks - You see a additional message in the recordList view in the footer)',
 	'description'        => '',
 	'category'           => 'misc',
 	'shy'                => 0,
