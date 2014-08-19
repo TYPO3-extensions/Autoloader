@@ -25,8 +25,8 @@ class FileUtility {
 	 * Get all base file names in the given directory with the given file extension
 	 * Check also if the directory exists
 	 *
-	 * @param $dirPath
-	 * @param $fileExtension
+	 * @param string $dirPath
+	 * @param string $fileExtension
 	 *
 	 * @return array
 	 */
@@ -38,6 +38,32 @@ class FileUtility {
 		foreach ($files as $key => $file) {
 			$files[$key] = pathinfo($file, PATHINFO_FILENAME);
 		}
+		return array_values($files);
+	}
+
+	/**
+	 * Get all base file names in the given directory with the given file extension
+	 * Check also if the directory exists. If you scan the dir recursively you get
+	 * also the folder name. The filename is also "basename" only.
+	 *
+	 * @param string  $dirPath
+	 * @param string  $fileExtension
+	 * @param boolean $recursively
+	 *
+	 * @return array
+	 * @todo After one or two releases, migrate the getBaseFilesRecursivelyInDir into the getBaseFilesInDir or rethink the file fetch handling
+	 */
+	static function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = TRUE) {
+		if (!is_dir($dirPath)) {
+			return array();
+		}
+		$recursively = $recursively ? 99 : 0;
+		$files = GeneralUtility::getAllFilesAndFoldersInPath(array(), $dirPath, $fileExtension, FALSE, $recursively);
+		foreach ($files as $key => $file) {
+			$pathInfo = pathinfo($file);
+			$files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
+		}
+		$files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
 		return array_values($files);
 	}
 }

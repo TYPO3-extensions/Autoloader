@@ -43,6 +43,7 @@ class Loader implements SingletonInterface {
 		'CommandController',
 		'StaticTyposcript',
 		'ExtensionId',
+		'TypeConverter',
 	);
 
 	/**
