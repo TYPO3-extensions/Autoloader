@@ -44,8 +44,8 @@ class ModelUtility {
 	static public function getTableNameByModelReflectionAnnotation($modelClassName) {
 		$classReflection = new ClassReflection($modelClassName);
 		if ($classReflection->isTaggedWith('db')) {
-			$db = $classReflection->getTagValues('db');
-			$value = trim($db[0]);
+			$databaseAnnotation = $classReflection->getTagValues('db');
+			$value = trim($databaseAnnotation[0]);
 			return $value === '' ? FALSE : $value;
 		}
 		return FALSE;
@@ -121,8 +121,8 @@ class ModelUtility {
 	static public function getParentClassByModelReflection($modelClassName) {
 		$classReflection = new ClassReflection($modelClassName);
 		if ($classReflection->isTaggedWith('parentclass')) {
-			$parentclass = $classReflection->getTagValues('parentclass');
-			$value = trim($parentclass[0]);
+			$parentClass = $classReflection->getTagValues('parentclass');
+			$value = trim($parentClass[0]);
 			return $value === '' ? FALSE : $value;
 		}
 		return FALSE;

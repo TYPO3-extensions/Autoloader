@@ -47,7 +47,7 @@ class SmartObjects implements LoaderInterface {
 		if (!is_dir($modelPath)) {
 			return $configuration;
 		}
-		$smartObjectInformationService = new SmartObjectInformationService();
+		$informationService = new SmartObjectInformationService();
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 
 		foreach ($models as $model) {
@@ -58,7 +58,7 @@ class SmartObjects implements LoaderInterface {
 				);
 				if ($type === LoaderInterface::EXT_TABLES) {
 					if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
-						$entry['additionalTca'] = $smartObjectInformationService->getCustomModelFieldTca($className);
+						$entry['additionalTca'] = $informationService->getCustomModelFieldTca($className);
 						$entry['tableName'] = ModelUtility::getTableName($className);
 					}
 				}

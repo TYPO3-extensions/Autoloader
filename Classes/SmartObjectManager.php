@@ -73,7 +73,7 @@ class SmartObjectManager implements SingletonInterface {
 	}
 
 	/**
-	 * Get the extension key by the given modelname
+	 * Get the extension key by the given model name
 	 *
 	 * @param string|object $modelClassName
 	 *

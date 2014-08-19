@@ -38,11 +38,11 @@ class AlternativeImplementations implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$classNames = array();
 		$alternativeImpPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/AlternativeImplementations/';
-		$alternativeImplementationsClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
+		$alternativeClasses = FileUtility::getBaseFilesInDir($alternativeImpPath, 'php');
 
 		$extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 
-		foreach ($alternativeImplementationsClasses as $aic) {
+		foreach ($alternativeClasses as $aic) {
 			$aicClass = $loader->getVendorName() . '\\' . $extKey . '\\AlternativeImplementations\\' . $aic;
 
 			if (!$loader->isInstantiableClass($aicClass)) {

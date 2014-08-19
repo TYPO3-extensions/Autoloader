@@ -61,12 +61,12 @@ class Aspect implements LoaderInterface {
 				if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinpoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
 					$aspectClassName = trim($methodTags['aspectClass'][0], '\\');
 					$aspectJoinpoint = trim($methodTags['aspectJoinpoint'][0]);
-					$aspectJoinpointArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinpoint);
+					$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinpoint);
 
 					$aspects[] = array(
 						'aspectClassName'           => $aspectClassName,
 						'aspectJoinpoint'           => $aspectJoinpoint,
-						'aspectJoinpointArguments'  => $aspectJoinpointArguments, // auf array testen!!
+						'aspectJoinpointArguments'  => $aspectJpArguments,
 						'aspectAdvice'              => trim($methodTags['aspectAdvice'][0]),
 						'originClassName'           => $aspectClass,
 						'originMethodName'          => $methodReflection->getName()

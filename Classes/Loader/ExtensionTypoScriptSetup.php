@@ -131,14 +131,14 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 */
 	private function getSmartObjectsForExtensionKey($extensionKey) {
 		$smartObjects = SmartObjectRegister::getRegister();
-		$extensionSmartObjects = array();
+		$extensionObjects = array();
 		foreach ($smartObjects as $className) {
 			$objectExtension = SmartObjectManager::getExtensionKeyByModel($className);
 			if ($objectExtension === $extensionKey) {
-				$extensionSmartObjects[] = $className;
+				$extensionObjects[] = $className;
 			}
 		}
-		return $extensionSmartObjects;
+		return $extensionObjects;
 	}
 
 }

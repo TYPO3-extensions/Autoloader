@@ -58,10 +58,10 @@ class SmartObjectInformationService {
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
 		$tableName = ModelUtility::getTableNameByModelName($modelClassName);
-		$customFieldInformation = $this->getCustomModelFields($modelClassName);
+		$customFieldInfo = $this->getCustomModelFields($modelClassName);
 		$searchFields = array();
 		$customFields = array();
-		foreach ($customFieldInformation as $info) {
+		foreach ($customFieldInfo as $info) {
 			$key = $tableName . '.' . $info['name'];
 			try {
 				TranslateUtility::assureLabel($key, $extensionName, $info['name']);
@@ -223,8 +223,8 @@ class SmartObjectInformationService {
 		// extension icon
 		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
 		$tableIconRelPath = ExtensionManagementUtility::extRelPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png';
-		$tableDefaultIconRelPath = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
-		$tableIcon = is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIconRelPath;
+		$tableDefaultIcon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
+		$tableIcon = is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIcon;
 
 		// title
 		$fields = array_keys($customFields);

@@ -37,8 +37,8 @@ class CommandController implements LoaderInterface {
 	 */
 	public function prepareLoader(Loader $loader, $type) {
 		$classNames = array();
-		$commandControllerPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
-		$controllers = FileUtility::getBaseFilesInDir($commandControllerPath, 'php');
+		$commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Command/';
+		$controllers = FileUtility::getBaseFilesInDir($commandPath, 'php');
 		foreach ($controllers as $controller) {
 			if ($controller === 'AbstractCommandController') {
 				continue;

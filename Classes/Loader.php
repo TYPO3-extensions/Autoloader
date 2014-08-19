@@ -25,7 +25,7 @@ class Loader implements SingletonInterface {
 	 *
 	 * @var array
 	 */
-	protected $autoLoaderImplementations = array(
+	protected $implementations = array(
 		// class replacement
 		'Xclass',
 		'AlternativeImplementations',
@@ -71,7 +71,7 @@ class Loader implements SingletonInterface {
 	 *
 	 * @var array
 	 */
-	protected $defaultCacheConfiguration = array(
+	protected $cacheConfiguration = array(
 		'backend'  => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
 		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
 		'groups'   => array(
@@ -89,7 +89,7 @@ class Loader implements SingletonInterface {
 		if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {
 			/** @var \TYPO3\CMS\Core\Configuration\ConfigurationManager $configurationManager */
 			$configurationManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
-			$configurationManager->setLocalConfigurationValueByPath('SYS/caching/cacheConfigurations/autoloader', $this->defaultCacheConfiguration);
+			$configurationManager->setLocalConfigurationValueByPath('SYS/caching/cacheConfigurations/autoloader', $this->cacheConfiguration);
 			$this->disableFirstCall = TRUE;
 		}
 	}
@@ -99,12 +99,12 @@ class Loader implements SingletonInterface {
 	 *
 	 * @param string $vendorName
 	 * @param string $extensionKey
-	 * @param array  $loaderImplementations
+	 * @param array  $implementations
 	 */
-	static public function extTables($vendorName, $extensionKey, array $loaderImplementations = array()) {
+	static public function extTables($vendorName, $extensionKey, array $implementations = array()) {
 		/** @var \HDNET\Autoloader\Loader $loader */
 		$loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
-		$loader->loadExtTables($vendorName, $extensionKey, $loaderImplementations);
+		$loader->loadExtTables($vendorName, $extensionKey, $implementations);
 	}
 
 	/**
@@ -112,12 +112,12 @@ class Loader implements SingletonInterface {
 	 *
 	 * @param string $vendorName
 	 * @param string $extensionKey
-	 * @param array  $loaderImplementations
+	 * @param array  $implementations
 	 */
-	static public function extLocalconf($vendorName, $extensionKey, array $loaderImplementations = array()) {
+	static public function extLocalconf($vendorName, $extensionKey, array $implementations = array()) {
 		/** @var \HDNET\Autoloader\Loader $loader */
 		$loader = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader');
-		$loader->loadExtLocalconf($vendorName, $extensionKey, $loaderImplementations);
+		$loader->loadExtLocalconf($vendorName, $extensionKey, $implementations);
 	}
 
 	/**
@@ -125,9 +125,9 @@ class Loader implements SingletonInterface {
 	 *
 	 * @param string $vendorName
 	 * @param string $extensionKey
-	 * @param array  $loaderImplementations
+	 * @param array  $implementations
 	 */
-	public function loadExtTables($vendorName, $extensionKey, array $loaderImplementations = array()) {
+	public function loadExtTables($vendorName, $extensionKey, array $implementations = array()) {
 		if ($this->disableFirstCall) {
 			return;
 		}
@@ -135,7 +135,7 @@ class Loader implements SingletonInterface {
 		$this->vendorName = $vendorName;
 
 
-		$autoLoaderObjects = $this->buildAutoLoaderObjects($loaderImplementations);
+		$autoLoaderObjects = $this->buildAutoLoaderObjects($implementations);
 		$information = $this->prepareAutoLoaderObjects($autoLoaderObjects, LoaderInterface::EXT_TABLES);
 		foreach ($autoLoaderObjects as $object) {
 			/** @var LoaderInterface $object */
@@ -151,16 +151,16 @@ class Loader implements SingletonInterface {
 	 *
 	 * @param string $vendorName
 	 * @param string $extensionKey
-	 * @param array  $loaderImplementations
+	 * @param array  $implementations
 	 */
-	public function loadExtLocalconf($vendorName, $extensionKey, array $loaderImplementations = array()) {
+	public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = array()) {
 		if ($this->disableFirstCall) {
 			return;
 		}
 		$this->extensionKey = $extensionKey;
 		$this->vendorName = $vendorName;
 
-		$autoLoaderObjects = $this->buildAutoLoaderObjects($loaderImplementations);
+		$autoLoaderObjects = $this->buildAutoLoaderObjects($implementations);
 		$information = $this->prepareAutoLoaderObjects($autoLoaderObjects, LoaderInterface::EXT_LOCAL_CONFIGURATION);
 		foreach ($autoLoaderObjects as $object) {
 			/** @var LoaderInterface $object */
@@ -174,14 +174,14 @@ class Loader implements SingletonInterface {
 	/**
 	 * Build the Autoloader objects
 	 *
-	 * @param array $autoLoaderObjectNames
+	 * @param array $objectNames
 	 *
 	 * @return array
 	 */
-	protected function buildAutoLoaderObjects(array $autoLoaderObjectNames = array()) {
-		$autoLoaderObjectNames = $this->getAutoLoaderNamesInRightOrder($autoLoaderObjectNames);
+	protected function buildAutoLoaderObjects(array $objectNames = array()) {
+		$objectNames = $this->getAutoLoaderNamesInRightOrder($objectNames);
 		$objects = array();
-		foreach ($autoLoaderObjectNames as $autoLoaderObjectName) {
+		foreach ($objectNames as $autoLoaderObjectName) {
 			$objects[] = GeneralUtility::makeInstance('HDNET\\Autoloader\\Loader\\' . $autoLoaderObjectName);
 		}
 		return $objects;
@@ -190,19 +190,19 @@ class Loader implements SingletonInterface {
 	/**
 	 * Get the Autoloader Names in the right order
 	 *
-	 * @param array $autoLoaderObjectNames
+	 * @param array $objectNames
 	 *
 	 * @return array
 	 */
-	protected function getAutoLoaderNamesInRightOrder(array $autoLoaderObjectNames = array()) {
-		if (!$autoLoaderObjectNames) {
-			return $this->autoLoaderImplementations;
+	protected function getAutoLoaderNamesInRightOrder(array $objectNames = array()) {
+		if (!$objectNames) {
+			return $this->implementations;
 		}
 
 		// sort
 		$names = array();
-		foreach ($this->autoLoaderImplementations as $className) {
-			if (in_array($className, $autoLoaderObjectNames)) {
+		foreach ($this->implementations as $className) {
+			if (in_array($className, $objectNames)) {
 				$names[] = $className;
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Register the Aspectfiles and create the Xclass.
+ * Register the aspect files and create the Xclass.
  *
  * @category   Extension
  * @package    Autoloader
@@ -160,19 +160,19 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 * @return string
 	 */
 	protected function getConfigurationArray($type, $joinpoint, $advices) {
-		$c = array();
+		$code = array();
 
-		$c[] = '\'' . $joinpoint . '\'' . ' => array(';
+		$code[] = '\'' . $joinpoint . '\'' . ' => array(';
 		foreach ($advices[$type] as $method) {
-			$c[] = 'array(';
-			$c[] = '\'id\' => \'' . GeneralUtility::shortMD5($method['originClassName'] . $method['originMethodName'], 13) . '\',';
-			$c[] = '\'class\' => \'\\' . $method['originClassName'] . '\',';
-			$c[] = '\'function\' => \'' . $method['originMethodName'] . '\',';
-			$c[] = '),';
+			$code[] = 'array(';
+			$code[] = '\'id\' => \'' . GeneralUtility::shortMD5($method['originClassName'] . $method['originMethodName'], 13) . '\',';
+			$code[] = '\'class\' => \'\\' . $method['originClassName'] . '\',';
+			$code[] = '\'function\' => \'' . $method['originMethodName'] . '\',';
+			$code[] = '),';
 		}
-		$c[] = '),';
+		$code[] = '),';
 
-		return implode("\n", $c);
+		return implode(LF, $code);
 	}
 
 	/**
@@ -183,11 +183,11 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 * @return string
 	 */
 	protected function mergeConfigurationArrayForCode($configuration) {
-		$c[] = 'array(';
-		$c[] = implode("\n", $configuration);
-		$c[] = ')';
+		$code[] = 'array(';
+		$code[] = implode("\n", $configuration);
+		$code[] = ')';
 
-		return implode("\n", $c);
+		return implode(LF, $code);
 	}
 
 	/**
