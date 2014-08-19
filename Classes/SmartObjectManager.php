@@ -133,15 +133,8 @@ class SmartObjectManager implements SingletonInterface {
 				if (!is_dir($dir)) {
 					GeneralUtility::mkdir_deep($dir);
 				}
-				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model) ? : ModelUtility::getTableNameByModelName($model);
-				$tcaFileName = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/' . $tableName . '.php';
 
-				if (!is_file($tcaFileName)) {
-					$dir = dirname($tcaFileName);
-					if (!is_dir($dir)) {
-						GeneralUtility::mkdir_deep($dir);
-					}
-					$content = '<?php
+				$content = '<?php
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation(\'' . str_replace('\\', '\\\\', $model) . '\');
 
@@ -149,8 +142,8 @@ $custom = array();
 
 return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);';
 
-					GeneralUtility::writeFile($tcaFileName, $content);
-				}
+				GeneralUtility::writeFile($tcaFileName, $content);
+
 			}
 		}
 	}
