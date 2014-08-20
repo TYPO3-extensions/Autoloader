@@ -286,7 +286,7 @@ class SmartObjectInformationService {
 				'showRecordFieldList' => implode(',', array_keys($columns)),
 			),
 			'types'     => array(
-				'1' => array('showitem' => implode(',', array_keys($showitem))),
+				'1' => array('showitem' => implode(',', $showitem)),
 			),
 			'palettes'  => array(
 				'access'   => array('showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'),
