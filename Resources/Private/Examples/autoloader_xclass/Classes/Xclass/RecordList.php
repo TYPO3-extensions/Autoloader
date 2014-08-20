@@ -38,7 +38,7 @@ class RecordList extends \TYPO3\CMS\Recordlist\RecordList {
 
 		// Add FlashMessage
 		$flashMessageService = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessageService');
-		/** @var $defaultFlashMessageQueue \TYPO3\CMS\Core\Messaging\FlashMessageQueue */
+		/** @var $flashMessageQueue \TYPO3\CMS\Core\Messaging\FlashMessageQueue */
 		$flashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
 		$flashMessageQueue->enqueue($flashMessage);
 	}

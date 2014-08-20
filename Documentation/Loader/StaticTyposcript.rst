@@ -1,4 +1,4 @@
-Static typoscript
+Static TypoScript
 ^^^^^^^^^^^^^^^^^
 
 Check and translate:

@@ -7,7 +7,7 @@
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
-
+/** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
 	'title'              => 'Autoloader (Contentobject - You should create a Teaser Content Element)',
 	'description'        => '',

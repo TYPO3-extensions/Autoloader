@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Register the Aspectfiles and create the needed Xclasses.
+ * Register the aspect files and create the needed Xclasses.
  *
  * @package    Autoloader
  * @subpackage Hooks

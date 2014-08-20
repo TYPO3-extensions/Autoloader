@@ -7,7 +7,7 @@
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
-
+/** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
 	'title'              => 'Autoloader',
 	'description'        => 'Automatic components loading of ExtBase extensions to get more time for coffee in the company ;) Loads CommandController, Xclass, Hooks, Aspects, FlexForms, Slots...',
