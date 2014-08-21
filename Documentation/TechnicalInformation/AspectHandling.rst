@@ -1,3 +1,5 @@
+.. index:: Aspect
+
 Aspect Handling
 ^^^^^^^^^^^^^^^
 

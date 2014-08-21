@@ -1,4 +1,4 @@
-Extension TypoScript
+:index:`Extension TypoScript`
 ^^^^^^^^^^^^^^^^^^^^
 
-Details comming soon.
+Details coming soon.

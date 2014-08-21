@@ -1,5 +1,7 @@
 Introduction
 ------------
 
-.. include:: WhatDoesItDo/Index.rst
-.. include:: NeedHelp/Index.rst
+.. toctree::
+
+	WhatDoesItDo/Index
+	NeedHelp/Index

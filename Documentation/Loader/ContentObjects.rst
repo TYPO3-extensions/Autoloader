@@ -1,4 +1,4 @@
-Content Objects
+:index:`Content Objects`
 ^^^^^^^^^^^^^^^
 
 Check and translate:

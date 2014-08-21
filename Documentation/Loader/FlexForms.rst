@@ -1,4 +1,4 @@
-FlexForms
+:index:`FlexForms`
 ^^^^^^^^^
 
 Check and translate:

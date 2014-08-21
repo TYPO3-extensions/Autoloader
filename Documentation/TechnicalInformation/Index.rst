@@ -1,6 +1,7 @@
 Technical Information
 ---------------------
+.. toctree::
 
-.. include:: General.rst
-.. include:: SmartObjectManagement.rst
-.. include:: AspectHandling.rst
+	General
+	SmartObjectManagement
+	AspectHandling

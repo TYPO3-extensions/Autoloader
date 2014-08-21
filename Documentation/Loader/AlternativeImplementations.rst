@@ -1,4 +1,4 @@
-Alternative Implementations
+:index:`Alternative Implementations`
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Details comming soon.
+Details coming soon.

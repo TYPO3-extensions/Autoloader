@@ -1,4 +1,4 @@
-Static TypoScript
+:index:`Static TypoScript`
 ^^^^^^^^^^^^^^^^^
 
 Check and translate:

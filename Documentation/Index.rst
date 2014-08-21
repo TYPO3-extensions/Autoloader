@@ -12,7 +12,7 @@ Autoloader: Speed up Extension Development
       forEditors, forAdmins, forBeginners, forIntermediates
 
 :Author:
-      Tim Lochmüller, Carsten Biebricher
+      Tim Lochmüller, Carsten Biebricher, Tim Spiekerkötter
 
 :Email:
       tim.lochmueller@hdnet.de, carsten.biebricher@hdnet.de
@@ -20,14 +20,9 @@ Autoloader: Speed up Extension Development
 :Language:
       en
 
-**Table of Contents**
-
 .. toctree::
 
-	Introduction/Index
-	Loader/Index
-	TechnicalInformation/Index
-
-.. include:: Introduction/Index.rst
-.. include:: Loader/Index.rst
-.. include:: TechnicalInformation/Index.rst
+   Introduction/Index
+   Loader/Index
+   TechnicalInformation/Index
+   Example/Index

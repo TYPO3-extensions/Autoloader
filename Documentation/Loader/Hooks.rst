@@ -1,4 +1,4 @@
-Hooks
+:index:`Hooks`
 ^^^^^
 
 Check and translate:

@@ -1,4 +1,4 @@
-TCA Files
+:index:`TCA Files`
 ^^^^^^^^^
 
 Check and translate:

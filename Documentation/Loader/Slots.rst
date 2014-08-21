@@ -1,4 +1,4 @@
-Slots
+:index:`Slots`
 ^^^^^
 
 Check and translate:

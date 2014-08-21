@@ -1,4 +1,4 @@
-ExtensionId (eID)
+:index:`ExtensionId` (:index:`eID`)
 ^^^^^^^^^^^^^^^^^
 
-Details comming soon.
+Details coming soon.

@@ -1,4 +1,4 @@
-SmartObjects
+:index:`SmartObjects`
 ^^^^^^^^^^^^
 
 Check and translate:
