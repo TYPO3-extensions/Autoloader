@@ -1,6 +1,8 @@
 Loader
 ------
 
+Here we describe the different implemented Loader.
+
 .. include:: AlternativeImplementations.rst
 .. include:: Aspect.rst
 .. include:: CommandController.rst

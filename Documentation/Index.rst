@@ -20,10 +20,13 @@ Autoloader: Speed up Extension Development
 :Language:
       en
 
+**Table of Contents**
+
 .. toctree::
-   :maxdepth: 5
-   :titlesonly:
-   :glob:
+
+	Introduction/Index
+	Loader/Index
+	TechnicalInformation/Index
 
 .. include:: Introduction/Index.rst
 .. include:: Loader/Index.rst
