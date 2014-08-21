@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader\Service;
 
+use HDNET\Autoloader\DataSet;
 use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
@@ -91,7 +92,6 @@ class SmartObjectInformationService {
 	 * @return array
 	 */
 	public function getTcaInformation($modelClassName) {
-
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
 		$reflectionTableName = ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName);
@@ -110,121 +110,11 @@ class SmartObjectInformationService {
 
 		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
 
-		$defaultColumns = array();
-
-		// languages
-		if (!in_array('language', $excludes)) {
-			$defaultColumns['sys_language_uid'] = array(
-				'exclude' => 1,
-				'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-				'config'  => array(
-					'type'                => 'select',
-					'foreign_table'       => 'sys_language',
-					'foreign_table_where' => 'ORDER BY sys_language.title',
-					'items'               => array(
-						array(
-							'LLL:EXT:lang/locallang_general.xml:LGL.allLanguages',
-							-1
-						),
-						array(
-							'LLL:EXT:lang/locallang_general.xml:LGL.default_value',
-							0
-						)
-					),
-				),
-			);
-			$defaultColumns['l10n_parent'] = array(
-				'displayCond' => 'FIELD:sys_language_uid:>:0',
-				'exclude'     => 1,
-				'label'       => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-				'config'      => array(
-					'type'                => 'select',
-					'items'               => array(
-						array(
-							'',
-							0
-						),
-					),
-					'foreign_table'       => $tableName,
-					'foreign_table_where' => 'AND ' . $tableName . '.pid=###CURRENT_PID### AND ' . $tableName . '.sys_language_uid IN (-1,0)',
-				),
-			);
-			$defaultColumns['l10n_diffsource'] = array(
-				'config' => array(
-					'type' => 'passthrough',
-				),
-			);
-		}
-
-		// workspaces
-		if (!in_array('workspaces', $excludes)) {
-			$defaultColumns['t3ver_label'] = array(
-				'label'  => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
-				'config' => array(
-					'type' => 'input',
-					'size' => 30,
-					'max'  => 255,
-				)
-			);
-		}
-
-		// enableFields
-		if (!in_array('enableFields', $excludes)) {
-			$defaultColumns['fe_group'] = $GLOBALS['TCA']['tt_content']['columns']['fe_group'];
-			$defaultColumns['editlock'] = array(
-				'exclude'   => 1,
-				'l10n_mode' => 'mergeIfNotBlank',
-				'label'     => 'LLL:EXT:lang/locallang_tca.xml:editlock',
-				'config'    => array(
-					'type' => 'check'
-				)
-			);
-			$defaultColumns['hidden'] = array(
-				'exclude' => 1,
-				'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-				'config'  => array(
-					'type' => 'check',
-				),
-			);
-			$defaultColumns['starttime'] = array(
-				'exclude'   => 1,
-				'l10n_mode' => 'mergeIfNotBlank',
-				'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
-				'config'    => array(
-					'type'     => 'input',
-					'size'     => 13,
-					'max'      => 20,
-					'eval'     => 'datetime',
-					'checkbox' => 0,
-					'default'  => 0,
-					'range'    => array(
-						'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-					),
-				),
-			);
-			$defaultColumns['endtime'] = array(
-				'exclude'   => 1,
-				'l10n_mode' => 'mergeIfNotBlank',
-				'label'     => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
-				'config'    => array(
-					'type'     => 'input',
-					'size'     => 13,
-					'max'      => 20,
-					'eval'     => 'datetime',
-					'checkbox' => 0,
-					'default'  => 0,
-					'range'    => array(
-						'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-					),
-				),
-			);
-		}
+		$dataSet = new DataSet();
+		$dataImplementations = $dataSet->getAllAndExcludeList($excludes);
+		$baseTca = $dataSet->getTcaInformation($dataImplementations, $tableName);
 
 		// extension icon
-		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
-		$tableIconRelPath = ExtensionManagementUtility::extRelPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png';
-		$tableDefaultIcon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
-		$tableIcon = is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIcon;
 
 		// title
 		$fields = array_keys($customFields);
@@ -237,63 +127,64 @@ class SmartObjectInformationService {
 		} catch (\Exception $ex) {
 		}
 
-
-		$columns = ArrayUtility::mergeRecursiveDistinct($defaultColumns, $customFields);
-
-		$ctrl = array(
-			'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
-			'label'         => $labelField,
-			'tstamp'        => 'tstamp',
-			'crdate'        => 'crdate',
-			'cruser_id'     => 'cruser_id',
-			'dividers2tabs' => TRUE,
-			'sortby'        => 'sorting',
-			'delete'        => 'deleted',
-			'searchFields'  => implode(',', $searchFields),
-			'iconfile'      => $tableIcon
-		);
+		$baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
 
 		// items
 		$showitem = array_keys($customFields);
 		if (!in_array('language', $excludes)) {
-			$ctrl['languageField'] = 'sys_language_uid';
-			$ctrl['transOrigPointerField'] = 'l10n_parent';
-			$ctrl['transOrigDiffSourceField'] = 'l10n_diffsource';
 			$showitem[] = '--palette--;LLL:EXT:lang/locallang_general.xlf:LGL.language;language';
 		}
 
 		if (!in_array('workspaces', $excludes)) {
-			$ctrl['versioningWS'] = 2;
-			$ctrl['versioning_followPages'] = TRUE;
-			$ctrl['shadowColumnsForNewPlaceholders'] = 'sys_language_uid,' . $labelField;
-			$ctrl['origUid'] = 't3_origuid';
+			$baseTca['ctrl']['shadowColumnsForNewPlaceholders'] .= ',' . $labelField;
 		}
 		if (!in_array('enableFields', $excludes)) {
-			$ctrl['enablecolumns'] = array(
-				'disabled'  => 'hidden',
-				'starttime' => 'starttime',
-				'endtime'   => 'endtime',
-				'fe_group'  => 'fe_group',
-			);
 			$showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access';
 			$showitem[] = '--palette--;LLL:EXT:cms/locallang_tca.xlf:pages.palettes.access;access';
 		}
 		$showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
 
-		return array(
-			'ctrl'      => $ctrl,
+
+		$overrideTca = array(
+			'ctrl'      => array(
+				'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),
+				'label'         => $labelField,
+				'tstamp'        => 'tstamp',
+				'crdate'        => 'crdate',
+				'cruser_id'     => 'cruser_id',
+				'dividers2tabs' => TRUE,
+				'sortby'        => 'sorting',
+				'delete'        => 'deleted',
+				'searchFields'  => implode(',', $searchFields),
+				'iconfile'      => $this->getTableIcon($modelClassName)
+			),
 			'interface' => array(
-				'showRecordFieldList' => implode(',', array_keys($columns)),
+				'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
 			),
 			'types'     => array(
 				'1' => array('showitem' => implode(',', $showitem)),
 			),
 			'palettes'  => array(
-				'access'   => array('showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'),
-				'language' => array('showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'),
+				'access' => array('showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group'),
 			),
-			'columns'   => $columns,
 		);
+		return ArrayUtility::mergeRecursiveDistinct($baseTca, $overrideTca);
+	}
+
+	/**
+	 * Get the table icon for the given model name
+	 *
+	 * @param string $modelClassName
+	 *
+	 * @return string
+	 */
+	protected function getTableIcon($modelClassName) {
+		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
+		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
+		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
+		$tableIconRelPath = ExtensionManagementUtility::extRelPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png';
+		$tableDefaultIcon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
+		return is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIcon;
 	}
 
 	/**
@@ -392,10 +283,14 @@ class SmartObjectInformationService {
 	 * @return string
 	 */
 	protected function generateCompleteSQLQuery($modelClassName, $tableName, $custom) {
-		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
 		$fields = array();
 		$fields[] = 'uid int(11) NOT NULL auto_increment';
 		$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
+		$fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
+		$fields[] = 'crdate int(11) unsigned DEFAULT \'0\' NOT NULL';
+		$fields[] = 'cruser_id int(11) unsigned DEFAULT \'0\' NOT NULL';
+		$fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
+		$fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
 
 		if ($custom) {
 			foreach ($custom as $field) {
@@ -403,53 +298,19 @@ class SmartObjectInformationService {
 			}
 		}
 
+		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
+		$dataSet = new DataSet();
+		$dataImplementations = $dataSet->getAllAndExcludeList($excludes);
 
-		$fields[] = 'tstamp int(11) unsigned DEFAULT \'0\' NOT NULL';
-		$fields[] = 'crdate int(11) unsigned DEFAULT \'0\' NOT NULL';
-		$fields[] = 'cruser_id int(11) unsigned DEFAULT \'0\' NOT NULL';
-		$fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
-		$fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
+		// add data set fields
+		$fields = array_merge($fields, $dataSet->getDatabaseSqlInformation($dataImplementations, $tableName));
 
-		if (!in_array('enableFields', $excludes)) {
-			$fields[] = 'hidden tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
-			$fields[] = 'starttime int(11) unsigned DEFAULT \'0\' NOT NULL';
-			$fields[] = 'endtime int(11) unsigned DEFAULT \'0\' NOT NULL';
-			$fields[] = 'fe_group varchar(100) DEFAULT \'0\' NOT NULL';
-			$fields[] = 'editlock tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
-		}
-		if (!in_array('workspaces', $excludes)) {
-			/**
-			 * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html
-			 * section: versioningWS
-			 */
-			$fields[] = 't3ver_oid int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_id int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_label varchar(255) DEFAULT \'\' NOT NULL';
-			$fields[] = 't3ver_wsid int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_state tinyint(4) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_stage int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_count int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_tstamp int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3ver_move_id int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 't3_origuid int(11) DEFAULT \'0\' NOT NULL';
-		}
-
-		if (!in_array('language', $excludes)) {
-			$fields[] = 'sys_language_uid int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 'l10n_parent int(11) DEFAULT \'0\' NOT NULL';
-			$fields[] = 'l10n_diffsource mediumblob';
-		}
-
+		// default keys
 		$fields[] = 'PRIMARY KEY (uid)';
 		$fields[] = 'KEY parent (pid)';
 
-		if (!in_array('workspaces', $excludes)) {
-			$fields[] = 'KEY t3ver_oid (t3ver_oid,t3ver_wsid)';
-		}
-
-		if (!in_array('language', $excludes)) {
-			$fields[] = 'KEY language (l10n_parent,sys_language_uid)';
-		}
+		// add data set keys
+		$fields = array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
 
 		return $this->generateSQLQuery($tableName, $fields);
 	}
