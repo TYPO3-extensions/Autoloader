@@ -23,6 +23,8 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 class DummyConverter extends AbstractTypeConverter {
 
 	/**
+	 * Dummy source
+	 *
 	 * @var array<string>
 	 */
 	protected $sourceTypes = array(
@@ -30,11 +32,15 @@ class DummyConverter extends AbstractTypeConverter {
 	);
 
 	/**
+	 * Dummy target
+	 *
 	 * @var string
 	 */
 	protected $targetType = 'NULL';
 
 	/**
+	 * Dummy function that do nothing
+	 *
 	 * @param mixed                                 $source
 	 * @param string                                $targetType
 	 * @param array                                 $childProperties
