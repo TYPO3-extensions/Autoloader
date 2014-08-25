@@ -3,4 +3,4 @@
 Aspect Handling
 ^^^^^^^^^^^^^^^
 
-Details about the Aspect Handling comming soon.
+Details about the Aspect Handling coming soon.

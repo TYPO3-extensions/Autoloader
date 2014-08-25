@@ -1,5 +1,4 @@
 :index:`Static TypoScript`
 ^^^^^^^^^^^^^^^^^
 
-Check and translate:
-Alle setup- und/oder constants-Text-Dateien, welche innerhalb “Configuration/TypoScript” gefunden werden, werden als Static Extension TypoScript geladen. Die Suche geschieht rekursiv weshalb auch Unterordner möglich sind. Gibt es Unterordner, werden diese in den Bezeichner der Registrierung mit aufgenommen.
+These loader loads all setup and/or constants text files, that are in the "Configuration/TypoScript" folder structure and add them as static TypoScript include to TYPO3. The search for this text files is recursively. If there are same files in a deeper folder structure, the folder name will also added to the registration to differ between the different TypoScripts.
