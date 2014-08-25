@@ -1,5 +1,12 @@
 :index:`SmartObjects`
 ^^^^^^^^^^^^
 
-Check and translate:
-SmartObjects stellen die Basis für die ContentObjects und helfen dabei, Modelle schneller zu entwickeln welche in der Persistenz-Schicht abgelegt werden sollen. Die Zentrale Annotation dafür ist “@db”. Steht ein “@db” an einem Model, ist dies ein SmartObject und die Datenbank wird entsprechend der Properties angelegt. Steht ein “@db” an einer Property, wird anhand des Variablen-Typ der Datenbank-Typ ermittelt, sodass die SQL CREATE-TABLE Abfrage vollständig ist. Sowohl mit dem “@db” am Model als auch an der Property, kann entweder die Ziel-Datenbank geändert werden (ContentObjects: “@db tt_content”) oder an den Properties der Datenbank-Typ für komplexe Datentypen bestimmt werden (“@db int(11) NOT NULL”). Die Datenbanken werden mittels eines Slots innerhalb des “SqlExpectedSchemaService” integriert, weshalb es somit keine ext_tables.sql Datei mehr geben muss (ist zusätzlich natürlich weiterhin möglich).
+"SmartObjects" are the base for the content objects and help the developer to speed up the development, if there are persistent models. All smart objects have a "@db" annotation on the given class.
+If the model is mapped to a existing table, you have to add the table name like "@db tt_content". In this case, the create table statement is
+create without the TYPO3 default fields like e.g. tstamp, crdate, sorting.
+
+Furthermore the properties should have also a "@db" annotation, if the property is stored in the database. The field definition determined by the variable type of the property.
+If the variable contains a complex data type, you have to add a proper field definition like "@db int(11) NOT NULL" on the right field.
+
+Note: You do not need any SQL in your ext_tables.sql file, because the smart object management register all smart objects via a slot at the database. But you can still use the ext_tables.sql
+if you have any kind of special tables like mm-relation tables.
