@@ -87,15 +87,15 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 		$replaceConfiguration = array();
 		$afterConfiguration = array();
 		$throwConfiguration = array();
-		$joinpointMethods = array();
+		$joinPointMethods = array();
 
-		foreach ($xClass as $joinpoint => $advices) {
-			$beforeConfiguration[$joinpoint] = $this->getConfigurationArray('before', $joinpoint, $advices);
-			$replaceConfiguration[$joinpoint] = $this->getConfigurationArray('replace', $joinpoint, $advices);
-			$afterConfiguration[$joinpoint] = $this->getConfigurationArray('after', $joinpoint, $advices);
-			$throwConfiguration[$joinpoint] = $this->getConfigurationArray('throw', $joinpoint, $advices);
+		foreach ($xClass as $joinPoint => $advices) {
+			$beforeConfiguration[$joinPoint] = $this->getConfigurationArray('before', $joinPoint, $advices);
+			$replaceConfiguration[$joinPoint] = $this->getConfigurationArray('replace', $joinPoint, $advices);
+			$afterConfiguration[$joinPoint] = $this->getConfigurationArray('after', $joinPoint, $advices);
+			$throwConfiguration[$joinPoint] = $this->getConfigurationArray('throw', $joinPoint, $advices);
 
-			$joinpointMethods[$joinpoint] = $this->getJoinPointMethod($joinpoint, $xClass);
+			$joinPointMethods[$joinPoint] = $this->getJoinPointMethod($joinPoint, $xClass);
 		}
 
 		$xclassTemplate = str_replace('__beforeAspectsConfiguration__', $this->mergeConfigurationArrayForCode($beforeConfiguration), $xclassTemplate);
@@ -103,24 +103,24 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 		$xclassTemplate = str_replace('__afterAspectsConfiguration__', $this->mergeConfigurationArrayForCode($afterConfiguration), $xclassTemplate);
 		$xclassTemplate = str_replace('__throwAspectsConfiguration__', $this->mergeConfigurationArrayForCode($throwConfiguration), $xclassTemplate);
 
-		$xclassTemplate = str_replace('__joinpointMethods__', implode("\n", $joinpointMethods), $xclassTemplate);
+		$xclassTemplate = str_replace('__joinPointMethods__', implode("\n", $joinPointMethods), $xclassTemplate);
 
 		return $xclassTemplate;
 	}
 
 	/**
-	 * Return the Joinpoint method.
+	 * Return the JoinPoint method.
 	 *
-	 * @param string $joinpoint
+	 * @param string $joinPoint
 	 * @param array $xClass
 	 *
 	 * @return string
 	 */
-	protected function getJoinPointMethod($joinpoint, $xClass) {
-		$config = $xClass[$joinpoint];
+	protected function getJoinPointMethod($joinPoint, $xClass) {
+		$config = $xClass[$joinPoint];
 		$code = array();
 
-		$code[] = 'public function ' . $joinpoint . '(';
+		$code[] = 'public function ' . $joinPoint . '(';
 
 		// arguments
 		if (is_array($config['arguments']) && sizeof($config['arguments']) > 0) {
@@ -139,7 +139,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 		$code[] = ') {';
 
 		$code[] = '$args = func_get_args();';
-		$code[] = 'return $this->aspectLogic(\'' . $joinpoint . '\', $args);';
+		$code[] = 'return $this->aspectLogic(\'' . $joinPoint . '\', $args);';
 
 		$code[] = '}';
 
@@ -149,20 +149,20 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	/**
 	 * Creates code for a configuration array like:
 	 * array(
-	 *  {joinpoint} => array(
+	 *  {joinPoint} => array(
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
 	 * @param string $type before, throw, after, replace
-	 * @param string $joinpoint
+	 * @param string $joinPoint
 	 * @param array $advices
 	 *
 	 * @return string
 	 */
-	protected function getConfigurationArray($type, $joinpoint, $advices) {
+	protected function getConfigurationArray($type, $joinPoint, $advices) {
 		$code = array();
 
-		$code[] = '\'' . $joinpoint . '\'' . ' => array(';
+		$code[] = '\'' . $joinPoint . '\'' . ' => array(';
 		foreach ($advices[$type] as $method) {
 			$code[] = 'array(';
 			$code[] = '\'id\' => \'' . GeneralUtility::shortMD5($method['originClassName'] . $method['originMethodName'], 13) . '\',';
@@ -244,16 +244,16 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 					$xClasses[$aspect['aspectClassName']] = array();
 				}
 
-				if (!array_key_exists($aspect['aspectJoinpoint'], $xClasses[$aspect['aspectClassName']])) {
-					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinpoint']] = array();
-					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinpoint']]['arguments'] = $aspect['aspectJoinpointArguments'];
+				if (!array_key_exists($aspect['aspectJoinPoint'], $xClasses[$aspect['aspectClassName']])) {
+					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']] = array();
+					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']]['arguments'] = $aspect['aspectJoinPointArguments'];
 				}
 
-				if (!array_key_exists($aspect['aspectAdvice'], $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinpoint']])) {
-					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinpoint']][$aspect['aspectAdvice']] = array();
+				if (!array_key_exists($aspect['aspectAdvice'], $xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']])) {
+					$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']] = array();
 				}
 
-				$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinpoint']][$aspect['aspectAdvice']][] = array(
+				$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = array(
 					'originClassName' => $aspect['originClassName'],
 					'originMethodName' => $aspect['originMethodName']
 				);

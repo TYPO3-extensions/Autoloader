@@ -21,7 +21,7 @@ class __classname__ extends __extendedClass__ {
 	 * Configuration Array for before-aspects.
 	 *
 	 * array(
-	 *  {joinpoint} => array(
+	 *  {joinPoint} => array(
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
@@ -33,7 +33,7 @@ class __classname__ extends __extendedClass__ {
 	 * Configuration Array for replace-aspects.
 	 *
 	 * array(
-	 *  {joinpoint} => array(
+	 *  {joinPoint} => array(
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
@@ -45,7 +45,7 @@ class __classname__ extends __extendedClass__ {
 	 * Configuration Array for after-aspects.
 	 *
 	 * array(
-	 *  {joinpoint} => array(
+	 *  {joinPoint} => array(
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
@@ -57,7 +57,7 @@ class __classname__ extends __extendedClass__ {
 	 * Configuration Array for throw-aspects.
 	 *
 	 * array(
-	 *  {joinpoint} => array(
+	 *  {joinPoint} => array(
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
@@ -65,17 +65,17 @@ class __classname__ extends __extendedClass__ {
 	 */
 	protected $throw = __throwAspectsConfiguration__;
 
-	__joinpointMethods__
+	__joinPointMethods__
 
 	/**
-	 * @param $joinpoint
+	 * @param $joinPoint
 	 * @param $args
 	 *
 	 * @return mixed
 	 *
 	 * @throws \Exception
 	 */
-	protected function aspectLogic($joinpoint, $args) {
+	protected function aspectLogic($joinPoint, $args) {
 		$arguments = array(
 			'args' => $args,
 			'result' => NULL
@@ -84,33 +84,33 @@ class __classname__ extends __extendedClass__ {
 		$return = NULL;
 		try {
 			// Aspect: before
-			$arguments = $this->before($joinpoint, $arguments);
+			$arguments = $this->before($joinPoint, $arguments);
 
 			// Aspect: replace
-			$arguments = $this->replace($joinpoint, $arguments);
+			$arguments = $this->replace($joinPoint, $arguments);
 
 			// Aspect: after
-			$arguments = $this->after($joinpoint, $arguments);
+			$arguments = $this->after($joinPoint, $arguments);
 
 		} catch (\Exception $e) {
 			// Aspect: throws
-			$arguments = $this->throws($joinpoint, $arguments, $e);
+			$arguments = $this->throws($joinPoint, $arguments, $e);
 		}
 
 		return $arguments['result'];
 	}
 
 	/**
-	 * Work the 'before' aspect. on the given joinpoint.
+	 * Work the 'before' aspect. on the given joinPoint.
 	 *
-	 * @param string $joinpoint joinpoint in the class
-	 * @param array $arguments arguments for the method defined by the joinpoint
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
 	 *
 	 * @return array $arguments
 	 */
-	protected function before($joinpoint, $arguments) {
-		if (array_key_exists($joinpoint, $this->before)) {
-			$functionStack = $this->before[strtolower($joinpoint)];
+	protected function before($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->before)) {
+			$functionStack = $this->before[strtolower($joinPoint)];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
@@ -121,16 +121,16 @@ class __classname__ extends __extendedClass__ {
 	}
 
 	/**
-	 * Work the 'after' aspect. on the given joinpoint.
+	 * Work the 'after' aspect. on the given joinPoint.
 	 *
-	 * @param string $joinpoint joinpoint in the class
-	 * @param array $arguments arguments for the method defined by the joinpoint
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
 	 *
 	 * @return array $arguments
 	 */
-	protected function after($joinpoint, $arguments) {
-		if (array_key_exists($joinpoint, $this->after)) {
-			$functionStack = $this->after[strtolower($joinpoint)];
+	protected function after($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->after)) {
+			$functionStack = $this->after[strtolower($joinPoint)];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
@@ -141,26 +141,26 @@ class __classname__ extends __extendedClass__ {
 	}
 
 	/**
-	 * Work the 'replace' aspect. on the given joinpoint.
+	 * Work the 'replace' aspect. on the given joinPoint.
 	 * If the replace aspect is called, the original method is not used anymore!
 	 *
-	 * @param string $joinpoint joinpoint in the class
-	 * @param array $arguments arguments for the method defined by the joinpoint
+	 * @param string $joinPoint joinPoint in the class
+	 * @param array $arguments arguments for the method defined by the joinPoint
 	 *
 	 * @return array $arguments
 	 */
-	protected function replace($joinpoint, $arguments) {
-		if (array_key_exists($joinpoint, $this->replace) && $this->replace[strtolower($joinpoint)]) {
-			$functionStack = $this->replace[strtolower($joinpoint)];
+	protected function replace($joinPoint, $arguments) {
+		if (array_key_exists($joinPoint, $this->replace) && $this->replace[strtolower($joinPoint)]) {
+			$functionStack = $this->replace[strtolower($joinPoint)];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
 			}
 		} else {
 			if (array_key_exists('args', $arguments)) {
-				$arguments['result'] = call_user_func_array('parent::' . $joinpoint, $arguments['args']);
+				$arguments['result'] = call_user_func_array('parent::' . $joinPoint, $arguments['args']);
 			} else {
-				$arguments['result'] = call_user_func_array('parent::' . $joinpoint, array());
+				$arguments['result'] = call_user_func_array('parent::' . $joinPoint, array());
 			}
 		}
 
@@ -168,19 +168,19 @@ class __classname__ extends __extendedClass__ {
 	}
 
 	/**
-	 * Work the 'throw' aspect. on the given joinpoint.
+	 * Work the 'throw' aspect. on the given joinPoint.
 	 *
-	 * @param string     $joinpoint joinpoint in the class
-	 * @param array      $arguments arguments for the method defined by the joinpoint
+	 * @param string     $joinPoint joinPoint in the class
+	 * @param array      $arguments arguments for the method defined by the joinPoint
 	 * @param \Exception $e
 	 *
 	 * @return array $arguments
 	 *
 	 * @throws \Exception
 	 */
-	protected function throws($joinpoint, $arguments, \Exception $e) {
-		if (array_key_exists($joinpoint, $this->throw)) {
-			$functionStack = $this->throw[strtolower($joinpoint)];
+	protected function throws($joinPoint, $arguments, \Exception $e) {
+		if (array_key_exists($joinPoint, $this->throw)) {
+			$functionStack = $this->throw[strtolower($joinPoint)];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);

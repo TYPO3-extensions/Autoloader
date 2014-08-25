@@ -19,15 +19,15 @@ namespace HDNET\AutoloaderAspect\Aspect;
 class DocumentTemplate {
 
 	/**
-	 * Change the method-parameter BEFORE the joinpoint (original method) is called.
+	 * Change the method-parameter BEFORE the joinPoint (original method) is called.
 	 *
-	 * @param object $object class of the joinpoint
-	 * @param array  $params arguments of the joinpoint
+	 * @param object $object class of the joinPoint
+	 * @param array  $params arguments of the joinPoint
 	 *
 	 * @return array
 	 *
 	 * @aspectClass \TYPO3\CMS\Backend\Template\DocumentTemplate
-	 * @aspectJoinpoint header
+	 * @aspectJoinPoint header
 	 * @aspectAdvice    before
 	 */
 	public function headerBefore($object, $params) {
@@ -36,15 +36,15 @@ class DocumentTemplate {
 	}
 
 	/**
-	 * Change the method-parameter BEFORE the joinpoint (original method) is called.
+	 * Change the method-parameter BEFORE the joinPoint (original method) is called.
 	 *
-	 * @param object $object class of the joinpoint
-	 * @param array  $params arguments of the joinpoint
+	 * @param object $object class of the joinPoint
+	 * @param array  $params arguments of the joinPoint
 	 *
 	 * @return array
 	 *
 	 * @aspectClass \TYPO3\CMS\Backend\Template\DocumentTemplate
-	 * @aspectJoinpoint header
+	 * @aspectJoinPoint header
 	 * @aspectAdvice    before
 	 */
 	public function headerBefore2($object, $params) {
@@ -53,15 +53,15 @@ class DocumentTemplate {
 	}
 
 	/**
-	 * Change the method-result After the joinpoint (original method) is called.
+	 * Change the method-result After the joinPoint (original method) is called.
 	 *
-	 * @param object $object class of the joinpoint
-	 * @param array  $params arguments of the joinpoint
+	 * @param object $object class of the joinPoint
+	 * @param array  $params arguments of the joinPoint
 	 *
 	 * @return array
 	 *
 	 * @aspectClass \TYPO3\CMS\Backend\Template\DocumentTemplate
-	 * @aspectJoinpoint header
+	 * @aspectJoinPoint header
 	 * @aspectAdvice    after
 	 */
 	public function headerAfter($object, $params) {

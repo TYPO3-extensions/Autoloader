@@ -25,11 +25,11 @@ class RecordList {
 	/**
 	 * Called BEFORE the main-method and add a FlashMessage to the page.
 	 *
-	 * @param object $object class of the joinpoint
-	 * @param array  $params arguments of the joinpoint
+	 * @param object $object class of the joinPoint
+	 * @param array  $params arguments of the joinPoint
 	 *
 	 * @aspectClass \TYPO3\CMS\Recordlist\RecordList
-	 * @aspectJoinpoint main
+	 * @aspectJoinPoint main
 	 * @aspectAdvice    before
 	 */
 	public function mainBefore($object, $params) {
@@ -49,11 +49,11 @@ class RecordList {
 	/**
 	 * Called BEFORE the main-method and add a FlashMessage to the page.
 	 *
-	 * @param object $object class of the joinpoint
-	 * @param array  $params arguments of the joinpoint
+	 * @param object $object class of the joinPoint
+	 * @param array  $params arguments of the joinPoint
 	 *
 	 * @aspectClass \TYPO3\CMS\Recordlist\RecordList
-	 * @aspectJoinpoint main
+	 * @aspectJoinPoint main
 	 * @aspectAdvice    after
 	 */
 	public function mainAfter($object, $params) {

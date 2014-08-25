@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Loading Aspect
  *
  * Aspects available: before, replace, after, throw
- * Used Tags: @aspectClass, @aspectJoinpoint, @aspectAdvice
+ * Used Tags: @aspectClass, @aspectJoinPoint, @aspectAdvice
  *
  * @package    Autoloader
  * @subpackage Loader
@@ -58,15 +58,15 @@ class Aspect implements LoaderInterface {
 				/** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
 				$methodTags = $methodReflection->getTagsValues();
 
-				if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinpoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
+				if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinPoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
 					$aspectClassName = trim($methodTags['aspectClass'][0], '\\');
-					$aspectJoinpoint = trim($methodTags['aspectJoinpoint'][0]);
-					$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinpoint);
+					$aspectJoinPoint = trim($methodTags['aspectJoinPoint'][0]);
+					$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
 
 					$aspects[] = array(
 						'aspectClassName'           => $aspectClassName,
-						'aspectJoinpoint'           => $aspectJoinpoint,
-						'aspectJoinpointArguments'  => $aspectJpArguments,
+						'aspectJoinPoint'           => $aspectJoinPoint,
+						'aspectJoinPointArguments'  => $aspectJpArguments,
 						'aspectAdvice'              => trim($methodTags['aspectAdvice'][0]),
 						'originClassName'           => $aspectClass,
 						'originMethodName'          => $methodReflection->getName()
@@ -82,13 +82,13 @@ class Aspect implements LoaderInterface {
 	 * Get the Arguments from the original method via Reflection.
 	 *
 	 * @param $aspectClassName
-	 * @param $aspectJoinpoint
+	 * @param $aspectJoinPoint
 	 *
 	 * @return array
 	 */
-	protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinpoint) {
+	protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint) {
 		$reflectionClass = new \ReflectionClass($aspectClassName);
-		$methodReflection =  $reflectionClass->getMethod($aspectJoinpoint);
+		$methodReflection =  $reflectionClass->getMethod($aspectJoinPoint);
 
 		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
 		$methodArguments = $methodReflection->getParameters();
