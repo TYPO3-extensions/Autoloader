@@ -9,6 +9,11 @@
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
-	'title'              => 'Autoloader (Xclass - Check the default list view)',
-	'description'        => '',
+	'title'       => 'Autoloader (Xclass - Check the default list view)',
+	'description' => '',
+	'constraints' => array(
+		'depends' => array(
+			'autoloader' => '1.1.0-9.9.9',
+		),
+	),
 );

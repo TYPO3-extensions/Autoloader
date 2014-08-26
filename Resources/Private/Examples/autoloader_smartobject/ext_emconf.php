@@ -9,6 +9,11 @@
 
 /** @var $_EXTKEY string */
 $EM_CONF[$_EXTKEY] = array(
-	'title'              => 'Autoloader (Smartobject - You should create Test records of an smart object)',
-	'description'        => '',
+	'title'       => 'Autoloader (Smart object - You should create test records of an smart object)',
+	'description' => '',
+	'constraints' => array(
+		'depends' => array(
+			'autoloader' => '1.1.0-9.9.9',
+		),
+	),
 );
