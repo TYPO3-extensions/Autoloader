@@ -74,7 +74,7 @@ class ContentObjects implements LoaderInterface {
 				$icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
 			}
 
-			$entry =  array(
+			$entry = array(
 				'fieldConfiguration' => implode(',', $fieldConfiguration),
 				'modelClass'         => $className,
 				'model'              => $model,
@@ -91,7 +91,29 @@ class ContentObjects implements LoaderInterface {
 			$loaderInformation[$key] = $entry;
 		}
 
+		$this->checkAndCreateDummyTemplates($loaderInformation, $loader);
+
 		return $loaderInformation;
+	}
+
+	/**
+	 * Check if the templates are exist and create a dummy, if there is no valid template
+	 *
+	 * @param array  $loaderInformation
+	 * @param Loader $loader
+	 */
+	protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader) {
+		foreach ($loaderInformation as $configuration) {
+			$templatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
+			$absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
+			if (!file_exists($absoluteTemplatePath)) {
+				$dir = dirname($absoluteTemplatePath) . '/';
+				if (!is_dir($dir)) {
+					GeneralUtility::mkdir_deep($dir);
+				}
+				GeneralUtility::writeFile($absoluteTemplatePath, 'Use object to get access to your domain model: <f:debug>{object}</f:debug>');
+			}
+		}
 	}
 
 	/**
@@ -125,7 +147,7 @@ class ContentObjects implements LoaderInterface {
 		foreach ($classReflection->getProperties() as $property) {
 			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
 			if ($property->getDeclaringClass()
-			             ->getName() === $classReflection->getName()
+					->getName() === $classReflection->getName()
 			) {
 				$properties[] = $property->getName();
 			}
@@ -228,8 +250,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
                 vendorName = ' . $loader->getVendorName() . '
             }
         }
-                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content')
-			, 43);
+                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content'), 43);
 		}
 
 		return NULL;
