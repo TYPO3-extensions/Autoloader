@@ -1,4 +1,7 @@
 .. index:: ! Aspect
+
+..  _aspect:
+
 Aspect
 ^^^^^^
 

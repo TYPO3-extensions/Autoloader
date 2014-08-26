@@ -17,6 +17,7 @@ Here we describe the different implemented Loader.
 	SmartObjects
 	StaticTyposcript
 	TcaFiles
+	TypeConverter
 	Xclass
 
 

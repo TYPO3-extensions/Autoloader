@@ -6,16 +6,17 @@ This extension implements a framework for autoload mechanisms for 3rd party exte
 Loader
 """"""
 
-- Alternative Implementations
-- Aspect
-- Command Controller
-- Content Object
-- Extension ID (eID)
-- Extension TypoScript Setup
-- Flex Forms
-- Hooks
-- Slots
-- Smart Objects
-- Static TypoScript
-- TCA Files
-- Xclass
+- :ref:`alternative-implementations`
+- :ref:`aspect`
+- :ref:`command-controller`
+- :ref:`content-objects`
+- :ref:`extension-id`
+- :ref:`extension-typoscript`
+- :ref:`flex-forms`
+- :ref:`hooks`
+- :ref:`slots`
+- :ref:`smart-objects`
+- :ref:`static-typoscript`
+- :ref:`tca-files`
+- :ref:`type-converter`
+- :ref:`xclass`

@@ -1,6 +1,8 @@
-:index:`TCA Files`
+.. index:: ! TCA Files
+
+.. _tca-files:
+
+TCA Files
 ^^^^^^^^^
 
-Check and translate:
-Dieser Loader durchläuft alle SmartObjects und erzeugt eine TCA Datei, für die welche eine brauchen aber noch keine haben.
-Dabei wird das TCA auf Basis des Model “vorgebaut” und kann durch den Entwickler überschrieben werden.
+This loader check all smart objects and create the right TCA folder and file structure. The TCA is build on a smart object manager preset. The developer can customize this configuration in the different TCA files.

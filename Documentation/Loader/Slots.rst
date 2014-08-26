@@ -1,4 +1,8 @@
-:index:`Slots`
+.. index:: ! Slots
+
+.. _slots:
+
+Slots
 ^^^^^
 
 The "Slots" Loader scans the "Classes/Slots" folder, to connect the given class methods to specific signals. All class will be checked. The slot methods have to annotate with "@signalClass"

@@ -1,4 +1,8 @@
-:index:`Hooks`
+.. index:: ! Hooks
+
+.. _hooks:
+
+Hooks
 ^^^^^
 
 Hooks are located in the folder "Classes/Hooks". The loader scan the directory and check the classes via PHP reflection against certain annotations. The keyword is "@hook" and the class or method (based on the target hook) have to be marked with this keyword. If the keyword ist part of the class PHPDoc, the hook register the class name and if the annotation is part of a method PHPDoc the autoloader will register the method (TYPO3 syntax class name -> method name) to the given hook.
