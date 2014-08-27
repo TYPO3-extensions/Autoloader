@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader;
 
+use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -121,30 +122,45 @@ class SmartObjectManager implements SingletonInterface {
 	static public function checkAndCreateTcaInformation() {
 		$register = SmartObjectRegister::getRegister();
 
+		$defaultTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Php/Templates/TcaFiles/Default.tmpl'));
+		$overrideTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Php/Templates/TcaFiles/Override.tmpl'));
+		$search = array(
+			'__modelName__',
+			'__tableName__',
+			'__extensionKey__',
+		);
+
 		foreach ($register as $model) {
-			if (strpos($model, '\\Content\\') !== FALSE) {
-				continue;
-			}
 			$extensionKey = self::getExtensionKeyByModel($model);
-			$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model) ? : ModelUtility::getTableNameByModelName($model);
-			$tcaFileName = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/' . $tableName . '.php';
+			$basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
+
+			// ModelUtility::getTableNameByModelReflectionAnnotation($model)
+			if (strstr($model, '\\Content\\') !== FALSE) {
+				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
+				$tcaFileName = $basePath . 'Overrides/' . $tableName . '.php';
+				$template = $overrideTemplate;
+
+				// disabled
+				// review SmartObjects->prepareLoader and
+				// review SmartObjects->loadExtensionTables
+				continue;
+
+			} else {
+				#$tableName = ModelUtility::getTableNameByModelName($model);
+				$tableName = ModelUtility::getTableName($model);
+				$tcaFileName = $basePath . $tableName . '.php';
+				$template = $defaultTemplate;
+			}
 
 			if (!is_file($tcaFileName)) {
-				$dir = dirname($tcaFileName);
-				if (!is_dir($dir)) {
-					GeneralUtility::mkdir_deep($dir);
-				}
+				$replace = array(
+					str_replace('\\', '\\\\', $model),
+					$tableName,
+					$extensionKey
+				);
 
-				$content = '<?php
-
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation(\'' . str_replace('\\', '\\\\', $model) . '\');
-
-$custom = array();
-
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);';
-
-				GeneralUtility::writeFile($tcaFileName, $content);
-
+				$content = str_replace($search, $replace, $template);
+				FileUtility::writeFileAndCreateFolder($tcaFileName, $content);
 			}
 		}
 	}

@@ -88,7 +88,6 @@ class SmartObjects implements LoaderInterface {
 				$GLOBALS['TCA'][$tableName]['columns'] = ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $configuration['additionalTca']);
 			}
 		}
-
 		return NULL;
 	}
 

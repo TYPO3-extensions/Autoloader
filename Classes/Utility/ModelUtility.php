@@ -9,6 +9,8 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\SmartObjectManager;
+use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
@@ -137,6 +139,39 @@ class ModelUtility {
 		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
 		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 		return $informationService->getTcaInformation($modelClassName);
+	}
+
+	/**
+	 * Get the default TCA incl. smart object fields.
+	 * Add missing fields to the existing TCA structure.
+	 *
+	 * @param string $extensionKey
+	 * @param string $tableName
+	 *
+	 * @return array
+	 */
+	static public function getTcaOverrideInformation($extensionKey, $tableName) {
+		$return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : array();
+		$classNames = SmartObjectRegister::getRegister();
+
+		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+
+		foreach ($classNames as $className) {
+			if (SmartObjectManager::getExtensionKeyByModel($className) !== $extensionKey) {
+				continue;
+			}
+			if (ModelUtility::getTableNameByModelReflectionAnnotation($className) == $tableName) {
+				$additionalTca = $informationService->getCustomModelFieldTca($className);
+				foreach ($additionalTca as $fieldName => $configuration) {
+					if (!isset($return['columns'][$fieldName])) {
+						$return['columns'][$fieldName] = $configuration;
+					}
+				}
+			}
+		}
+
+		return $return;
 	}
 
 }
