@@ -40,31 +40,40 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	public function processData() {
 		$aspectCollection = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'];
 
-		$xClasses = $this->prepareConfiguration($aspectCollection);
-
-		// Cache the template file
-		if (!self::$xclassTemplate) {
-			$xclassTemplatePath = GeneralUtility::getFileAbsFileName(
-				ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Php/Templates/Xclass/Aspect.tmpl'
-			);
-			self::$xclassTemplate = GeneralUtility::getUrl($xclassTemplatePath);
+		if(!is_array($aspectCollection)) {
+			return;
 		}
 
+		$xClasses = $this->prepareConfiguration($aspectCollection);
+
+		$this->loadXclassTemplate();
+
+		/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
+		$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('autoloader');
 		foreach ($xClasses as $xClassName => $xClass) {
 			// Register the Xclass in TYPO3
 			$this->registerXclass($xClassName);
 
 			// get the Cache Identifier
 			$cacheIdentifier = $this->getCacheIdentifier($xClassName);
-
-			/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-			$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('autoloader');
 			if (!$cache->has($cacheIdentifier)) {
 				$code = $this->generateXclassCode($xClassName, $xClass, self::$xclassTemplate);
 				// !! ;) !! in the xclass-template ist a <?php string for better development
 				$code = str_replace('<?php', '', $code);
 				$cache->set($cacheIdentifier, $code);
 			}
+		}
+	}
+
+	/**
+	 * Load the xclass template and cache it in a local property
+	 */
+	protected function loadXclassTemplate(){
+		if (!self::$xclassTemplate) {
+			$xclassTemplatePath = GeneralUtility::getFileAbsFileName(
+				ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Php/Templates/Xclass/Aspect.tmpl'
+			);
+			self::$xclassTemplate = GeneralUtility::getUrl($xclassTemplatePath);
 		}
 	}
 
@@ -236,7 +245,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 *
 	 * @return array
 	 */
-	protected function prepareConfiguration($aspectCollection) {
+	protected function prepareConfiguration(array $aspectCollection) {
 		$xClasses = array();
 		foreach ($aspectCollection as $aspects) {
 			foreach ($aspects as $aspect) {
