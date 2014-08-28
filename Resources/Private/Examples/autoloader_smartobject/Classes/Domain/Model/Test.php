@@ -3,7 +3,7 @@
  * Test Model
  *
  * @category   Extension
- * @package    AutoloaderSmart
+ * @package    AutoloaderSmartobject
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -14,7 +14,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Test Model
  *
- * @package    AutoloaderSmart
+ * @package    AutoloaderSmartobject
  * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db

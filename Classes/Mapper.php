@@ -82,6 +82,7 @@ class Mapper implements SingletonInterface {
 			'DateTime',
 			'FileReference',
 			'FileReferenceObjectStorage',
+			'ObjectStorage',
 			'Int',
 			'String',
 		);
