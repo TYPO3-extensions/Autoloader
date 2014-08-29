@@ -12,7 +12,6 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
@@ -42,7 +41,9 @@ class ContentObjects implements LoaderInterface {
 	 */
 	public function prepareLoader(Loader $loader, $type) {
 		$loaderInformation = array();
-		$smartObjectInformationService = new SmartObjectInformationService();
+
+		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
@@ -83,7 +84,7 @@ class ContentObjects implements LoaderInterface {
 
 			if ($type === LoaderInterface::EXT_TABLES) {
 				if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
-					$entry['additionalTca'] = $smartObjectInformationService->getCustomModelFieldTca($className);
+					$entry['additionalTca'] = $informationService->getCustomModelFieldTca($className);
 					$entry['tableName'] = ModelUtility::getTableName($className);
 				}
 			}

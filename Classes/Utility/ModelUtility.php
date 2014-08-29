@@ -9,7 +9,6 @@
 
 namespace HDNET\Autoloader\Utility;
 
-use HDNET\Autoloader\Service\SmartObjectInformationService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
@@ -136,7 +135,8 @@ class ModelUtility {
 	 * @return array
 	 */
 	static public function getTcaInformation($modelClassName) {
-		$informationService = new SmartObjectInformationService();
+		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 		return $informationService->getTcaInformation($modelClassName);
 	}
 

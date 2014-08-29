@@ -110,7 +110,7 @@ class SmartObjectInformationService {
 
 		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
 
-		$dataSet = new DataSet();
+		$dataSet = $this->getDataSet();
 		$dataImplementations = $dataSet->getAllAndExcludeList($excludes);
 		$baseTca = $dataSet->getTcaInformation($dataImplementations, $tableName);
 
@@ -299,7 +299,7 @@ class SmartObjectInformationService {
 		}
 
 		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
-		$dataSet = new DataSet();
+		$dataSet = $this->getDataSet();
 		$dataImplementations = $dataSet->getAllAndExcludeList($excludes);
 
 		// add data set fields
@@ -313,5 +313,14 @@ class SmartObjectInformationService {
 		$fields = array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
 
 		return $this->generateSQLQuery($tableName, $fields);
+	}
+
+	/**
+	 * Get the data set object
+	 *
+	 * @return \HDNET\Autoloader\DataSet
+	 */
+	protected function getDataSet(){
+		return GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet');
 	}
 }

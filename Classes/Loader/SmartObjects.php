@@ -13,7 +13,6 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
@@ -47,7 +46,8 @@ class SmartObjects implements LoaderInterface {
 		if (!is_dir($modelPath)) {
 			return $configuration;
 		}
-		$informationService = new SmartObjectInformationService();
+		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 
 		foreach ($models as $model) {

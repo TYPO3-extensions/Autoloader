@@ -29,7 +29,8 @@ class SmartObjectManager implements SingletonInterface {
 	 * @return string
 	 */
 	static public function getSmartObjectRegisterSql() {
-		$informationService = new Service\SmartObjectInformationService();
+		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 		$register = SmartObjectRegister::getRegister();
 
 		$output = array();
