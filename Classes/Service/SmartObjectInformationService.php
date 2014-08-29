@@ -58,7 +58,7 @@ class SmartObjectInformationService {
 	public function getCustomModelFieldTca($modelClassName, &$searchFields = array()) {
 		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
 		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-		$tableName = ModelUtility::getTableNameByModelName($modelClassName);
+		$tableName = ModelUtility::getTableName($modelClassName);
 		$customFieldInfo = $this->getCustomModelFields($modelClassName);
 		$searchFields = array();
 		$customFields = array();
@@ -70,7 +70,6 @@ class SmartObjectInformationService {
 			} catch (\Exception $ex) {
 				$label = $info['name'];
 			}
-
 
 			/** @var Mapper $mapper */
 			$mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');

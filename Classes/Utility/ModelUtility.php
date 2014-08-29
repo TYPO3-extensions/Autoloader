@@ -29,8 +29,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableName($modelClassName) {
-		$tableName = self::getTableNameByModelReflectionAnnotation($modelClassName) ? : self::getTableNameByModelName($modelClassName);
-		return $tableName;
+		return self::getTableNameByModelReflectionAnnotation($modelClassName) ? : self::getTableNameByModelName($modelClassName);
 	}
 
 	/**
