@@ -11,3 +11,6 @@ Summarize: Create a domain model, create a template, maybe run database compare,
 
 .. note::
 	These are real content elements and no flex form elements like in many other extensions.
+
+.. note::
+	Please also use the TcaFiles loader to create the right base TCA files for the first content objects.

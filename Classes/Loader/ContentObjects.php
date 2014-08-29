@@ -108,11 +108,7 @@ class ContentObjects implements LoaderInterface {
 			$templatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
 			$absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
 			if (!file_exists($absoluteTemplatePath)) {
-				$dir = dirname($absoluteTemplatePath) . '/';
-				if (!is_dir($dir)) {
-					GeneralUtility::mkdir_deep($dir);
-				}
-				GeneralUtility::writeFile($absoluteTemplatePath, 'Use object to get access to your domain model: <f:debug>{object}</f:debug>');
+				FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, 'Use object to get access to your domain model: <f:debug>{object}</f:debug>');
 			}
 		}
 	}

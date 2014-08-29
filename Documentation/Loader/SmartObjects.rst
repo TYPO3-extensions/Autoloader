@@ -14,3 +14,6 @@ If the variable contains a complex data type, you have to add a proper field def
 
 .. note::
 	You do not need any SQL in your ext_tables.sql file, because the smart object management register all smart objects via a slot at the database. But you can still use the ext_tables.sql if you have any kind of special tables like mm-relation tables.
+
+.. note::
+	Please also use the TcaFiles loader to create the right base TCA files for the first content objects.

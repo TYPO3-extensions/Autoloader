@@ -22,6 +22,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FileUtility {
 
 	/**
+	 * Write a file and create the target folder, if the folder do not exists
+	 *
+	 * @param string $absoluteFileName
+	 * @param string $content
+	 *
+	 * @return bool
+	 */
+	static function writeFileAndCreateFolder($absoluteFileName, $content) {
+		$dir = dirname($absoluteFileName) . '/';
+		if (!is_dir($dir)) {
+			GeneralUtility::mkdir_deep($dir);
+		}
+		return GeneralUtility::writeFile($absoluteFileName, $content);
+	}
+
+	/**
 	 * Get all base file names in the given directory with the given file extension
 	 * Check also if the directory exists
 	 *
