@@ -28,7 +28,7 @@ class Tca {
 	 * @return string
 	 */
 	public function objectStorageInfoField($configuration, $formEngine) {
-		$infoField = '<div style="padding: 5px; border-style: solid; border-color: red; border-width: 2px;">';
+		$infoField = '<div style="padding: 5px; border: 2px solid red;">';
 		$infoField .= '<strong>Please configure your TCA for this field.</strong><br/>';
 		$infoField .= 'You see this message because you have NOT configured the TCA.';
 		$infoField .= '<ul><li>table: <em>' . $configuration['table'] . '</em></li>';
@@ -38,7 +38,7 @@ class Tca {
 		$infoField .= '<li>foreign table: <em>Configuration/TCA/Overrides/' . $configuration['table'] . '.php</em></li></ul>';
 		$infoField .= '</li></ul>';
 		$infoField .= 'Common foreign tables are <em>tt_content</em>, <em>tt_address</em>, &hellip;.<br/><br/>';
-		$infoField .= 'Infos about proper TCA configuration as ';
+		$infoField .= 'Information about proper TCA configuration as ';
 		$infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Group/Index.html" target="_blank">group</a>, ';
 		$infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Inline/Index.html" target="_blank">inline</a> or ';
 		$infoField .= '<a href="http://docs.typo3.org/typo3cms/TCAReference/Reference/Columns/Select/Index.html" target="_blank">select</a>';
