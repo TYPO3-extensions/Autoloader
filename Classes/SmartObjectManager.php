@@ -122,8 +122,10 @@ class SmartObjectManager implements SingletonInterface {
 	static public function checkAndCreateTcaInformation() {
 		$register = SmartObjectRegister::getRegister();
 
-		$defaultTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/Default.tmpl'));
-		$overrideTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/Override.tmpl'));
+		$baseTemplatePath = ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/');
+		$defaultTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Default.tmpl');
+		$overrideTemplate = GeneralUtility::getUrl($baseTemplatePath . 'Override.tmpl');
+
 		$search = array(
 			'__modelName__',
 			'__tableName__',
@@ -134,20 +136,12 @@ class SmartObjectManager implements SingletonInterface {
 			$extensionKey = self::getExtensionKeyByModel($model);
 			$basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
 
-			// ModelUtility::getTableNameByModelReflectionAnnotation($model)
-			if (strstr($model, '\\Content\\') !== FALSE) {
+			if (ModelUtility::getTableNameByModelReflectionAnnotation($model)) {
 				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
 				$tcaFileName = $basePath . 'Overrides/' . $tableName . '.php';
 				$template = $overrideTemplate;
-
-				// disabled
-				// review SmartObjects->prepareLoader and
-				// review SmartObjects->loadExtensionTables
-				continue;
-
 			} else {
-				#$tableName = ModelUtility::getTableNameByModelName($model);
-				$tableName = ModelUtility::getTableName($model);
+				$tableName = ModelUtility::getTableNameByModelName($model);
 				$tcaFileName = $basePath . $tableName . '.php';
 				$template = $defaultTemplate;
 			}

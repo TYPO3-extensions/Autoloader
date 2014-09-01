@@ -13,14 +13,11 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 
 /**
  * Loading SmartObjects
@@ -47,23 +44,12 @@ class SmartObjects implements LoaderInterface {
 		if (!is_dir($modelPath)) {
 			return $configuration;
 		}
-		/** @var SmartObjectInformationService $informationService */
-		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
-		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 
+		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 		foreach ($models as $model) {
 			$className = $loader->getVendorName() . '\\' . ucfirst(GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey())) . '\\Domain\\Model\\' . $model;
 			if (SmartObjectManager::isSmartObjectClass($className)) {
-				$entry = array(
-					'className' => $className,
-				);
-				if ($type === LoaderInterface::EXT_TABLES) {
-					if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
-						$entry['additionalTca'] = $informationService->getCustomModelFieldTca($className);
-						$entry['tableName'] = ModelUtility::getTableName($className);
-					}
-				}
-				$configuration[] = $entry;
+				$configuration[] = $className;
 			}
 		}
 		// already add for the following processes
@@ -82,13 +68,6 @@ class SmartObjects implements LoaderInterface {
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		$this->addClassesToSmartRegister($loaderInformation);
-
-		foreach ($loaderInformation as $configuration) {
-			if ($configuration['additionalTca']) {
-				$tableName = $configuration['tableName'];
-				$GLOBALS['TCA'][$tableName]['columns'] = ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $configuration['additionalTca']);
-			}
-		}
 		return NULL;
 	}
 
@@ -112,7 +91,7 @@ class SmartObjects implements LoaderInterface {
 	 */
 	protected function addClassesToSmartRegister($loaderInformation) {
 		foreach ($loaderInformation as $configuration) {
-			SmartObjectRegister::register($configuration['className']);
+			SmartObjectRegister::register($configuration);
 		}
 	}
 }

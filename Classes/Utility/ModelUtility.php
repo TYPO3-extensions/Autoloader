@@ -162,7 +162,7 @@ class ModelUtility {
 			if (SmartObjectManager::getExtensionKeyByModel($className) !== $extensionKey) {
 				continue;
 			}
-			if (self::getTableNameByModelReflectionAnnotation($className) == $tableName) {
+			if (self::getTableNameByModelReflectionAnnotation($className) === $tableName) {
 				$additionalTca = $informationService->getCustomModelFieldTca($className);
 				foreach ($additionalTca as $fieldName => $configuration) {
 					if (!isset($return['columns'][$fieldName])) {
