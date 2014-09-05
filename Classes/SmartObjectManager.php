@@ -122,8 +122,8 @@ class SmartObjectManager implements SingletonInterface {
 	static public function checkAndCreateTcaInformation() {
 		$register = SmartObjectRegister::getRegister();
 
-		$defaultTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Php/Templates/TcaFiles/Default.tmpl'));
-		$overrideTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Php/Templates/TcaFiles/Override.tmpl'));
+		$defaultTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/Default.tmpl'));
+		$overrideTemplate = GeneralUtility::getUrl(ExtensionManagementUtility::extPath('autoloader', 'Resources/Private/Templates/TcaFiles/Override.tmpl'));
 		$search = array(
 			'__modelName__',
 			'__tableName__',

@@ -71,7 +71,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	protected function loadXclassTemplate(){
 		if (!self::$xclassTemplate) {
 			$xclassTemplatePath = GeneralUtility::getFileAbsFileName(
-				ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Php/Templates/Xclass/Aspect.tmpl'
+				ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Templates/Xclass/Aspect.tmpl'
 			);
 			self::$xclassTemplate = GeneralUtility::getUrl($xclassTemplatePath);
 		}
