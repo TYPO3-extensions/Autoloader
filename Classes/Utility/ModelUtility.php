@@ -103,8 +103,8 @@ class ModelUtility {
 	 */
 	static public function getRecordTypeFieldByModelReflection($modelClassName) {
 		$classReflection = new ClassReflection($modelClassName);
-		if ($classReflection->isTaggedWith('record_type')) {
-			$recordType = $classReflection->getTagValues('record_type');
+		if ($classReflection->isTaggedWith('recordType')) {
+			$recordType = $classReflection->getTagValues('recordType');
 			$value = trim($recordType[0]);
 			return $value === '' ? FALSE : $value;
 		}
@@ -120,8 +120,8 @@ class ModelUtility {
 	 */
 	static public function getParentClassByModelReflection($modelClassName) {
 		$classReflection = new ClassReflection($modelClassName);
-		if ($classReflection->isTaggedWith('parentclass')) {
-			$parentClass = $classReflection->getTagValues('parentclass');
+		if ($classReflection->isTaggedWith('parentClass')) {
+			$parentClass = $classReflection->getTagValues('parentClass');
 			$value = trim($parentClass[0]);
 			return $value === '' ? FALSE : $value;
 		}
