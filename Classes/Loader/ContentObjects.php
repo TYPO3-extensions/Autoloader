@@ -79,6 +79,8 @@ class ContentObjects implements LoaderInterface {
 				'icon'               => $icon,
 			);
 
+			SmartObjectRegister::register($entry['modelClass']);
+
 			if ($type === LoaderInterface::EXT_TABLES) {
 				if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
 					$entry['additionalTca'] = $informationService->getCustomModelFieldTca($className);

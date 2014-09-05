@@ -9,6 +9,7 @@ Here we describe the different implemented Loader.
 	Aspect
 	CommandController
 	ContentObjects
+	ContextSensitiveHelps
 	ExtensionId
 	ExtensionTypoScriptSetup
 	FlexForms
@@ -20,5 +21,3 @@ Here we describe the different implemented Loader.
 	TcaFiles
 	TypeConverter
 	Xclass
-
-
