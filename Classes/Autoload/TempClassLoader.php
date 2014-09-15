@@ -9,7 +9,7 @@
  */
 namespace HDNET\Autoloader\Autoload;
 
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class TempClassLoader
@@ -17,7 +17,7 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @package    Autoloader
  * @subpackage Utility
- * @author  Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class TempClassLoader {
 
@@ -36,38 +36,31 @@ class TempClassLoader {
 	static protected $namespace = 'HDNET\\Autoloader\\Xclass\\';
 
 	/**
+	 * Is TRUE, if the autoloader is registered
+	 *
+	 * @var bool
+	 */
+	static protected $isRegistered = FALSE;
+
+	/**
 	 * Registers the cached class loader.
 	 *
 	 * @return boolean TRUE in case of success
 	 */
 	static public function registerAutoloader() {
-		$autoloadIsRegistered = self::isRegistered();
-		if (!$autoloadIsRegistered) {
-			return spl_autoload_register(static::$className . '::autoload', TRUE, TRUE);
-		}
-		return FALSE;
-	}
-
-	/**
-	 * Check if this class is already in the spl_autoload registered.
-	 *
-	 * @return bool
-	 */
-	static public function isRegistered() {
-		$functions = spl_autoload_functions();
-		$self = self::$className;
-
-		if ($functions[0][0] == $self) {
-			return TRUE;
+		if (self::$isRegistered) {
+			return FALSE;
 		}
 
-		return FALSE;
+		self::$isRegistered = TRUE;
+		return spl_autoload_register(static::$className . '::autoload', TRUE, TRUE);
 	}
 
 	/**
 	 * Autoload function for cached classes.
 	 *
 	 * @param string $className Class name
+	 *
 	 * @return void
 	 */
 	static public function autoload($className) {
@@ -85,4 +78,5 @@ class TempClassLoader {
 		}
 	}
 }
+
 ?>
