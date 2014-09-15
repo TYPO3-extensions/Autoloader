@@ -28,10 +28,7 @@ class ObjectStorage implements MapperInterface {
 	 * @return boolean
 	 */
 	public function canHandleType($type) {
-		return stristr(
-			trim($type, '\\'),
-			'typo3\\cms\\extbase\\persistence\\objectstorage'
-		) !== FALSE;
+		return stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage') !== FALSE;
 	}
 
 	/**
@@ -44,10 +41,9 @@ class ObjectStorage implements MapperInterface {
 	 */
 	public function getTcaConfiguration($fieldName, $overWriteLabel = FALSE) {
 		$baseConfig = array(
-			'type' => 'user',
+			'type'     => 'user',
 			'userFunc' => 'HDNET\\Autoloader\\UserFunctions\\Tca->objectStorageInfoField',
 		);
-
 
 		return array(
 			'exclude' => 1,
