@@ -257,8 +257,7 @@ class SmartObjectInformationService {
 	}
 
 	/**
-	 * Generae SQL Query
-	 *custom
+	 * Generate SQL Query
 	 *
 	 * @param string $tableName
 	 * @param array  $fields
@@ -319,7 +318,7 @@ class SmartObjectInformationService {
 	 *
 	 * @return \HDNET\Autoloader\DataSet
 	 */
-	protected function getDataSet(){
+	protected function getDataSet() {
 		return GeneralUtility::makeInstance('HDNET\\Autoloader\\DataSet');
 	}
 }
