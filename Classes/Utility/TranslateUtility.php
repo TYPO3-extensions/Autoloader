@@ -34,7 +34,7 @@ class TranslateUtility {
 	 * @param string $key       key in the localization file
 	 * @param string $extensionName
 	 * @param string $default   default value of the label
-	 * @param array  $arguments the arguments of the extension, being passed over to vsprintf
+	 * @param array  $arguments arguments are being passed over to vsprintf
 	 *
 	 * @return string
 	 */

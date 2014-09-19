@@ -12,6 +12,7 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
+use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
@@ -42,7 +43,7 @@ class ContentObjects implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$loaderInformation = array();
 
-		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
+		/** @var SmartObjectInformationService $informationService */
 		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
 
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
@@ -69,7 +70,7 @@ class ContentObjects implements LoaderInterface {
 			$extPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
 			if (is_file($extPath . 'ext_icon.png')) {
 				$icon .= 'ext_icon.png';
-			} else if (is_file($extPath . 'ext_icon.gif')) {
+			} elseif (is_file($extPath . 'ext_icon.gif')) {
 				$icon .= 'ext_icon.gif';
 			} else {
 				$icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
@@ -98,7 +99,8 @@ class ContentObjects implements LoaderInterface {
 	}
 
 	/**
-	 * Check if the templates are exist and create a dummy, if there is no valid template
+	 * Check if the templates are exist and create a dummy, if there
+	 * is no valid template
 	 *
 	 * @param array  $loaderInformation
 	 * @param Loader $loader
@@ -131,7 +133,7 @@ class ContentObjects implements LoaderInterface {
 
 	/**
 	 * Basic configuration for the properties.
-	 * You have to add e.g. a RTE yourself: bodytext;LLL:EXT:cms/locallang_ttc.xml:bodytext_formlabel;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]
+	 * You have to add e.g. a RTE yourself (please check the TCA documentation)
 	 *
 	 * @param string $className
 	 *

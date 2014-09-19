@@ -11,8 +11,8 @@ namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use TYPO3\CMS\Core\Database\TableConfigurationPostProcessingHookInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Register the aspect files and create the needed Xclasses.
@@ -40,7 +40,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	public function processData() {
 		$aspectCollection = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Aspect'];
 
-		if(!is_array($aspectCollection)) {
+		if (!is_array($aspectCollection)) {
 			return;
 		}
 
@@ -49,7 +49,8 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 		$this->loadXclassTemplate();
 
 		/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-		$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('autoloader');
+		$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')
+			->getCache('autoloader');
 		foreach ($xClasses as $xClassName => $xClass) {
 			// Register the Xclass in TYPO3
 			$this->registerXclass($xClassName);
@@ -67,12 +68,12 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 
 	/**
 	 * Load the xclass template and cache it in a local property
+	 *
+	 * @return null
 	 */
-	protected function loadXclassTemplate(){
+	protected function loadXclassTemplate() {
 		if (!self::$xclassTemplate) {
-			$xclassTemplatePath = GeneralUtility::getFileAbsFileName(
-				ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Templates/Xclass/Aspect.tmpl'
-			);
+			$xclassTemplatePath = ExtensionManagementUtility::extPath('autoloader') . 'Resources/Private/Templates/Xclass/Aspect.tmpl';
 			self::$xclassTemplate = GeneralUtility::getUrl($xclassTemplatePath);
 		}
 	}
@@ -81,7 +82,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 * Generate the Xclass code on base of the xclass-template.
 	 *
 	 * @param string $xClassName
-	 * @param array $xClass
+	 * @param array  $xClass
 	 * @param string $xclassTemplate
 	 *
 	 * @return string full xclass-code
@@ -107,21 +108,29 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 			$joinPointMethods[$joinPoint] = $this->getJoinPointMethod($joinPoint, $xClass);
 		}
 
-		$xclassTemplate = str_replace('__beforeAspectsConfiguration__', $this->mergeConfigurationArrayForCode($beforeConfiguration), $xclassTemplate);
-		$xclassTemplate = str_replace('__replaceAspectsConfiguration__', $this->mergeConfigurationArrayForCode($replaceConfiguration), $xclassTemplate);
-		$xclassTemplate = str_replace('__afterAspectsConfiguration__', $this->mergeConfigurationArrayForCode($afterConfiguration), $xclassTemplate);
-		$xclassTemplate = str_replace('__throwAspectsConfiguration__', $this->mergeConfigurationArrayForCode($throwConfiguration), $xclassTemplate);
+		$search = array(
+			'__beforeAspectsConfiguration__',
+			'__replaceAspectsConfiguration__',
+			'__afterAspectsConfiguration__',
+			'__throwAspectsConfiguration__',
+			'__joinPointMethods__',
+		);
+		$replace = array(
+			$this->mergeConfigurationArrayForCode($beforeConfiguration),
+			$this->mergeConfigurationArrayForCode($replaceConfiguration),
+			$this->mergeConfigurationArrayForCode($afterConfiguration),
+			$this->mergeConfigurationArrayForCode($throwConfiguration),
+			implode("\n", $joinPointMethods),
+		);
 
-		$xclassTemplate = str_replace('__joinPointMethods__', implode("\n", $joinPointMethods), $xclassTemplate);
-
-		return $xclassTemplate;
+		return str_replace($search, $replace, $xclassTemplate);
 	}
 
 	/**
 	 * Return the JoinPoint method.
 	 *
 	 * @param string $joinPoint
-	 * @param array $xClass
+	 * @param array  $xClass
 	 *
 	 * @return string
 	 */
@@ -162,9 +171,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 *          {method1}, {method2}, {method3}
 	 *      )
 	 * )
+	 *
 	 * @param string $type before, throw, after, replace
 	 * @param string $joinPoint
-	 * @param array $advices
+	 * @param array  $advices
 	 *
 	 * @return string
 	 */
@@ -213,6 +223,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 
 	/**
 	 * Return from the full namespace the classname.
+	 *
 	 * @param string $xClassName
 	 *
 	 * @return string
@@ -233,9 +244,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 */
 	protected function getCacheIdentifier($xClassName) {
 		$shortName = $this->getXclassShortname($xClassName);
-		$cacheIdentifier = 'XCLASS' . '_' . str_replace('\\', '', 'HDNET\\Autoloader\\Xclass\\' . $shortName);
-
-		return $cacheIdentifier;
+		return 'XCLASS_' . str_replace('\\', '', 'HDNET\\Autoloader\\Xclass\\' . $shortName);
 	}
 
 	/**
@@ -263,7 +272,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 				}
 
 				$xClasses[$aspect['aspectClassName']][$aspect['aspectJoinPoint']][$aspect['aspectAdvice']][] = array(
-					'originClassName' => $aspect['originClassName'],
+					'originClassName'  => $aspect['originClassName'],
 					'originMethodName' => $aspect['originMethodName']
 				);
 			}

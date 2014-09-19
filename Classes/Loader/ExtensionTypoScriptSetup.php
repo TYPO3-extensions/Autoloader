@@ -57,13 +57,12 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param Loader $loader
 	 * @param array  $loaderInformation
 	 *
-	 * @return NULL
+	 * @return null
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		if ($loaderInformation) {
 			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
 		}
-		return;
 	}
 
 	/**
@@ -72,18 +71,17 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param Loader $loader
 	 * @param array  $loaderInformation
 	 *
-	 * @return NULL
+	 * @return null
 	 */
 	public function loadExtensionConfiguration(Loader $loader, array $loaderInformation) {
 		if ($loaderInformation) {
 			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
 		}
-		return;
 	}
 
 	/**
-	 * Generate the TypoScript setup for the smart objects defined within the extension
-	 *
+	 * Generate the TypoScript setup for the smart objects defined
+	 * within the extension
 	 *
 	 * @param string $extensionKey
 	 *

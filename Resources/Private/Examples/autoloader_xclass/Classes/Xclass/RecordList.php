@@ -23,6 +23,8 @@ class RecordList extends \TYPO3\CMS\Recordlist\RecordList {
 
 	/**
 	 * Overwrite the main and add a flash Message
+	 *
+	 * @return null
 	 */
 	public function main() {
 		$this->addDummyFlashMessage();

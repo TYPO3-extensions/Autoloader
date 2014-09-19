@@ -39,7 +39,8 @@ class Hooks implements LoaderInterface {
 	 */
 	public function prepareLoader(Loader $loader, $type) {
 		$hooks = array();
-		$files = FileUtility::getBaseFilesInDir(ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/', 'php');
+		$folder = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Hooks/';
+		$files = FileUtility::getBaseFilesInDir($folder, 'php');
 
 		$extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 		foreach ($files as $hookFile) {

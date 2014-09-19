@@ -69,4 +69,3 @@ class TcaFiles implements LoaderInterface {
 		return NULL;
 	}
 }
- 

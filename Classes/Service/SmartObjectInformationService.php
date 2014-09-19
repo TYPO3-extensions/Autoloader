@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Autoloader
- * @author     Tim Spiekerkoetter HDNET GmbH & Co. KG <tim.spiekerkoetter@hdnet.de>
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 
 namespace HDNET\Autoloader\Service;
@@ -24,7 +24,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @package    Autoloader
  * @subpackage Service
- * @author     Tim Spiekerkoetter HDNET GmbH & Co. KG <tim.spiekerkoetter@hdnet.de>
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 class SmartObjectInformationService {
 
@@ -42,9 +42,9 @@ class SmartObjectInformationService {
 		// disable complete table generation
 		// for extending existing tables
 		if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
-			return $this->generateSQLQuery($tableName, $custom);
+			return $this->generateSqlQuery($tableName, $custom);
 		}
-		return $this->generateCompleteSQLQuery($modelClassName, $tableName, $custom);
+		return $this->generateCompleteSqlQuery($modelClassName, $tableName, $custom);
 	}
 
 	/**
@@ -264,7 +264,7 @@ class SmartObjectInformationService {
 	 *
 	 * @return string
 	 */
-	protected function generateSQLQuery($tableName, $fields) {
+	protected function generateSqlQuery($tableName, $fields) {
 		if (!$fields) {
 			return '';
 		}
@@ -280,7 +280,7 @@ class SmartObjectInformationService {
 	 *
 	 * @return string
 	 */
-	protected function generateCompleteSQLQuery($modelClassName, $tableName, $custom) {
+	protected function generateCompleteSqlQuery($modelClassName, $tableName, $custom) {
 		$fields = array();
 		$fields[] = 'uid int(11) NOT NULL auto_increment';
 		$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
@@ -310,7 +310,7 @@ class SmartObjectInformationService {
 		// add data set keys
 		$fields = array_merge($fields, $dataSet->getDatabaseSqlKeyInformation($dataImplementations, $tableName));
 
-		return $this->generateSQLQuery($tableName, $fields);
+		return $this->generateSqlQuery($tableName, $fields);
 	}
 
 	/**

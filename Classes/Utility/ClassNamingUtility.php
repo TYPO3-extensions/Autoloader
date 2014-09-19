@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Autoloader
- * @author     Tim Spiekerkoetter HDNET GmbH & Co. KG <tim.spiekerkoetter@hdnet.de>
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -14,13 +14,13 @@ namespace HDNET\Autoloader\Utility;
  *
  * @package    Autoloader
  * @subpackage Utility
- * @author     Tim Spiekerkoetter HDNET GmbH & Co. KG <tim.spiekerkoetter@hdnet.de>
+ * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 class ClassNamingUtility {
 
 	/**
-	 * Explodes a modelName like \Vendor\Ext\Domain\Model\Foo
-	 * into several pieces like vendorName, extensionName, subpackageKey and controllerName
+	 * Explodes a modelName like \Vendor\Ext\Domain\Model\Foo into several
+	 * pieces like vendorName, extensionName, subpackageKey and controllerName
 	 *
 	 * @param string $modelName The model name to be exploded
 	 *

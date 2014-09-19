@@ -29,7 +29,7 @@ class FileUtility {
 	 *
 	 * @return bool
 	 */
-	static function writeFileAndCreateFolder($absoluteFileName, $content) {
+	static public function writeFileAndCreateFolder($absoluteFileName, $content) {
 		$dir = dirname($absoluteFileName) . '/';
 		if (!is_dir($dir)) {
 			GeneralUtility::mkdir_deep($dir);
@@ -46,7 +46,7 @@ class FileUtility {
 	 *
 	 * @return array
 	 */
-	static function getBaseFilesInDir($dirPath, $fileExtension) {
+	static public function getBaseFilesInDir($dirPath, $fileExtension) {
 		if (!is_dir($dirPath)) {
 			return array();
 		}
@@ -67,9 +67,9 @@ class FileUtility {
 	 * @param boolean $recursively
 	 *
 	 * @return array
-	 * @todo After one or two releases, migrate the getBaseFilesRecursivelyInDir into the getBaseFilesInDir or rethink the file fetch handling
+	 * @todo migrate this into the getBaseFilesInDir or rethink the fetch handling
 	 */
-	static function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = TRUE) {
+	static public function getBaseFilesRecursivelyInDir($dirPath, $fileExtension, $recursively = TRUE) {
 		if (!is_dir($dirPath)) {
 			return array();
 		}

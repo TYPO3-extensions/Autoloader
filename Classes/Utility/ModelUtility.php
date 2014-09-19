@@ -78,7 +78,8 @@ class ModelUtility {
 	}
 
 	/**
-	 * get the smart exclude values e.g. language,workspace,enableFields from the given model
+	 * get the smart exclude values e.g. language, workspace,
+	 * enableFields from the given model
 	 *
 	 * @param string $name
 	 *
@@ -161,7 +162,7 @@ class ModelUtility {
 			if (SmartObjectManager::getExtensionKeyByModel($className) !== $extensionKey) {
 				continue;
 			}
-			if (ModelUtility::getTableNameByModelReflectionAnnotation($className) == $tableName) {
+			if (self::getTableNameByModelReflectionAnnotation($className) == $tableName) {
 				$additionalTca = $informationService->getCustomModelFieldTca($className);
 				foreach ($additionalTca as $fieldName => $configuration) {
 					if (!isset($return['columns'][$fieldName])) {

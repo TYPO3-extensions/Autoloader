@@ -55,7 +55,7 @@ class Workspaces implements DataSetInterface {
 	 * @param string $tableName
 	 *
 	 * @return array
-	 * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html section: versioningWS
+	 * @see http://docs.typo3.org/typo3cms/TCAReference/Reference/Ctrl/Index.html
 	 */
 	public function getDatabaseSql($tableName) {
 		return array(

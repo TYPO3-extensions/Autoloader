@@ -29,30 +29,20 @@ class ArrayUtility {
 	 * @see http://www.php.net/manual/de/function.array-walk-recursive.php#106340
 	 */
 	public static function setNodes(array $data, array &$array) {
-		$separator = '|'; // set this to any string that won't occur in your keys
+		$separator = '|';
 		foreach ($data as $name => $value) {
 			if (strpos($name, $separator) === FALSE) {
-				// If the array doesn't contain a special separator character, just set the key/value pair.
-				// If $value is an array, you will of course set nested key/value pairs just fine.
 				$array[$name] = $value;
 			} else {
-				// In this case we're trying to target a specific nested node without overwriting any other siblings/ancestors.
-				// The node or its ancestors may not exist yet.
 				$keys = explode($separator, $name);
-				// Set the root of the tree.
-				$optTree =& $array;
-				// Start traversing the tree using the specified keys.
+				$optTree = & $array;
 				while ($key = array_shift($keys)) {
-					// If there are more keys after the current one.
 					if ($keys) {
 						if (!isset($optTree[$key]) || !is_array($optTree[$key])) {
-							// Create this node if it doesn't already exist.
 							$optTree[$key] = array();
 						}
-						// Redefine the "root" of the tree to this node (assign by reference) then process the next key.
-						$optTree =& $optTree[$key];
+						$optTree = & $optTree[$key];
 					} else {
-						// This is the last key to check, so assign the value.
 						$optTree[$key] = $value;
 					}
 				}
@@ -73,9 +63,9 @@ class ArrayUtility {
 
 		foreach ($array2 as $key => &$value) {
 			if (is_array($value) && isset ($merged[$key]) && is_array($merged[$key])) {
-				$merged [$key] = self::mergeRecursiveDistinct($merged [$key], $value);
+				$merged[$key] = self::mergeRecursiveDistinct($merged[$key], $value);
 			} else {
-				$merged [$key] = $value;
+				$merged[$key] = $value;
 			}
 		}
 

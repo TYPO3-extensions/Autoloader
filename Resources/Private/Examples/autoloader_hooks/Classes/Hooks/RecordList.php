@@ -30,7 +30,11 @@ class RecordList {
 	 * @hook TYPO3_CONF_VARS|SC_OPTIONS|recordlist/mod1/index.php|drawFooterHook
 	 */
 	public function addFooterContent($params, $parentObject) {
-		return '<div style="background-color: red"><h1 style="color:white; padding: 20px;">I am additional Content at the Footer by the autoloader_hooks Extension</h1></div>';
+		return '<div style="background-color: red">
+					<h1 style="color:white; padding: 20px;">
+					I am additional Content at the Footer by the autoloader_hooks Extension
+					</h1>
+				</div>';
 	}
 
 }

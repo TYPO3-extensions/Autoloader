@@ -52,4 +52,3 @@ class DummyConverter extends AbstractTypeConverter {
 		return NULL;
 	}
 }
- 

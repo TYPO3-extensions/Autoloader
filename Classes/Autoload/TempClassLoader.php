@@ -68,7 +68,7 @@ class TempClassLoader {
 
 		if (strpos($className, static::$namespace) !== FALSE) {
 			$optimizedClassName = str_replace('\\', '', $className);
-			$cacheIdentifier = 'XCLASS' . '_' . $optimizedClassName;
+			$cacheIdentifier = 'XCLASS_' . $optimizedClassName;
 
 			/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
 			$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('autoloader');
