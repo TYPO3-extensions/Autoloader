@@ -181,7 +181,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	protected function getConfigurationArray($type, $joinPoint, $advices) {
 		$code = array();
 
-		$code[] = '\'' . $joinPoint . '\'' . ' => array(';
+		$code[] = '\'' . $joinPoint . '\' => array(';
 		foreach ($advices[$type] as $method) {
 			$code[] = 'array(';
 			$code[] = '\'id\' => \'' . GeneralUtility::shortMD5($method['originClassName'] . $method['originMethodName'], 13) . '\',';

@@ -52,7 +52,7 @@ class AlternativeImplementations implements LoaderInterface {
 			/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
 			$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $aicClass);
 			$originalName = $classReflection->getParentClass()
-			                                ->getName();
+				->getName();
 			$classNames[] = array(
 				'originalName'    => $originalName,
 				'classReflection' => $classReflection,

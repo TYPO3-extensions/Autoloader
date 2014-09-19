@@ -64,16 +64,27 @@ class ExtendedUtility {
 	 */
 	static public function addXclass($source, $target) {
 		if (isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source])) {
-			if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
-				$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = array();
-			}
-			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = 'Double registration of Xclass for ' . $source . ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
+			$message = 'Double registration of Xclass for ' . $source;
+			$message .= ' (' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source]['className'] . ' and ' . $target . ')';
+			self::log($message);
 			return FALSE;
 		}
 		$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][$source] = array(
 			'className' => $target,
 		);
 		return TRUE;
+	}
+
+	/**
+	 * Log into the TYPO3_CONF_VARS to get more information in the backend
+	 *
+	 * @param $message
+	 */
+	static public function log($message) {
+		if (!is_array($GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'])) {
+			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'] = array();
+		}
+		$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['Log'][] = $message;
 	}
 
 	/**

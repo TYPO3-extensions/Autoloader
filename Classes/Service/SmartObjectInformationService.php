@@ -143,7 +143,6 @@ class SmartObjectInformationService {
 		}
 		$showitem[] = '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
 
-
 		$overrideTca = array(
 			'ctrl'      => array(
 				'title'         => TranslateUtility::getLllOrHelpMessage($tableName, $extensionName),

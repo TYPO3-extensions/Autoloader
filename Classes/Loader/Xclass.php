@@ -53,7 +53,7 @@ class Xclass implements LoaderInterface {
 			/** @var $xclassReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
 			$xclassReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $xclassName);
 			$originalName = $xclassReflection->getParentClass()
-			                                 ->getName();
+				->getName();
 			$return[] = array(
 				'source' => $originalName,
 				'target' => $xclassName,
