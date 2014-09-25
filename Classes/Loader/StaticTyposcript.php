@@ -43,12 +43,12 @@ class StaticTyposcript implements LoaderInterface {
 
 		foreach ($typoScriptFolder as $folder) {
 			if (is_file($folder . 'setup.txt') || is_file($folder . 'constants.txt')) {
-				$extensionName = $extensionName . '/' . str_replace($baseDir, '', $folder);
-				$extensionName = implode(' - ', GeneralUtility::trimExplode('/', $extensionName, TRUE));
+				$setupName = $extensionName . '/' . str_replace($baseDir, '', $folder);
+				$setupName = implode(' - ', GeneralUtility::trimExplode('/', $setupName, TRUE));
 				$folder = str_replace($extPath, '', $folder);
 				$tsConfiguration[] = array(
 					'path'  => $folder,
-					'title' => $extensionName,
+					'title' => $setupName,
 				);
 			}
 		}
