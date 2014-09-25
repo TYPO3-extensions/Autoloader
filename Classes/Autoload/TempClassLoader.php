@@ -3,8 +3,7 @@
  * TempClassAutoloader.php
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Utility
+ * @package    Autoloader\Autoload
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 namespace HDNET\Autoloader\Autoload;
@@ -15,8 +14,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class TempClassLoader
  * Thx to SJBR
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class TempClassLoader {

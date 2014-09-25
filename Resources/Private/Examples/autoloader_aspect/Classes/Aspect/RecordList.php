@@ -4,7 +4,7 @@
  * This example show, that not all 'AFTER' aspects works as expected.
  *
  * @category   Extension
- * @package    AutoloaderAspect
+ * @package    AutoloaderAspect\Aspect
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 
@@ -16,8 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This Example test the aspects before & after.
  *
- * @package    AutoloaderAspect
- * @subpackage Aspect
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class RecordList {

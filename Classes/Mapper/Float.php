@@ -3,7 +3,7 @@
  * Map float/double
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Autoloader\Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -14,8 +14,6 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map float/double
  *
- * @package    Autoloader
- * @subpackage Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Float implements MapperInterface {

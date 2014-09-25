@@ -3,7 +3,7 @@
  * This Example test the aspects before & after.
  *
  * @category   Extension
- * @package    AutoloaderAspect
+ * @package    AutoloaderAspect\Aspect
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 
@@ -12,8 +12,6 @@ namespace HDNET\AutoloaderAspect\Aspect;
 /**
  * This Example test the aspects before & after.
  *
- * @package    AutoloaderAspect
- * @subpackage Aspect
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class DocumentTemplate {

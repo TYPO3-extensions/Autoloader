@@ -3,8 +3,7 @@
  * DataSet information for workspaces
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage DataSet
+ * @package    Autoloader\DataSet
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -15,8 +14,6 @@ use HDNET\Autoloader\DataSetInterface;
 /**
  * DataSet information for workspaces
  *
- * @package    Autoloader
- * @subpackage DataSet
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Workspaces implements DataSetInterface {

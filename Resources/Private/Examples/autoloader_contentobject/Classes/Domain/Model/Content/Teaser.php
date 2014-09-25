@@ -14,8 +14,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Example Teaser Model
  *
- * @package    AutoloaderContentobject
- * @subpackage Domain\Model\Content
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db         tt_content
  */

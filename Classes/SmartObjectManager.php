@@ -19,7 +19,6 @@ use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 /**
  * Management for Smart Objects
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class SmartObjectManager implements SingletonInterface {

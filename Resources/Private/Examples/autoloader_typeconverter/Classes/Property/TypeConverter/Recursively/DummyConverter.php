@@ -3,8 +3,7 @@
  * Dummy Type Converter (second level)
  *
  * @category   Extension
- * @package    AutoloaderTypeconverter
- * @subpackage Property\TypeConverter
+ * @package    AutoloaderTypeconverter\Property\TypeConverter
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -16,8 +15,6 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 /**
  * Dummy Type Converter (second level)
  *
- * @package    AutoloaderTypeconverter
- * @subpackage Property\TypeConverter
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class DummyConverter extends AbstractTypeConverter {

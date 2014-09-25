@@ -3,8 +3,7 @@
  * FileUtility
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Utility
+ * @package    Autoloader\Utility
  * @author     Tim Lochmüller <tim.locahmueller@hdnet.de>
  */
 
@@ -15,8 +14,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * FileUtility
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class FileUtility {

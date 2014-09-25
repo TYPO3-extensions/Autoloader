@@ -3,7 +3,7 @@
  * Map String
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Autoloader\Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -14,8 +14,6 @@ use HDNET\Autoloader\MapperInterface;
 /**
  * Map String
  *
- * @package    Autoloader
- * @subpackage Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class String implements MapperInterface {

@@ -15,8 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Test xclass via Globals configuration
  *
- * @package    AutoloaderXclass
- * @subpackage Xclass
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class RecordList extends \TYPO3\CMS\Recordlist\RecordList {

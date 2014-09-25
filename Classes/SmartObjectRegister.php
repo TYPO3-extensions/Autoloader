@@ -12,7 +12,6 @@ namespace HDNET\Autoloader;
 /**
  * Register for Smart Objects
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class SmartObjectRegister {

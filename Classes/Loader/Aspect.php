@@ -3,8 +3,7 @@
  * Loading Aspect
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Loader
+ * @package    Autoloader\Loader
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 
@@ -23,8 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Aspects available: before, replace, after, throw
  * Used Tags: @aspectClass, @aspectJoinPoint, @aspectAdvice
  *
- * @package    Autoloader
- * @subpackage Loader
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class Aspect implements LoaderInterface {

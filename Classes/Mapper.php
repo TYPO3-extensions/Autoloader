@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * Mapper for variables types to TCA and DB information
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class Mapper implements SingletonInterface {

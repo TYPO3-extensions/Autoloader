@@ -12,7 +12,6 @@ namespace HDNET\Autoloader;
 /**
  * Exception
  *
- * @package    Autoloader
  * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 class Exception extends \Exception {

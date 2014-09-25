@@ -3,8 +3,7 @@
  * RecordList
  *
  * @category   Extension
- * @package    AutoloaderHooks
- * @subpackage Hooks
+ * @package    AutoloaderHooks\Hooks
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -13,8 +12,6 @@ namespace HDNET\AutoloaderHooks\Hooks;
 /**
  * RecordList
  *
- * @package    AutoloaderHooks
- * @subpackage Hooks
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class RecordList {

@@ -3,8 +3,7 @@
  * TranslateUtility.php
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Utility
+ * @package    Autoloader\Utility
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 
@@ -16,8 +15,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * TranslateUtility
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class TranslateUtility {

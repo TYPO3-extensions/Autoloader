@@ -15,8 +15,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * TestList Model
  * Container for the test-model.
  *
- * @package    AutoloaderSmartobject
- * @subpackage Domain\Model
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  * @db
  */

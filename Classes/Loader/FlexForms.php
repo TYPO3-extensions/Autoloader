@@ -3,8 +3,7 @@
  * Loading FlexForms
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Loader
+ * @package    Autoloader\Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -19,8 +18,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Loading FlexForms
  *
- * @package    Autoloader
- * @subpackage Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class FlexForms implements LoaderInterface {

@@ -14,8 +14,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Test Model
  *
- * @package    AutoloaderSmartobject
- * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db
  */

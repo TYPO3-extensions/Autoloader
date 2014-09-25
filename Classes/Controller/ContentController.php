@@ -3,8 +3,7 @@
  * Content Controller
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Controller
+ * @package    Autoloader\Controller
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -18,10 +17,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Content Controller
  *
- * @package    Autoloader
- * @subpackage Controller
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
- * @deprecated
  */
 class ContentController extends ActionController {
 

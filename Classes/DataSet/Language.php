@@ -3,8 +3,7 @@
  * DataSet information for languages
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage DataSet
+ * @package    Autoloader\DataSet
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -15,8 +14,6 @@ use HDNET\Autoloader\DataSetInterface;
 /**
  * DataSet information for languages
  *
- * @package    Autoloader
- * @subpackage DataSet
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Language implements DataSetInterface {

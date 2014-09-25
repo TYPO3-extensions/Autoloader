@@ -3,8 +3,7 @@
  * Tca UserFunctions
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage UserFunctions
+ * @package    Autoloader\UserFunctions
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 
@@ -13,8 +12,6 @@ namespace HDNET\Autoloader\UserFunctions;
 /**
  * Tca UserFunctions
  *
- * @package    Autoloader
- * @subpackage UserFunctions
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  */
 class Tca {

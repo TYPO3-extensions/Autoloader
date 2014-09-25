@@ -3,8 +3,7 @@
  * Add the smart object SQL string
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Slots
+ * @package    Autoloader\Slots
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -15,8 +14,6 @@ use HDNET\Autoloader\SmartObjectManager;
 /**
  * Add the smart object SQL string
  *
- * @package    Autoloader
- * @subpackage Slots
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class SmartDatabase {

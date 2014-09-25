@@ -15,8 +15,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 /**
  * Test command controller
  *
- * @package    AutoloaderCommandcontroller
- * @subpackage Command
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class TestCommandController extends CommandController {

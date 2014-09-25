@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Central DataSet object
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class DataSet implements SingletonInterface {

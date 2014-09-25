@@ -3,8 +3,7 @@
  * Arrays utility
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Utility
+ * @package    Autoloader\Utility
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -14,8 +13,6 @@ namespace HDNET\Autoloader\Utility;
 /**
  * Arrays utility
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class ArrayUtility {

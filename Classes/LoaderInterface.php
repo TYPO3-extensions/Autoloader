@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\SingletonInterface;
  * General loading interface
  * All Loader are singletons
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 interface LoaderInterface extends SingletonInterface {

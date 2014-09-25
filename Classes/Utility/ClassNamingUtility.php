@@ -3,7 +3,7 @@
  * ClassNamingUtility.php
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Autoloader\Utility
  * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 
@@ -12,8 +12,6 @@ namespace HDNET\Autoloader\Utility;
 /**
  * ClassNamingUtility
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 class ClassNamingUtility {

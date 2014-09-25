@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * data set interface
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 interface DataSetInterface extends SingletonInterface {

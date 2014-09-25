@@ -3,8 +3,7 @@
  * Loading TypeConverter
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Loader
+ * @package    Autoloader\Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -20,8 +19,6 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 /**
  * Loading TypeConverter
  *
- * @package    Autoloader
- * @subpackage Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class TypeConverter implements LoaderInterface {

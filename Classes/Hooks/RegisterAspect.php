@@ -17,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Register the aspect files and create the needed Xclasses.
  *
- * @package    Autoloader
- * @subpackage Hooks
  * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
  * @hook       TYPO3_CONF_VARS|SC_OPTIONS|GLOBAL|extTablesInclusion-PostProcessing
  */

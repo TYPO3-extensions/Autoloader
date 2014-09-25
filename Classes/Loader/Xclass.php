@@ -3,8 +3,7 @@
  * Loading Xclass
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Loader
+ * @package    Autoloader\Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -20,8 +19,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Loading Xclass
  *
- * @package    Autoloader
- * @subpackage Loader
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Xclass implements LoaderInterface {

@@ -3,8 +3,7 @@
  * ExtensionTypoScriptSetup
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Loader
+ * @package    Autoloader\Loader
  * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 
@@ -21,8 +20,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * ExtensionTypoScriptSetup
  *
- * @package    Autoloader
- * @subpackage Loader
  * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
  */
 class ExtensionTypoScriptSetup implements LoaderInterface {

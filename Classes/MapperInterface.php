@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * Mapper Interface
  *
- * @package    Autoloader
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 interface MapperInterface extends SingletonInterface {

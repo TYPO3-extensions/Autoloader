@@ -3,7 +3,7 @@
  * Utility to interact with the Model
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Autoloader\Utility
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -17,8 +17,6 @@ use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 /**
  * Utility to interact with the Model
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class ModelUtility {

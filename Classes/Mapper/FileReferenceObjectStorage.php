@@ -3,7 +3,7 @@
  * Map FileReferenceObjectStorage
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Autoloader\Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -15,8 +15,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Map FileReferenceObjectStorage
  *
- * @package    Autoloader
- * @subpackage Mapper
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class FileReferenceObjectStorage implements MapperInterface {

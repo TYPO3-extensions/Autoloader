@@ -3,8 +3,7 @@
  * Utility functions for the Autoloader
  *
  * @category   Extension
- * @package    Autoloader
- * @subpackage Utility
+ * @package    Autoloader\Utility
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 
@@ -15,8 +14,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Utility functions for the Autoloader
  *
- * @package    Autoloader
- * @subpackage Utility
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  */
 class ExtendedUtility {
