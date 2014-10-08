@@ -39,11 +39,11 @@ class Xclass implements LoaderInterface {
 			return $return;
 		}
 		$xClassesPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Xclass/';
-		$xClasses = FileUtility::getBaseFilesInDir($xClassesPath, 'php');
+		$xClasses = FileUtility::getBaseFilesRecursivelyInDir($xClassesPath, 'php');
 
 		$extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 		foreach ($xClasses as $xClass) {
-			$xclassName = $loader->getVendorName() . '\\' . $extKey . '\\Xclass\\' . $xClass;
+			$xclassName = $loader->getVendorName() . '\\' . $extKey . '\\Xclass\\' . str_replace('/', '\\', $xClass);
 			if (!$loader->isInstantiableClass($xclassName)) {
 				continue;
 			}
