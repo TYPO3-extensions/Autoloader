@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader;
 
+use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -29,8 +30,7 @@ class SmartObjectManager implements SingletonInterface {
 	 * @return string
 	 */
 	static public function getSmartObjectRegisterSql() {
-		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
-		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+		$informationService = SmartObjectInformationService::getInstance();
 		$register = SmartObjectRegister::getRegister();
 
 		$output = array();

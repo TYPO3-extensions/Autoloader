@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -135,8 +136,7 @@ class ModelUtility {
 	 * @return array
 	 */
 	static public function getTcaInformation($modelClassName) {
-		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
-		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+		$informationService = SmartObjectInformationService::getInstance();
 		return $informationService->getTcaInformation($modelClassName);
 	}
 
@@ -152,9 +152,7 @@ class ModelUtility {
 	static public function getTcaOverrideInformation($extensionKey, $tableName) {
 		$return = isset($GLOBALS['TCA'][$tableName]) ? $GLOBALS['TCA'][$tableName] : array();
 		$classNames = SmartObjectRegister::getRegister();
-
-		/** @var \HDNET\Autoloader\Service\SmartObjectInformationService $informationService */
-		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+		$informationService = SmartObjectInformationService::getInstance();
 
 		foreach ($classNames as $className) {
 			if (SmartObjectManager::getExtensionKeyByModel($className) !== $extensionKey) {

@@ -83,7 +83,8 @@ class Loader implements SingletonInterface {
 	);
 
 	/**
-	 * Build up the object. If there is no valid cache in the LocalConfiguration add one
+	 * Build up the object.
+	 * If there is no valid cache in the LocalConfiguration add one
 	 */
 	public function __construct() {
 		if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['autoloader'])) {

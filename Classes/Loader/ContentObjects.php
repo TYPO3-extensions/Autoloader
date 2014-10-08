@@ -40,8 +40,7 @@ class ContentObjects implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$loaderInformation = array();
 
-		/** @var SmartObjectInformationService $informationService */
-		$informationService = GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+		$informationService = SmartObjectInformationService::getInstance();
 
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');

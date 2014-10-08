@@ -27,6 +27,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SmartObjectInformationService {
 
 	/**
+	 * Get a instance of this object
+	 *
+	 * @return \HDNET\Autoloader\Service\SmartObjectInformationService
+	 */
+	public static function getInstance() {
+		return GeneralUtility::makeInstance('HDNET\\Autoloader\\Service\\SmartObjectInformationService');
+	}
+
+	/**
 	 * Get database information
 	 *
 	 * @param $modelClassName
