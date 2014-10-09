@@ -39,6 +39,14 @@ class Content extends AbstractEntity {
 	protected $otherField;
 
 	/**
+	 * Foreign model
+	 *
+	 * @var \HDNET\AutoloaderSmartobject\Domain\Model\Test
+	 * @db
+	 */
+	protected $foreignModelWithoutSpecificDbAnnotation;
+
+	/**
 	 * Set bodytext
 	 *
 	 * @param string $bodytext
@@ -74,4 +82,21 @@ class Content extends AbstractEntity {
 		return $this->otherField;
 	}
 
+	/**
+	 * Set the foreign model
+	 *
+	 * @param \HDNET\AutoloaderSmartobject\Domain\Model\Test $foreignModelWithoutSpecificDbAnnotation
+	 */
+	public function setForeignModelWithoutSpecificDbAnnotation($foreignModelWithoutSpecificDbAnnotation) {
+		$this->foreignModelWithoutSpecificDbAnnotation = $foreignModelWithoutSpecificDbAnnotation;
+	}
+
+	/**
+	 * get the foreign model
+	 *
+	 * @return \HDNET\AutoloaderSmartobject\Domain\Model\Test
+	 */
+	public function getForeignModelWithoutSpecificDbAnnotation() {
+		return $this->foreignModelWithoutSpecificDbAnnotation;
+	}
 } 

@@ -84,6 +84,7 @@ class Mapper implements SingletonInterface {
 			'ObjectStorage',
 			'Int',
 			'String',
+			'Model',
 		);
 		foreach ($mapper as $key => $value) {
 			$mapper[$key] = ExtendedUtility::create('HDNET\\Autoloader\\Mapper\\' . $value);
