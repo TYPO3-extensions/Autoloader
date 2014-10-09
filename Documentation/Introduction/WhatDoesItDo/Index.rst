@@ -14,6 +14,7 @@ Loader
 - :ref:`extension-typoscript`
 - :ref:`flex-forms`
 - :ref:`hooks`
+- :ref:`plugins`
 - :ref:`slots`
 - :ref:`smart-objects`
 - :ref:`static-typoscript`

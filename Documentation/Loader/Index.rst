@@ -13,6 +13,7 @@ Here we describe the different implemented Loader.
 	ExtensionTypoScriptSetup
 	FlexForms
 	Hooks
+	Plugins
 	Slots
 	SmartObjects
 	StaticTyposcript

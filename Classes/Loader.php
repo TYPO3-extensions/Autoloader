@@ -38,6 +38,7 @@ class Loader implements SingletonInterface {
 		'TcaFiles',
 		'ExtensionTypoScriptSetup',
 		// non-critical
+		'Plugins',
 		'FlexForms',
 		'CommandController',
 		'StaticTyposcript',
