@@ -110,7 +110,7 @@ class DataSet implements SingletonInterface {
 		$return = array();
 		foreach ($dataSetObjects as $object) {
 			/** @var $object DataSetInterface */
-			$return = array_merge($return, $object->getDatabaseSqlKey($table));
+			$return = array_merge($return, $object->getDatabaseSqlKey());
 		}
 		return $return;
 	}

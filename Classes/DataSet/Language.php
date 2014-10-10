@@ -98,11 +98,9 @@ class Language implements DataSetInterface {
 	/**
 	 * Get database sql key information
 	 *
-	 * @param string $tableName
-	 *
 	 * @return array
 	 */
-	public function getDatabaseSqlKey($tableName) {
+	public function getDatabaseSqlKey() {
 		return array(
 			'KEY language (l10n_parent,sys_language_uid)'
 		);

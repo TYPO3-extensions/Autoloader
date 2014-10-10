@@ -108,11 +108,9 @@ class EnableFields implements DataSetInterface {
 	/**
 	 * Get database sql key information
 	 *
-	 * @param string $tableName
-	 *
 	 * @return array
 	 */
-	public function getDatabaseSqlKey($tableName) {
+	public function getDatabaseSqlKey() {
 		return array();
 	}
 }

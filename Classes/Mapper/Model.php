@@ -10,6 +10,7 @@
 namespace HDNET\Autoloader\Mapper;
 
 use HDNET\Autoloader\MapperInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Map general Models
@@ -31,11 +32,10 @@ class Model implements MapperInterface {
 		}
 		try {
 			$dummy = new $type();
-			return ($dummy instanceof \TYPO3\CMS\Extbase\DomainObject\AbstractEntity);
+			return ($dummy instanceof AbstractEntity);
 		} catch (\Exception $exception) {
 			return FALSE;
 		}
-		return FALSE;
 	}
 
 	/**

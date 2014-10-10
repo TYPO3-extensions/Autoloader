@@ -40,9 +40,7 @@ interface DataSetInterface extends SingletonInterface {
 	/**
 	 * Get database sql key information
 	 *
-	 * @param string $tableName
-	 *
 	 * @return array
 	 */
-	public function getDatabaseSqlKey($tableName);
+	public function getDatabaseSqlKey();
 }
