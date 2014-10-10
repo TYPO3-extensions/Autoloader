@@ -178,7 +178,7 @@ class ContentObjects implements LoaderInterface {
 			$baseTcaConfiguration = '
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general,
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.header;header,
-    --div--;Inhaltsdaten,
+    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
     ' . $config['fieldConfiguration'] . ',
     --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,
     --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
