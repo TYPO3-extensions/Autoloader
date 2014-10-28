@@ -27,8 +27,8 @@ class Slots implements LoaderInterface {
 	 * This return value will be cached and stored in the database
 	 * There is no file monitoring for this cache
 	 *
-	 * @param Loader  $autoLoader
-	 * @param integer $type
+	 * @param Loader $autoLoader
+	 * @param int    $type
 	 *
 	 * @return array
 	 */

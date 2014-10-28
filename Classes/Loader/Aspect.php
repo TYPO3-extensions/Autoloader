@@ -31,8 +31,8 @@ class Aspect implements LoaderInterface {
 	 * This return value will be cached and stored in the database
 	 * There is no file monitoring for this cache
 	 *
-	 * @param Loader  $loader
-	 * @param integer $type
+	 * @param Loader $loader
+	 * @param int    $type
 	 *
 	 * @return array $loaderInformation
 	 */
@@ -61,12 +61,12 @@ class Aspect implements LoaderInterface {
 					$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
 
 					$aspects[] = array(
-						'aspectClassName'           => $aspectClassName,
-						'aspectJoinPoint'           => $aspectJoinPoint,
-						'aspectJoinPointArguments'  => $aspectJpArguments,
-						'aspectAdvice'              => trim($methodTags['aspectAdvice'][0]),
-						'originClassName'           => $aspectClass,
-						'originMethodName'          => $methodReflection->getName()
+						'aspectClassName'          => $aspectClassName,
+						'aspectJoinPoint'          => $aspectJoinPoint,
+						'aspectJoinPointArguments' => $aspectJpArguments,
+						'aspectAdvice'             => trim($methodTags['aspectAdvice'][0]),
+						'originClassName'          => $aspectClass,
+						'originMethodName'         => $methodReflection->getName()
 					);
 				}
 			}
@@ -85,7 +85,7 @@ class Aspect implements LoaderInterface {
 	 */
 	protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint) {
 		$reflectionClass = new \ReflectionClass($aspectClassName);
-		$methodReflection =  $reflectionClass->getMethod($aspectJoinPoint);
+		$methodReflection = $reflectionClass->getMethod($aspectJoinPoint);
 
 		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
 		$methodArguments = $methodReflection->getParameters();
@@ -93,7 +93,7 @@ class Aspect implements LoaderInterface {
 		/** @var $argument \ReflectionParameter */
 		foreach ($methodArguments as $argument) {
 			$arguments[] = array(
-				'name' => $argument->getName(),
+				'name'     => $argument->getName(),
 				'typeHint' => $argument->getClass()->name
 			);
 		}
