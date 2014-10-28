@@ -35,8 +35,8 @@ interface LoaderInterface extends SingletonInterface {
 	 * This return value will be cached and stored in the core_cache of TYPO3.
 	 * There is no file monitoring for this cache.
 	 *
-	 * @param Loader  $loader
-	 * @param integer $type
+	 * @param Loader $loader
+	 * @param int    $type
 	 *
 	 * @return array
 	 */

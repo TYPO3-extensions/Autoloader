@@ -216,8 +216,8 @@ class Loader implements SingletonInterface {
 	/**
 	 * Prepare the autoLoader information
 	 *
-	 * @param array   $objects
-	 * @param integer $type
+	 * @param array $objects
+	 * @param int   $type
 	 *
 	 * @return array
 	 */
