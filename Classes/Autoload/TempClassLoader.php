@@ -42,7 +42,7 @@ class TempClassLoader {
 	/**
 	 * Registers the cached class loader.
 	 *
-	 * @return boolean TRUE in case of success
+	 * @return bool TRUE in case of success
 	 */
 	static public function registerAutoloader() {
 		if (self::$isRegistered) {

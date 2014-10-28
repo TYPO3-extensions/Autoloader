@@ -108,7 +108,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 *
 	 * @param string $extensionKey
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	private function extensionHasSmartObjects($extensionKey) {
 		if ($this->getSmartObjectsForExtensionKey($extensionKey)) {

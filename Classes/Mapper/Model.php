@@ -24,7 +24,7 @@ class Model implements MapperInterface {
 	 *
 	 * @param string $type
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canHandleType($type) {
 		if (!class_exists($type)) {

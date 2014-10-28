@@ -286,7 +286,7 @@ class Loader implements SingletonInterface {
 	 *
 	 * @param $class
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isInstantiableClass($class) {
 		#if (!class_exists($class)) {

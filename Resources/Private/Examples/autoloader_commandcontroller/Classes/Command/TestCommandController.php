@@ -30,7 +30,7 @@ class TestCommandController extends CommandController {
 	 * Run a test command
 	 *
 	 * @param string  $text
-	 * @param boolean $boolTest
+	 * @param bool $boolTest
 	 */
 	public function runCommand($text, $boolTest) {
 

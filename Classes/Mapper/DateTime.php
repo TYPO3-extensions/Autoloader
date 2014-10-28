@@ -23,7 +23,7 @@ class DateTime implements MapperInterface {
 	 *
 	 * @param string $type
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canHandleType($type) {
 		return in_array(strtolower(trim($type, '\\')), array(

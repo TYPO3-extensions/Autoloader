@@ -23,7 +23,7 @@ interface MapperInterface extends SingletonInterface {
 	 *
 	 * @param string $type
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canHandleType($type);
 

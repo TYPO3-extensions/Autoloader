@@ -61,7 +61,7 @@ class FileUtility {
 	 *
 	 * @param string  $dirPath
 	 * @param string  $fileExtension
-	 * @param boolean $recursively
+	 * @param bool $recursively
 	 *
 	 * @return array
 	 * @todo migrate this into the getBaseFilesInDir or rethink the fetch handling

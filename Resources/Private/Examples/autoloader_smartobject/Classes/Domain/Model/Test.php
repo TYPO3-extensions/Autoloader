@@ -30,7 +30,7 @@ class Test extends AbstractEntity {
 	/**
 	 * A boolean
 	 *
-	 * @var boolean
+	 * @var bool
 	 * @db
 	 */
 	protected $boolField;
@@ -72,7 +72,7 @@ class Test extends AbstractEntity {
 	/**
 	 * Boolean
 	 *
-	 * @param boolean $boolField
+	 * @param bool $boolField
 	 */
 	public function setBoolField($boolField) {
 		$this->boolField = $boolField;
@@ -81,7 +81,7 @@ class Test extends AbstractEntity {
 	/**
 	 * Boolean
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getBoolField() {
 		return $this->boolField;

@@ -23,7 +23,7 @@ class ObjectStorage implements MapperInterface {
 	 *
 	 * @param string $type
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function canHandleType($type) {
 		return stristr(trim($type, '\\'), 'typo3\\cms\\extbase\\persistence\\objectstorage') !== FALSE;
