@@ -55,6 +55,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param array  $loaderInformation
 	 *
 	 * @return null
+	 * @todo add TS only once (internal check)
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		if ($loaderInformation) {
@@ -69,6 +70,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param array  $loaderInformation
 	 *
 	 * @return null
+	 * @todo add TS only once (internal check)
 	 */
 	public function loadExtensionConfiguration(Loader $loader, array $loaderInformation) {
 		if ($loaderInformation) {
