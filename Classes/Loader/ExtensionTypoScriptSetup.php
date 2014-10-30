@@ -55,12 +55,9 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param array  $loaderInformation
 	 *
 	 * @return null
-	 * @todo add TS only once (internal check)
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
-		if ($loaderInformation) {
-			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
-		}
+		$this->addTypoScript($loaderInformation);
 	}
 
 	/**
@@ -70,9 +67,19 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 	 * @param array  $loaderInformation
 	 *
 	 * @return null
-	 * @todo add TS only once (internal check)
 	 */
 	public function loadExtensionConfiguration(Loader $loader, array $loaderInformation) {
+		$this->addTypoScript($loaderInformation);
+	}
+
+	/**
+	 * Add the given loader information as TypoScript
+	 *
+	 * @param array $loaderInformation
+	 *
+	 * @todo add TS only once (internal check)
+	 */
+	protected function addTypoScript(array $loaderInformation) {
 		if ($loaderInformation) {
 			ExtensionManagementUtility::addTypoScriptSetup(implode(LF, $loaderInformation));
 		}
