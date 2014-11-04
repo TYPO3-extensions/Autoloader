@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tt_content.new_field"><![CDATA[The new Field]]></label>
 			<label index="tx_autoloadercontentobject_domain_model_content_teaser.new_field"><![CDATA[New field label (via LLL)]]></label>
 			<label index="tt_content.teaser"><![CDATA[Teaser]]></label>
 			<label index="tt_content.teaser.description"><![CDATA[Teaser description here...]]></label>

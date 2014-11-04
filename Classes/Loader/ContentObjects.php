@@ -80,14 +80,6 @@ class ContentObjects implements LoaderInterface {
 			);
 
 			SmartObjectRegister::register($entry['modelClass']);
-
-			if ($type === LoaderInterface::EXT_TABLES) {
-				if (ModelUtility::getTableNameByModelReflectionAnnotation($className)) {
-					$entry['additionalTca'] = $informationService->getCustomModelFieldTca($className);
-					$entry['tableName'] = ModelUtility::getTableName($className);
-				}
-			}
-
 			$loaderInformation[$key] = $entry;
 		}
 
@@ -164,11 +156,6 @@ class ContentObjects implements LoaderInterface {
 		// content register
 		foreach ($loaderInformation as $e => $config) {
 			SmartObjectRegister::register($config['modelClass']);
-
-			if ($config['additionalTca']) {
-				$tableName = $config['tableName'];
-				$GLOBALS['TCA'][$tableName]['columns'] = ArrayUtility::arrayMergeRecursiveOverrule($GLOBALS['TCA'][$tableName]['columns'], $config['additionalTca']);
-			}
 
 			ExtensionManagementUtility::addPlugin(array(
 				TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()),
