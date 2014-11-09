@@ -18,7 +18,6 @@ use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * ContextSensitiveHelp (CSH) based on smart objects
@@ -46,7 +45,9 @@ class ContextSensitiveHelps implements LoaderInterface {
 			$tables[] = $information['table'];
 			$path = 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Language/locallang_csh_' . $information['table'] . '.xml';
 			$realPath = GeneralUtility::getFileAbsFileName($path);
-			$this->checkCshFile($realPath, $information['class']);
+			if ($type === LoaderInterface::EXT_TABLES) {
+				$this->checkCshFile($realPath, $information['class']);
+			}
 		}
 
 		return $tables;
@@ -91,8 +92,8 @@ class ContextSensitiveHelps implements LoaderInterface {
 			->getCustomModelFieldTca($modelClass);
 		$properties = array_keys($information);
 
-		$standaloneView = new StandaloneView();
 		$templatePath = 'Resources/Private/Templates/ContextSensitiveHelp/LanguageDescription.xml';
+		$standaloneView = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$standaloneView->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('autoloader', $templatePath));
 		$standaloneView->assign('properties', $properties);
 		$content = $standaloneView->render();
