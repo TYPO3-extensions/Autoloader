@@ -40,8 +40,6 @@ class ContentObjects implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$loaderInformation = array();
 
-		$informationService = SmartObjectInformationService::getInstance();
-
 		$modelPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Classes/Domain/Model/Content/';
 		$models = FileUtility::getBaseFilesInDir($modelPath, 'php');
 		if ($models) {
