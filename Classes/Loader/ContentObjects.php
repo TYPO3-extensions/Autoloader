@@ -158,7 +158,7 @@ class ContentObjects implements LoaderInterface {
 			SmartObjectRegister::register($config['modelClass']);
 
 			ExtensionManagementUtility::addPlugin(array(
-				TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()),
+				TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()),
 				$loader->getExtensionKey() . '_' . $e
 			), 'CType');
 
@@ -188,8 +188,8 @@ class ContentObjects implements LoaderInterface {
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
     icon = ' . $icon . '
-    title = ' . TranslateUtility::getLllString('tt_content.' . $e, $loader->getExtensionKey()) . '
-    description = ' . TranslateUtility::getLllString('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
+    title = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()) . '
+    description = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
         CType = ' . $loader->getExtensionKey() . '_' . $e . '
     }
@@ -201,7 +201,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 	show = *
-	header = ' . TranslateUtility::getLllString('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()) . '
+	header = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $loader->getExtensionKey() . '.header', $loader->getExtensionKey()) . '
 }');
 		}
 

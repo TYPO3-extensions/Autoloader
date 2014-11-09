@@ -73,7 +73,7 @@ class SmartObjectInformationService {
 			$key = $tableName . '.' . $info['name'];
 			try {
 				TranslateUtility::assureLabel($key, $extensionName, $info['name']);
-				$label = TranslateUtility::getLllString($key, $extensionName);
+				$label = TranslateUtility::getLllOrHelpMessage($key, $extensionName);
 			} catch (\Exception $ex) {
 				$label = $info['name'];
 			}
