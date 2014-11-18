@@ -11,15 +11,12 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ClassReflection;
-use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -58,6 +55,8 @@ class ContentObjects implements LoaderInterface {
 				TranslateUtility::assureLabel('tt_content.' . $key, $loader->getExtensionKey(), $key . ' (Title)', NULL, 'xml');
 				TranslateUtility::assureLabel('tt_content.' . $key . '.description', $loader->getExtensionKey(), $key . ' (Description)', NULL, 'xml');
 				$fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
+				$defaultFields = $this->getDefaultTcaFields();
+				$fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
 			}
 
 			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
@@ -150,6 +149,53 @@ class ContentObjects implements LoaderInterface {
 	}
 
 	/**
+	 * Wrap the given field configuration in the CE default TCA fields
+	 *
+	 * @param string $configuration
+	 *
+	 * @return string
+	 */
+	protected function wrapDefaultTcaConfiguration($configuration) {
+		$configuration = trim($configuration) ? trim($configuration) . ',' : '';
+		return '--palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general,
+    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.header;header,
+    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
+    ' . $configuration . '
+    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,
+    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
+    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.access;access,
+    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.extended';
+	}
+
+	/**
+	 * Get the fields that are in the default configuration
+	 *
+	 * @param null|string $configuration
+	 *
+	 * @return array
+	 */
+	protected function getDefaultTcaFields($configuration = NULL) {
+		if ($configuration === NULL) {
+			$configuration = $this->wrapDefaultTcaConfiguration('');
+		}
+		$defaultFields = array();
+		$existingFields = array_keys($GLOBALS['TCA']['tt_content']['columns']);
+		$parts = GeneralUtility::trimExplode(',', $configuration, TRUE);
+		foreach ($parts as $fieldConfiguration) {
+			$fieldConfiguration = GeneralUtility::trimExplode(';', $fieldConfiguration, TRUE);
+			if (in_array($fieldConfiguration[0], $existingFields)) {
+				$defaultFields[] = $fieldConfiguration[0];
+			} elseif ($fieldConfiguration[0] == '--palette--') {
+				$paletteConfiguration = $GLOBALS['TCA']['tt_content']['palettes'][$fieldConfiguration[2]]['showitem'];
+				if (is_string($paletteConfiguration)) {
+					$defaultFields = array_merge($defaultFields, $this->getDefaultTcaFields($paletteConfiguration));
+				}
+			}
+		}
+		return $defaultFields;
+	}
+
+	/**
 	 * Run the loading process for the ext_tables.php file
 	 *
 	 * @param Loader $loader
@@ -167,17 +213,10 @@ class ContentObjects implements LoaderInterface {
 				$loader->getExtensionKey() . '_' . $e
 			), 'CType');
 
+
 			$typeKey = $loader->getExtensionKey() . '_' . $e;
 			if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
-				$baseTcaConfiguration = '
-	    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general,
-	    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.header;header,
-	    --div--;LLL:EXT:autoloader/Resources/Private/Language/locallang.xml:contentData,
-	    ' . $config['fieldConfiguration'] . ',
-	    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,
-	    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.visibility;visibility,
-	    --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.access;access,
-	    --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.extended';
+				$baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration']);
 
 				if (ExtensionManagementUtility::isLoaded('gridelements')) {
 					$baseTcaConfiguration .= ',tx_gridelements_container,tx_gridelements_columns';
@@ -203,11 +242,11 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
     }
 }');
 			$cObjectConfiguration = array(
-				'extensionKey' => $loader->getExtensionKey(),
+				'extensionKey'        => $loader->getExtensionKey(),
 				'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
-				'modelClass' => $config['modelClass']
+				'modelClass'          => $config['modelClass']
 			);
-			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][ $loader->getExtensionKey() . '_' . strtolower($config['model'])] = $cObjectConfiguration;
+			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . strtolower($config['model'])] = $cObjectConfiguration;
 		}
 
 		if ($loaderInformation) {
