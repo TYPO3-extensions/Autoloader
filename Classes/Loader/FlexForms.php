@@ -35,6 +35,8 @@ class FlexForms implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$flexForms = array();
 		$flexFormPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Configuration/FlexForms/';
+
+		// Plugins
 		$extensionName = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 		$flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath, 'xml');
 		foreach ($flexFormsFiles as $fileKey) {
@@ -44,6 +46,17 @@ class FlexForms implements LoaderInterface {
 				'path'            => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/' . $fileKey . '.xml',
 			);
 		}
+
+		// Content
+		$flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath . 'Content/', 'xml');
+		foreach ($flexFormsFiles as $fileKey) {
+			$contentSignature = strtolower($loader->getExtensionKey() . '_' . $fileKey);
+			$flexForms[] = array(
+				'contentSignature' => $contentSignature,
+				'path'             => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
+			);
+		}
+
 		return $flexForms;
 	}
 
@@ -57,9 +70,15 @@ class FlexForms implements LoaderInterface {
 	 */
 	public function loadExtensionTables(Loader $loader, array $loaderInformation) {
 		foreach ($loaderInformation as $info) {
-			$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$info['pluginSignature']] = 'layout,select_key,recursive';
-			$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$info['pluginSignature']] = 'pi_flexform';
-			ExtensionManagementUtility::addPiFlexFormValue($info['pluginSignature'], $info['path']);
+			if (isset($info['pluginSignature'])) {
+				$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$info['pluginSignature']] = 'layout,select_key,recursive';
+				$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$info['pluginSignature']] = 'pi_flexform';
+				ExtensionManagementUtility::addPiFlexFormValue($info['pluginSignature'], $info['path']);
+			} elseif (isset($info['contentSignature'])) {
+				// @todo check, why the field is not shown?!?!
+				$GLOBALS['TCA']['tt_content']['types'][$info['contentSignature']]['showitem'] .= ',pi_flexform';
+				ExtensionManagementUtility::addPiFlexFormValue('*', $info['path'], $info['contentSignature']);
+			}
 		}
 		return NULL;
 	}

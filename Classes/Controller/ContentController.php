@@ -10,9 +10,9 @@
 namespace HDNET\Autoloader\Controller;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -31,15 +31,16 @@ class ContentController extends ActionController {
 		$name = $this->settings['contentElement'];
 		$data = $this->configurationManager->getContentObject()->data;
 
-		$targetObject = $vendorName . '\\' . GeneralUtility::underscoredToUpperCamelCase($extensionKey) . '\\Domain\\Model\\Content\\' . $name;
+		$camelCaseExtKey = GeneralUtility::underscoredToUpperCamelCase($extensionKey);
+		$targetObject = $vendorName . '\\' . $camelCaseExtKey . '\\Domain\\Model\\Content\\' . $name;
 		$model = ModelUtility::getModel($targetObject, $data);
 
 		$view = $this->createStandaloneView();
 		$view->assignMultiple(array(
-			'data'   => $data,
-			'object' => $model,
+			'data'     => $data,
+			'object'   => $model,
+			'settings' => $this->settings
 		));
-
 		return $view->render();
 	}
 
@@ -69,16 +70,16 @@ class ContentController extends ActionController {
 	 *
 	 * @return object
 	 * @deprecated moved to ModelUtility
-	 * @see HDNET\Autoloader\Utility\ModelUtility::getModel
+	 * @see        HDNET\Autoloader\Utility\ModelUtility::getModel
 	 */
 	protected function getObject($objectName, $data) {
 		$query = ExtendedUtility::getQuery($objectName);
 		$query->getQuerySettings()
-		      ->setRespectStoragePage(FALSE);
+			->setRespectStoragePage(FALSE);
 		$query->getQuerySettings()
-		      ->setRespectSysLanguage(FALSE);
+			->setRespectSysLanguage(FALSE);
 		return $query->matching($query->equals('uid', $data['uid']))
-		             ->execute()
-		             ->getFirst();
+			->execute()
+			->getFirst();
 	}
 }
