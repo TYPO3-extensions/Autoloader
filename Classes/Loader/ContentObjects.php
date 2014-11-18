@@ -96,9 +96,16 @@ class ContentObjects implements LoaderInterface {
 	protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader) {
 		foreach ($loaderInformation as $configuration) {
 			$templatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
+			$beTemplatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . 'Backend.html';
 			$absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
+			$absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
 			if (!file_exists($absoluteTemplatePath)) {
-				FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, 'Use object to get access to your domain model: <f:debug>{object}</f:debug>');
+				$templateContent = 'Use object to get access to your domain model: <f:debug>{object}</f:debug>';
+				FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, $templateContent);
+
+				$beTemplateContent = 'The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
+<code>File: ' . $beTemplatePath . '</code><br /><strong>Alternative you can delete this file to go back to the old behavior.</strong><br />';
+				FileUtility::writeFileAndCreateFolder($absoluteBeTemplatePath, $beTemplateContent);
 			}
 		}
 	}
@@ -192,7 +199,12 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
         CType = ' . $loader->getExtensionKey() . '_' . $e . '
     }
 }');
-
+			$cObjectConfiguration = array(
+				'extensionKey' => $loader->getExtensionKey(),
+				'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
+				'modelClass' => $config['modelClass']
+			);
+			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][ $loader->getExtensionKey() . '_' . strtolower($config['model'])] = $cObjectConfiguration;
 		}
 
 		if ($loaderInformation) {

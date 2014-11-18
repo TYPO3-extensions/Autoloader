@@ -14,3 +14,10 @@ Summarize: Create a domain model, create a template, maybe run database compare,
 
 .. note::
 	Please also use the TcaFiles loader to create the right base TCA files for the first content objects.
+
+.. note::
+	The Autoloader creates two Template files for the ContentObject.
+	- the normal template-file for the FE
+	- a backend preview template (with suffix Backend)
+
+	If you don't need a Backend Preview for your ContentObject you can delete the template file and it will not be created again. The old behavior is in place.

@@ -171,4 +171,22 @@ class ModelUtility {
 		return $return;
 	}
 
+	/**
+	 * Get the target model.
+	 *
+	 * @param string $modelName
+	 * @param array  $data
+	 *
+	 * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+	 */
+	public static function getModel($modelName, $data) {
+		$query = ExtendedUtility::getQuery($modelName);
+		$query->getQuerySettings()
+			->setRespectStoragePage(FALSE);
+		$query->getQuerySettings()
+			->setRespectSysLanguage(FALSE);
+		return $query->matching($query->equals('uid', $data['uid']))
+			->execute()
+			->getFirst();
+	}
 }

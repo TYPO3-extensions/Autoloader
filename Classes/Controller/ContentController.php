@@ -12,6 +12,7 @@ namespace HDNET\Autoloader\Controller;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -31,18 +32,33 @@ class ContentController extends ActionController {
 		$data = $this->configurationManager->getContentObject()->data;
 
 		$targetObject = $vendorName . '\\' . GeneralUtility::underscoredToUpperCamelCase($extensionKey) . '\\Domain\\Model\\Content\\' . $name;
-		$object = $this->getObject($targetObject, $data);
+		$model = ModelUtility::getModel($targetObject, $data);
+
+		$view = $this->createStandaloneView();
+		$view->assignMultiple(array(
+			'data'   => $data,
+			'object' => $model,
+		));
+
+		return $view->render();
+	}
+
+	/**
+	 * Create a StandaloneView for the ContentObject.
+	 *
+	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
+	 */
+	protected function createStandaloneView() {
+		$extensionKey = $this->settings['extensionKey'];
+		$name = $this->settings['contentElement'];
+		$siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
 
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
 		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$view->assignMultiple(array(
-			'data'   => $data,
-			'object' => $object,
-		));
-		$view->setTemplatePathAndFilename(ExtensionManagementUtility::siteRelPath($extensionKey) . 'Resources/Private/Templates/Content/' . $name . '.html');
-		$view->setPartialRootPath(ExtensionManagementUtility::siteRelPath($extensionKey) . 'Resources/Private/Partials');
+		$view->setTemplatePathAndFilename($siteRelPath . 'Resources/Private/Templates/Content/' . $name . '.html');
+		$view->setPartialRootPath($siteRelPath . 'Resources/Private/Partials');
 
-		return $view->render();
+		return $view;
 	}
 
 	/**
@@ -52,6 +68,8 @@ class ContentController extends ActionController {
 	 * @param array  $data
 	 *
 	 * @return object
+	 * @deprecated moved to ModelUtility
+	 * @see HDNET\Autoloader\Utility\ModelUtility::getModel
 	 */
 	protected function getObject($objectName, $data) {
 		$query = ExtendedUtility::getQuery($objectName);
