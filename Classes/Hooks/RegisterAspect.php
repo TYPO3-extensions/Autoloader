@@ -134,6 +134,7 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 */
 	protected function getJoinPointMethod($joinPoint, $xClass) {
 		$config = $xClass[$joinPoint];
+		$argumentBlock = array();
 		$code = array();
 
 		$code[] = 'public function ' . $joinPoint . '(';
@@ -143,10 +144,15 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 			$args = array();
 			foreach ($config['arguments'] as $arguments) {
 				$type = '';
+				$reference = '';
 				if ($arguments['typeHint'] !== NULL || $arguments['typeHint'] !== '') {
 					$type = $arguments['typeHint'] . ' ';
 				}
-				$args[] = $type . '$' . $arguments['name'];
+				if ($arguments['reference']) {
+					$reference = '&';
+				}
+				$args[] = $type . $reference . '$' . $arguments['name'];
+				$argumentBlock[] = $reference . '$' . $arguments['name'];
 			}
 
 			$code[] = implode(',', $args);
@@ -154,9 +160,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 
 		$code[] = ') {';
 
-		$code[] = '$args = func_get_args();';
+		$code[] = '$args = array(';
+		$code[] = "\t" . implode(', ', $argumentBlock);
+		$code[] = ');';
 		$code[] = 'return $this->aspectLogic(\'' . $joinPoint . '\', $args);';
-
 		$code[] = '}';
 
 		return implode("\n", $code);
@@ -178,6 +185,10 @@ class RegisterAspect implements TableConfigurationPostProcessingHookInterface {
 	 */
 	protected function getConfigurationArray($type, $joinPoint, $advices) {
 		$code = array();
+
+		if (!$advices[$type]) {
+			return '';
+		}
 
 		$code[] = '\'' . $joinPoint . '\' => array(';
 		foreach ($advices[$type] as $method) {

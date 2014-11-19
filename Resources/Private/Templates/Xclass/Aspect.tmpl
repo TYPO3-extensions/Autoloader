@@ -110,7 +110,7 @@ class __classname__ extends __extendedClass__ {
 	 */
 	protected function before($joinPoint, $arguments) {
 		if (array_key_exists($joinPoint, $this->before)) {
-			$functionStack = $this->before[strtolower($joinPoint)];
+			$functionStack = $this->before[$joinPoint];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
@@ -130,7 +130,7 @@ class __classname__ extends __extendedClass__ {
 	 */
 	protected function after($joinPoint, $arguments) {
 		if (array_key_exists($joinPoint, $this->after)) {
-			$functionStack = $this->after[strtolower($joinPoint)];
+			$functionStack = $this->after[$joinPoint];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
@@ -150,8 +150,8 @@ class __classname__ extends __extendedClass__ {
 	 * @return array $arguments
 	 */
 	protected function replace($joinPoint, $arguments) {
-		if (array_key_exists($joinPoint, $this->replace) && $this->replace[strtolower($joinPoint)]) {
-			$functionStack = $this->replace[strtolower($joinPoint)];
+		if (array_key_exists($joinPoint, $this->replace) && $this->replace[$joinPoint]) {
+			$functionStack = $this->replace[$joinPoint];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);
@@ -180,7 +180,7 @@ class __classname__ extends __extendedClass__ {
 	 */
 	protected function throws($joinPoint, $arguments, \Exception $e) {
 		if (array_key_exists($joinPoint, $this->throw)) {
-			$functionStack = $this->throw[strtolower($joinPoint)];
+			$functionStack = $this->throw[$joinPoint];
 
 			foreach ($functionStack as $key => $configuration) {
 				$arguments = $this->callAspect($configuration, $arguments);

@@ -246,7 +246,8 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.ele
 				'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',
 				'modelClass'          => $config['modelClass']
 			);
-			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . strtolower($config['model'])] = $cObjectConfiguration;
+
+			$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($config['model'])] = $cObjectConfiguration;
 		}
 
 		if ($loaderInformation) {
@@ -291,5 +292,4 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 
 		return NULL;
 	}
-
 }

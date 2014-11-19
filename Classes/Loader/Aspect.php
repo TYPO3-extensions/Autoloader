@@ -49,26 +49,35 @@ class Aspect implements LoaderInterface {
 				continue;
 			}
 
-			/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-			$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $aspectClass);
-			foreach ($classReflection->getMethods() as $methodReflection) {
-				/** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
-				$methodTags = $methodReflection->getTagsValues();
+			try {
+				/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
+				$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $aspectClass);
+				foreach ($classReflection->getMethods() as $methodReflection) {
+					/** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
+					$methodTags = $methodReflection->getTagsValues();
 
-				if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinPoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
-					$aspectClassName = trim($methodTags['aspectClass'][0], '\\');
-					$aspectJoinPoint = trim($methodTags['aspectJoinPoint'][0]);
-					$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
+					if (isset($methodTags['aspectClass'][0]) && isset($methodTags['aspectJoinPoint'][0]) && isset($methodTags['aspectAdvice'][0])) {
+						$aspectClassName = trim($methodTags['aspectClass'][0], '\\');
+						$aspectJoinPoint = trim($methodTags['aspectJoinPoint'][0]);
 
-					$aspects[] = array(
-						'aspectClassName'          => $aspectClassName,
-						'aspectJoinPoint'          => $aspectJoinPoint,
-						'aspectJoinPointArguments' => $aspectJpArguments,
-						'aspectAdvice'             => trim($methodTags['aspectAdvice'][0]),
-						'originClassName'          => $aspectClass,
-						'originMethodName'         => $methodReflection->getName()
-					);
+						// check only if class exists
+						$loader->isInstantiableClass($aspectClassName);
+
+						$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
+
+						$aspects[] = array(
+							'aspectClassName'          => $aspectClassName,
+							'aspectJoinPoint'          => $aspectJoinPoint,
+							'aspectJoinPointArguments' => $aspectJpArguments,
+							'aspectAdvice'             => trim($methodTags['aspectAdvice'][0]),
+							'originClassName'          => $aspectClass,
+							'originMethodName'         => $methodReflection->getName()
+						);
+					}
 				}
+			} catch (\Exception $e) {
+				// Class or file is not available for Aspects $aspectClassName
+				continue;
 			}
 		}
 
@@ -77,11 +86,14 @@ class Aspect implements LoaderInterface {
 
 	/**
 	 * Get the Arguments from the original method via Reflection.
+	 * If the $aspectClassName not available (e.g. Extension is not installed) then
+	 * throw a Exception.
 	 *
 	 * @param $aspectClassName
 	 * @param $aspectJoinPoint
 	 *
 	 * @return array
+	 * @throws \HDNET\Autoloader\Exception
 	 */
 	protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint) {
 		$reflectionClass = new \ReflectionClass($aspectClassName);
@@ -94,7 +106,8 @@ class Aspect implements LoaderInterface {
 		foreach ($methodArguments as $argument) {
 			$arguments[] = array(
 				'name'     => $argument->getName(),
-				'typeHint' => $argument->getClass()->name
+				'typeHint' => $argument->getClass()->name,
+				'reference' => $argument->isPassedByReference()
 			);
 		}
 

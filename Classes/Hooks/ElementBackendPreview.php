@@ -55,7 +55,10 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 *
 	 * @return string
 	 */
-	protected function getBackendPreview($row) {
+	public function getBackendPreview($row) {
+		if(!$this->hasBackendPreview($row)) {
+			return '';
+		}
 		$ctype = $row['CType'];
 		/** @var array $config */
 		$config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
@@ -64,9 +67,9 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 
 		$view = ExtendedUtility::createExtensionStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
 		$view->assignMultiple(array(
-				'data'   => $row,
-				'object' => $model
-			));
+			'data'   => $row,
+			'object' => $model
+		));
 		return $view->render();
 	}
 
@@ -77,17 +80,16 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 *
 	 * @return bool
 	 */
-	protected function hasBackendPreview($row) {
+	public function hasBackendPreview($row) {
+		if(!$this->isAutoloaderContenobject($row)) {
+			return FALSE;
+		}
 		$ctype = $row['CType'];
 		/** @var array $config */
 		$config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
 
 		$beTemplatePath = GeneralUtility::getFileAbsFileName($config['backendTemplatePath']);
-
-		if (file_exists($beTemplatePath)) {
-			return TRUE;
-		}
-		return FALSE;
+		return is_file($beTemplatePath);
 	}
 
 	/**
@@ -97,7 +99,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 *
 	 * @return bool
 	 */
-	protected function isAutoloaderContenobject(array $row) {
+	public function isAutoloaderContenobject(array $row) {
 		$ctype = $row['CType'];
 		return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
 	}
