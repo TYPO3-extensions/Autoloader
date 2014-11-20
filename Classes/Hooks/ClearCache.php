@@ -10,6 +10,7 @@
 namespace HDNET\Autoloader\Hooks;
 
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -76,6 +77,14 @@ class ClearCache implements ClearCacheActionsHookInterface {
 	 * @return bool
 	 */
 	protected function isAdmin() {
-		return is_object($GLOBALS['BE_USER']) && $GLOBALS['BE_USER']->isAdmin();
+		return is_object($this->getBackendUserAuthentication()) && $this->getBackendUserAuthentication()
+			->isAdmin();
+	}
+
+	/**
+	 * @return BackendUserAuthentication
+	 */
+	protected function getBackendUserAuthentication() {
+		return $GLOBALS['BE_USER'];
 	}
 }

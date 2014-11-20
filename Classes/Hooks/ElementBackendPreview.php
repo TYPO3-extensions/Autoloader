@@ -13,6 +13,7 @@ use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use TYPO3\CMS\Backend\View\PageLayoutView;
 
 /**
  * Class ElementBackendPreview
@@ -26,15 +27,15 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	/**
 	 * Preprocesses the preview rendering of a content element.
 	 *
-	 * @param \TYPO3\CMS\Backend\View\PageLayoutView $parentObject  Calling parent object
-	 * @param bool                                   $drawItem      Whether to draw the item using the default functionalities
-	 * @param string                                 $headerContent Header content
-	 * @param string                                 $itemContent   Item content
-	 * @param array                                  $row           Record row of tt_content
+	 * @param PageLayoutView $parentObject  Calling parent object
+	 * @param bool           $drawItem      Whether to draw the item using the default functionalities
+	 * @param string         $headerContent Header content
+	 * @param string         $itemContent   Item content
+	 * @param array          $row           Record row of tt_content
 	 *
 	 * @return void
 	 */
-	public function preProcess(\TYPO3\CMS\Backend\View\PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) {
+	public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) {
 		if (!$this->isAutoloaderContenobject($row)) {
 			return;
 		}
@@ -116,7 +117,9 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
 		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($absTemplatePathAndFilename);
-		$view->setPartialRootPath($siteRelPath . 'Resources/Private/Partials');
+		$partialPath = $siteRelPath . 'Resources/Private/Partials';
+		// @todo add setPartialRootPaths check for TYPO3 CMS 7.0 / move to central function see ContentController
+		$view->setPartialRootPath($partialPath);
 
 		return $view;
 	}

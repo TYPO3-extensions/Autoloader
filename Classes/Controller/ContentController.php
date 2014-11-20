@@ -57,7 +57,9 @@ class ContentController extends ActionController {
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
 		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($siteRelPath . 'Resources/Private/Templates/Content/' . $name . '.html');
-		$view->setPartialRootPath($siteRelPath . 'Resources/Private/Partials');
+		$partialPath = $siteRelPath . 'Resources/Private/Partials';
+		// @todo add setPartialRootPaths check for TYPO3 CMS 7.0 / move to central function see ElementBackendPreview
+		$view->setPartialRootPath($partialPath);
 
 		return $view;
 	}
