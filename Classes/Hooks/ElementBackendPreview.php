@@ -62,7 +62,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 
 		$model = ModelUtility::getModel($config['modelClass'], $row);
 
-		$view = $this->createStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
+		$view = ExtendedUtility::createExtensionStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
 		$view->assignMultiple(array(
 				'data'   => $row,
 				'object' => $model
@@ -100,28 +100,6 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	protected function isAutoloaderContenobject(array $row) {
 		$ctype = $row['CType'];
 		return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
-	}
-
-	/**
-	 * Create a StandaloneView for the ContentObject.
-	 *
-	 * @param string $extensionKey
-	 * @param string $backendTemplatePath
-	 *
-	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
-	 */
-	protected function createStandaloneView($extensionKey, $backendTemplatePath) {
-		$siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
-		$absTemplatePathAndFilename = GeneralUtility::getFileAbsFileName($backendTemplatePath);
-
-		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$view->setTemplatePathAndFilename($absTemplatePathAndFilename);
-		$partialPath = $siteRelPath . 'Resources/Private/Partials';
-		// @todo add setPartialRootPaths check for TYPO3 CMS 7.0 / move to central function see ContentController
-		$view->setPartialRootPath($partialPath);
-
-		return $view;
 	}
 
 }

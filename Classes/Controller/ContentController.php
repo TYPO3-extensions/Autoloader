@@ -52,16 +52,9 @@ class ContentController extends ActionController {
 	protected function createStandaloneView() {
 		$extensionKey = $this->settings['extensionKey'];
 		$name = $this->settings['contentElement'];
-		$siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
 
-		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$view->setTemplatePathAndFilename($siteRelPath . 'Resources/Private/Templates/Content/' . $name . '.html');
-		$partialPath = $siteRelPath . 'Resources/Private/Partials';
-		// @todo add setPartialRootPaths check for TYPO3 CMS 7.0 / move to central function see ElementBackendPreview
-		$view->setPartialRootPath($partialPath);
-
-		return $view;
+		$templatePath = 'EXT:' . $extensionKey . '/Resources/Private/Templates/Content/' . $name . '.html';
+		return ExtendedUtility::createExtensionStandaloneView($extensionKey, $templatePath);
 	}
 
 	/**

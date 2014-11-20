@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -106,6 +107,36 @@ class ExtendedUtility {
 		$location = GeneralUtility::trimExplode('|', $location, TRUE);
 		array_push($location, 'via_autoloader_' . GeneralUtility::shortMD5($configuration));
 		ArrayUtility::setNodes(array(implode('|', $location) => $configuration), $GLOBALS);
+	}
+
+	/**
+	 * Create a StandaloneView for a extension context
+	 *
+	 * @param string $extensionKey
+	 * @param string $templatePath
+	 *
+	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
+	 */
+	static public function createExtensionStandaloneView($extensionKey, $templatePath) {
+		$siteRelPath = ExtensionManagementUtility::siteRelPath($extensionKey);
+		$templatePath = GeneralUtility::getFileAbsFileName($templatePath);
+
+		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
+		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$view->setTemplatePathAndFilename($templatePath);
+
+		$partialPath = $siteRelPath . 'Resources/Private/Partials';
+		$layoutPath = $siteRelPath . 'Resources/Private/Layouts';
+		if (method_exists($view, 'setPartialRootPaths') && method_exists($view, 'setLayoutRootPaths')) {
+			// TYPO3 CMS 7.0
+			$view->setPartialRootPaths(array($partialPath));
+			$view->setLayoutRootPaths(array($layoutPath));
+		} else {
+			// TYPO3 CMS 6.2 Fallback
+			$view->setPartialRootPath($partialPath);
+			$view->setLayoutRootPath($layoutPath);
+		}
+		return $view;
 	}
 
 }
