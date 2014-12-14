@@ -11,7 +11,6 @@ namespace HDNET\Autoloader\Hooks;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 

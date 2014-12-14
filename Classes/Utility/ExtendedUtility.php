@@ -11,6 +11,7 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Utility functions for the Autoloader
@@ -127,12 +128,11 @@ class ExtendedUtility {
 
 		$partialPath = $siteRelPath . 'Resources/Private/Partials';
 		$layoutPath = $siteRelPath . 'Resources/Private/Layouts';
-		if (method_exists($view, 'setPartialRootPaths') && method_exists($view, 'setLayoutRootPaths')) {
-			// TYPO3 CMS 7.0
+
+		if (GeneralUtility::compat_version('7.0')) {
 			$view->setPartialRootPaths(array($partialPath));
 			$view->setLayoutRootPaths(array($layoutPath));
 		} else {
-			// TYPO3 CMS 6.2 Fallback
 			$view->setPartialRootPath($partialPath);
 			$view->setLayoutRootPath($layoutPath);
 		}
