@@ -95,13 +95,13 @@ class SmartObjectManager implements SingletonInterface {
 				$extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
 			}
 			preg_match(
-				'/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z\\\\]+)$/ix',
+				'/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix',
 				$modelClassName,
 				$matches
 			);
 		} else {
 			preg_match(
-				'/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z_]+)$/ix',
+				'/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z0-9_]+)$/ix',
 				$modelClassName,
 				$matches
 			);
