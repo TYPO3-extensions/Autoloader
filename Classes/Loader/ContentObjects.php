@@ -74,6 +74,7 @@ class ContentObjects implements LoaderInterface {
 				'modelClass'         => $className,
 				'model'              => $model,
 				'icon'               => $icon,
+				'noHeader'           => $this->isTaggedWithNoHeader($className),
 			);
 
 			SmartObjectRegister::register($entry['modelClass']);
@@ -83,6 +84,19 @@ class ContentObjects implements LoaderInterface {
 		$this->checkAndCreateDummyTemplates($loaderInformation, $loader);
 
 		return $loaderInformation;
+	}
+
+	/**
+	 * Check if the class is tagged with noHeader
+	 *
+	 * @param $class
+	 *
+	 * @return bool
+	 */
+	protected function isTaggedWithNoHeader($class) {
+		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
+		$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $class);
+		return $classReflection->isTaggedWith('noHeader');
 	}
 
 	/**
@@ -279,7 +293,7 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 			ExtensionManagementUtility::addTypoScript($loader->getExtensionKey(), 'setup', trim('
         tt_content.' . $loader->getExtensionKey() . '_' . $e . ' = COA
         tt_content.' . $loader->getExtensionKey() . '_' . $e . ' {
-            10 =< lib.stdheader
+            ' . ($config['noHeader'] ? '' : '10 =< lib.stdheader') . '
             20 =< tt_content.list.20.autoloader_content
             20.settings {
                 contentElement = ' . $config['model'] . '
