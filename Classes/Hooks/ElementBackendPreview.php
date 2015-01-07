@@ -9,10 +9,11 @@
 namespace HDNET\Autoloader\Hooks;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
-use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
+use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ElementBackendPreview
@@ -43,6 +44,11 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 			return;
 		}
 
+		if (!ExtensionManagementUtility::isLoaded('css_styled_content')) {
+			// @todo avoid exception in the backend. Check why the backend is broken
+			return '';
+		}
+
 		$itemContent = $this->getBackendPreview($row);
 		$drawItem = FALSE;
 	}
@@ -55,7 +61,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 * @return string
 	 */
 	public function getBackendPreview($row) {
-		if(!$this->hasBackendPreview($row)) {
+		if (!$this->hasBackendPreview($row)) {
 			return '';
 		}
 		$ctype = $row['CType'];
@@ -80,7 +86,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 * @return bool
 	 */
 	public function hasBackendPreview($row) {
-		if(!$this->isAutoloaderContenobject($row)) {
+		if (!$this->isAutoloaderContenobject($row)) {
 			return FALSE;
 		}
 		$ctype = $row['CType'];
@@ -100,7 +106,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 	 */
 	public function isAutoloaderContenobject(array $row) {
 		$ctype = $row['CType'];
-		return (bool) $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
+		return (bool)$GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
 	}
 
 }

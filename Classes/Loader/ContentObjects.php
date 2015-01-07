@@ -245,23 +245,45 @@ mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . ' {
 	 */
 	public function loadExtensionConfiguration(Loader $loader, array $loaderInformation) {
 		static $loadPlugin = TRUE;
+		$csc = ExtensionManagementUtility::isLoaded('css_styled_content');
+		$typoScript = '';
+
 		if ($loadPlugin) {
 			$loadPlugin = FALSE;
 			ExtensionUtility::configurePlugin('HDNET.autoloader', 'Content', array('Content' => 'index'), array('Content' => ''));
+			if (!$csc) {
+				$typoScript .= 'tt_content = CASE
+tt_content.key.field = CType';
+			}
 		}
 		foreach ($loaderInformation as $e => $config) {
-			ExtensionManagementUtility::addTypoScript($loader->getExtensionKey(), 'setup', trim('
+			$typoScript .= '
         tt_content.' . $loader->getExtensionKey() . '_' . $e . ' = COA
         tt_content.' . $loader->getExtensionKey() . '_' . $e . ' {
             ' . ($config['noHeader'] ? '' : '10 =< lib.stdheader') . '
-            20 =< tt_content.list.20.autoloader_content
-            20.settings {
-                contentElement = ' . $config['model'] . '
-                extensionKey = ' . $loader->getExtensionKey() . '
-                vendorName = ' . $loader->getVendorName() . '
+            20 = USER
+            20 {
+                userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+                extensionName = Autoloader
+                pluginName = Content
+                vendorName = HDNET
+                settings {
+	                contentElement = ' . $config['model'] . '
+	                extensionKey = ' . $loader->getExtensionKey() . '
+	                vendorName = ' . $loader->getVendorName() . '
+	            }
             }
         }
-                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content'), 43);
+
+
+
+                config.tx_extbase.persistence.classes.' . $config['modelClass'] . '.mapping.tableName = tt_content';
+		}
+
+		if ($csc) {
+			ExtensionManagementUtility::addTypoScript($loader->getExtensionKey(), 'setup', $typoScript, 43);
+		} else {
+			ExtensionManagementUtility::addTypoScriptSetup($typoScript);
 		}
 
 		return NULL;
