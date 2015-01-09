@@ -68,7 +68,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 		/** @var array $config */
 		$config = $GLOBALS['TYPO3_CONF_VARS']['AUTOLOADER']['ContentObject'][$ctype];
 
-		$model = ModelUtility::getModel($config['modelClass'], $row);
+		$model = ModelUtility::getModel($config['modelClass'], $row, TRUE);
 
 		$view = ExtendedUtility::createExtensionStandaloneView($config['extensionKey'], $config['backendTemplatePath']);
 		$view->assignMultiple(array(

@@ -9,9 +9,11 @@
 
 namespace HDNET\Autoloader\Utility;
 
+use HDNET\Autoloader\Persistence\ExcludeIdentityMapDataMapper;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Utility to interact with the Model
@@ -129,17 +131,44 @@ class ModelUtility {
 	 *
 	 * @param string $modelName
 	 * @param array  $data
+	 * @param bool   $ignoreEnableFields
+	 * @param int    $overwriteLanguage
 	 *
 	 * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 */
-	public static function getModel($modelName, $data) {
+	public static function getModel($modelName, $data, $ignoreEnableFields = FALSE) {
 		$query = ExtendedUtility::getQuery($modelName);
 		$query->getQuerySettings()
-			->setRespectStoragePage(FALSE);
+			->setIgnoreEnableFields($ignoreEnableFields);
 		$query->getQuerySettings()
-			->setRespectSysLanguage(FALSE);
-		return $query->matching($query->equals('uid', $data['uid']))
-			->execute()
+			->setRespectStoragePage(FALSE);
+
+
+		$query->matching($query->equals('uid', $data['uid']));
+
+		if ($ignoreEnableFields) {
+			// Backend selection
+			if ((isset($data['l18n_parent']) && $data['l18n_parent'] > 0) && $data['sys_language_uid']) {
+				$query->getQuerySettings()
+					->setLanguageOverlayMode(FALSE);
+				$query->getQuerySettings()
+					->setLanguageMode(FALSE);
+				$query->getQuerySettings()
+					->setRespectSysLanguage(TRUE);
+				$query->getQuerySettings()
+					->setLanguageUid($data['sys_language_uid']);
+			}
+
+			$rows = $query->execute(TRUE);
+			$objectManager = new ObjectManager();
+			/** @var ExcludeIdentityMapDataMapper $dataMapper */
+			$dataMapper = $objectManager->get('HDNET\\Autoloader\\Persistence\\ExcludeIdentityMapDataMapper');
+			$objects = $dataMapper->map($modelName, $rows);
+			return current($objects);
+		}
+
+		return $query->execute()
 			->getFirst();
+
 	}
 }
