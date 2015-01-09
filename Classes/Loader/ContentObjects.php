@@ -13,6 +13,7 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -59,21 +60,11 @@ class ContentObjects implements LoaderInterface {
 				$fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
 			}
 
-			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
-			$extPath = ExtensionManagementUtility::extPath($loader->getExtensionKey());
-			if (is_file($extPath . 'ext_icon.png')) {
-				$icon .= 'ext_icon.png';
-			} elseif (is_file($extPath . 'ext_icon.gif')) {
-				$icon .= 'ext_icon.gif';
-			} else {
-				$icon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
-			}
-
 			$entry = array(
 				'fieldConfiguration' => implode(',', $fieldConfiguration),
 				'modelClass'         => $className,
 				'model'              => $model,
-				'icon'               => $icon,
+				'icon'               => IconUtility::getByExtensionKey($loader->getExtensionKey()),
 				'noHeader'           => $this->isTaggedWithNoHeader($className),
 			);
 
@@ -215,16 +206,9 @@ class ContentObjects implements LoaderInterface {
 				$GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
 			}
 
-			$icon = ExtensionManagementUtility::extRelPath($loader->getExtensionKey());
-			if (is_file(ExtensionManagementUtility::extPath($loader->getExtensionKey(), 'ext_icon.gif'))) {
-				$icon .= 'ext_icon.gif';
-			} else {
-				$icon .= 'ext_icon.png';
-			}
-
 			ExtensionManagementUtility::addPageTSConfig('
 mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
-    icon = ' . $icon . '
+    icon = ' . IconUtility::getByExtensionKey($loader->getExtensionKey()) . '
     title = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {

@@ -14,6 +14,7 @@ use HDNET\Autoloader\Mapper;
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
+use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
@@ -121,8 +122,6 @@ class SmartObjectInformationService {
 		$dataImplementations = $dataSet->getAllAndExcludeList($excludes);
 		$baseTca = $dataSet->getTcaInformation($dataImplementations, $tableName);
 
-		// extension icon
-
 		// title
 		$fields = array_keys($customFields);
 		$labelField = 'title';
@@ -162,7 +161,7 @@ class SmartObjectInformationService {
 				'sortby'        => 'sorting',
 				'delete'        => 'deleted',
 				'searchFields'  => implode(',', $searchFields),
-				'iconfile'      => $this->getTableIcon($modelClassName)
+				'iconfile'      => IconUtility::getByModelName($modelClassName)
 			),
 			'interface' => array(
 				'showRecordFieldList' => implode(',', array_keys($baseTca['columns'])),
@@ -175,22 +174,6 @@ class SmartObjectInformationService {
 			),
 		);
 		return ArrayUtility::mergeRecursiveDistinct($baseTca, $overrideTca);
-	}
-
-	/**
-	 * Get the table icon for the given model name
-	 *
-	 * @param string $modelClassName
-	 *
-	 * @return string
-	 */
-	protected function getTableIcon($modelClassName) {
-		$modelInformation = ClassNamingUtility::explodeObjectModelName($modelClassName);
-		$extensionName = GeneralUtility::camelCaseToLowerCaseUnderscored($modelInformation['extensionName']);
-		$modelName = str_replace('\\', '_', $modelInformation['modelName']);
-		$tableIconRelPath = ExtensionManagementUtility::extRelPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png';
-		$tableDefaultIcon = ExtensionManagementUtility::extRelPath('autoloader') . 'ext_icon.png';
-		return is_file(ExtensionManagementUtility::extPath($extensionName) . 'Resources/Public/Icons/' . $modelName . '.png') ? $tableIconRelPath : $tableDefaultIcon;
 	}
 
 	/**
