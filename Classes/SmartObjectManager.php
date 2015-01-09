@@ -10,6 +10,7 @@
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
@@ -72,47 +73,6 @@ class SmartObjectManager implements SingletonInterface {
 	}
 
 	/**
-	 * Get the extension key by the given model name
-	 *
-	 * @param string|object $modelClassName
-	 *
-	 * @return string
-	 * @throws \HDNET\Autoloader\Exception
-	 */
-	static public function getExtensionKeyByModel($modelClassName) {
-		$matches = array();
-
-		if (is_object($modelClassName)) {
-			$modelClassName = get_class($modelClassName);
-		}
-
-		if (strpos($modelClassName, '\\') !== FALSE) {
-			if (substr($modelClassName, 0, 9) === 'TYPO3\\CMS') {
-				$extensionName = '^(?P<vendorName>[^\\\\]+\\\[^\\\\]+)\\\(?P<extensionName>[^\\\\]+)';
-			} else {
-				$extensionName = '^(?P<vendorName>[^\\\\]+)\\\\(?P<extensionName>[^\\\\]+)';
-			}
-			preg_match(
-				'/' . $extensionName . '\\\\Domain\\\\Model\\\\(?P<modelName>[a-z0-9\\\\]+)$/ix',
-				$modelClassName,
-				$matches
-			);
-		} else {
-			preg_match(
-				'/^Tx_(?P<extensionName>[^_]+)_Domain_Model_(?P<modelName>[a-z0-9_]+)$/ix',
-				$modelClassName,
-				$matches
-			);
-		}
-
-		if(empty($matches)) {
-			throw new Exception('Could not determine extension key for: ' . $modelClassName, 1406577758);
-		}
-
-		return GeneralUtility::camelCaseToLowerCaseUnderscored($matches['extensionName']);
-	}
-
-	/**
 	 * Check and create the TCA information
 	 * disable this for better performance
 	 */
@@ -130,7 +90,7 @@ class SmartObjectManager implements SingletonInterface {
 		);
 
 		foreach ($register as $model) {
-			$extensionKey = self::getExtensionKeyByModel($model);
+			$extensionKey = ClassNamingUtility::getExtensionKeyByModel($model);
 			$basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
 
 			if (ModelUtility::getTableNameByModelReflectionAnnotation($model)) {

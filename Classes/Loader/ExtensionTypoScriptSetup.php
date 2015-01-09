@@ -12,8 +12,8 @@ namespace HDNET\Autoloader\Loader;
 
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
-use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
+use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -137,7 +137,7 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 		$smartObjects = SmartObjectRegister::getRegister();
 		$extensionObjects = array();
 		foreach ($smartObjects as $className) {
-			$objectExtension = SmartObjectManager::getExtensionKeyByModel($className);
+			$objectExtension = ClassNamingUtility::getExtensionKeyByModel($className);
 			if ($objectExtension === $extensionKey) {
 				$extensionObjects[] = $className;
 			}

@@ -10,7 +10,6 @@
 namespace HDNET\Autoloader\Utility;
 
 use HDNET\Autoloader\Service\SmartObjectInformationService;
-use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -136,7 +135,7 @@ class ModelUtility {
 		$informationService = SmartObjectInformationService::getInstance();
 
 		foreach ($classNames as $className) {
-			if (SmartObjectManager::getExtensionKeyByModel($className) !== $extensionKey) {
+			if (ClassNamingUtility::getExtensionKeyByModel($className) !== $extensionKey) {
 				continue;
 			}
 			if (self::getTableNameByModelReflectionAnnotation($className) === $tableName) {
