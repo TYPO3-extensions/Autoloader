@@ -15,6 +15,7 @@ use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -239,25 +240,22 @@ class SmartObjectInformationService {
 	 * @return array
 	 */
 	protected function getCustomModelFields($modelClassName) {
-		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-		$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $modelClassName);
+		$properties = ReflectionUtility::getPropertiesTaggedWith($modelClassName, 'db');
 		$fields = array();
-		foreach ($classReflection->getProperties() as $property) {
+		foreach ($properties as $property) {
 			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
-			if ($property->isTaggedWith('db')) {
-				$var = '';
-				if ($property->isTaggedWith('var')) {
-					$var = $property->getTagValues('var');
-					$var = $var[0];
-				}
-
-				$dbInformation = $property->getTagValues('db');
-				$fields[] = array(
-					'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
-					'db'   => trim($dbInformation[0]),
-					'var'  => trim($var),
-				);
+			$var = '';
+			if ($property->isTaggedWith('var')) {
+				$var = $property->getTagValues('var');
+				$var = $var[0];
 			}
+
+			$dbInformation = $property->getTagValues('db');
+			$fields[] = array(
+				'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
+				'db'   => trim($dbInformation[0]),
+				'var'  => trim($var),
+			);
 		}
 		return $fields;
 	}

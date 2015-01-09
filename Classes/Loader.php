@@ -9,6 +9,7 @@
 
 namespace HDNET\Autoloader;
 
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -282,19 +283,14 @@ class Loader implements SingletonInterface {
 	}
 
 	/**
-	 * check if the class is loadable and is instantiable (exists and is no interface or abstraction etc.)
+	 * check if the class is loadable and is instantiable
+	 * (exists and is no interface or abstraction etc.)
 	 *
 	 * @param $class
 	 *
 	 * @return bool
 	 */
 	public function isInstantiableClass($class) {
-		#if (!class_exists($class)) {
-		#	return FALSE;
-		#}
-
-		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-		$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $class);
-		return $classReflection->isInstantiable();
+		return ReflectionUtility::isInstantiable($class);
 	}
 }

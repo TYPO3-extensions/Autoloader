@@ -13,10 +13,10 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -94,8 +94,7 @@ class ContentObjects implements LoaderInterface {
 	 * @return bool
 	 */
 	protected function isTaggedWithNoHeader($class) {
-		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-		$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $class);
+		$classReflection = ReflectionUtility::createReflectionClass($class);
 		return $classReflection->isTaggedWith('noHeader');
 	}
 
@@ -149,8 +148,7 @@ class ContentObjects implements LoaderInterface {
 	 */
 	protected function getClassProperties($className) {
 		$properties = array();
-		/** @var ClassReflection $classReflection */
-		$classReflection = new ClassReflection($className);
+		$classReflection = ReflectionUtility::createReflectionClass($className);
 		foreach ($classReflection->getProperties() as $property) {
 			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
 			if ($property->getDeclaringClass()

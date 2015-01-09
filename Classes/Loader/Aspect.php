@@ -13,6 +13,7 @@ use HDNET\Autoloader\Autoload\TempClassLoader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -50,9 +51,8 @@ class Aspect implements LoaderInterface {
 			}
 
 			try {
-				/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-				$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $aspectClass);
-				foreach ($classReflection->getMethods() as $methodReflection) {
+				$methods = ReflectionUtility::getPublicMethods($aspectClass);
+				foreach ($methods as $methodReflection) {
 					/** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
 					$methodTags = $methodReflection->getTagsValues();
 
@@ -96,7 +96,7 @@ class Aspect implements LoaderInterface {
 	 * @throws \HDNET\Autoloader\Exception
 	 */
 	protected function getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint) {
-		$reflectionClass = new \ReflectionClass($aspectClassName);
+		$reflectionClass = ReflectionUtility::createReflectionClass($aspectClassName);
 		$methodReflection = $reflectionClass->getMethod($aspectJoinPoint);
 
 		/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
@@ -105,8 +105,8 @@ class Aspect implements LoaderInterface {
 		/** @var $argument \ReflectionParameter */
 		foreach ($methodArguments as $argument) {
 			$arguments[] = array(
-				'name'     => $argument->getName(),
-				'typeHint' => $argument->getClass()->name,
+				'name'      => $argument->getName(),
+				'typeHint'  => $argument->getClass()->name,
 				'reference' => $argument->isPassedByReference()
 			);
 		}

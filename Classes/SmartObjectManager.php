@@ -12,10 +12,10 @@ namespace HDNET\Autoloader;
 use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\Utility\FileUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
 /**
  * Management for Smart Objects
@@ -60,9 +60,7 @@ class SmartObjectManager implements SingletonInterface {
 		if (!class_exists($className)) {
 			$return = FALSE;
 		} else {
-			/** @var ClassReflection $classReflection */
-			// do not object factory here, to take care of the loading in the ext_localconf
-			$classReflection = new ClassReflection($className);
+			$classReflection = ReflectionUtility::createReflectionClass($className);
 			$return = !(bool)(!$classReflection->isInstantiable() || !$classReflection->isTaggedWith('db'));
 		}
 

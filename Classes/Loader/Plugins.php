@@ -12,6 +12,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -51,10 +52,7 @@ class Plugins implements LoaderInterface {
 			$controllerKey = str_replace('/', '\\', $controller);
 			$controllerKey = str_replace('Controller', '', $controllerKey);
 
-			/** @var $controllerReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-			$controllerReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $controllerName);
-			$methods = $controllerReflection->getMethods();
-
+			$methods = ReflectionUtility::getPublicMethods($controllerName);
 			foreach ($methods as $method) {
 				/** @var $method \TYPO3\CMS\Extbase\Reflection\MethodReflection */
 				if ($method->isTaggedWith('plugin')) {

@@ -14,8 +14,10 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\MethodReflection;
 
 /**
  * Loading Hooks
@@ -48,8 +50,7 @@ class Hooks implements LoaderInterface {
 				continue;
 			}
 
-			/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-			$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $hookClass);
+			$classReflection = ReflectionUtility::createReflectionClass($hookClass);
 
 			// add class hook
 			$classTags = $classReflection->getTagsValues();
@@ -65,7 +66,7 @@ class Hooks implements LoaderInterface {
 			}
 
 			// add method hooks
-			foreach ($classReflection->getMethods() as $methodReflection) {
+			foreach ($classReflection->getMethods(MethodReflection::IS_PUBLIC) as $methodReflection) {
 				/** @var $methodReflection \TYPO3\CMS\Extbase\Reflection\MethodReflection */
 				$methodTags = $methodReflection->getTagsValues();
 				if (isset($methodTags['hook'])) {

@@ -13,7 +13,6 @@ use HDNET\Autoloader\Service\SmartObjectInformationService;
 use HDNET\Autoloader\SmartObjectManager;
 use HDNET\Autoloader\SmartObjectRegister;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Reflection\ClassReflection;
 
 /**
  * Utility to interact with the Model
@@ -30,7 +29,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableName($modelClassName) {
-		return self::getTableNameByModelReflectionAnnotation($modelClassName) ? : self::getTableNameByModelName($modelClassName);
+		return self::getTableNameByModelReflectionAnnotation($modelClassName) ?: self::getTableNameByModelName($modelClassName);
 	}
 
 	/**
@@ -41,7 +40,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableNameByModelReflectionAnnotation($modelClassName) {
-		$classReflection = new ClassReflection($modelClassName);
+		$classReflection = ReflectionUtility::createReflectionClass($modelClassName);
 		if ($classReflection->isTaggedWith('db')) {
 			$databaseAnnotation = $classReflection->getTagValues('db');
 			$value = trim($databaseAnnotation[0]);
@@ -85,13 +84,7 @@ class ModelUtility {
 	 * @return array
 	 */
 	static public function getSmartExcludesByModelName($name) {
-		$classReflection = new ClassReflection($name);
-		if ($classReflection->isTaggedWith('smartExclude')) {
-			$smartExclude = $classReflection->getTagValues('smartExclude');
-			return GeneralUtility::trimExplode(',', $smartExclude[0]);
-		}
-		return array();
-
+		return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'));
 	}
 
 	/**
@@ -102,13 +95,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getRecordTypeFieldByModelReflection($modelClassName) {
-		$classReflection = new ClassReflection($modelClassName);
-		if ($classReflection->isTaggedWith('recordType')) {
-			$recordType = $classReflection->getTagValues('recordType');
-			$value = trim($recordType[0]);
-			return $value === '' ? FALSE : $value;
-		}
-		return FALSE;
+		return ReflectionUtility::getFirstTagValue($modelClassName, 'recordType');
 	}
 
 	/**
@@ -119,13 +106,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getParentClassByModelReflection($modelClassName) {
-		$classReflection = new ClassReflection($modelClassName);
-		if ($classReflection->isTaggedWith('parentClass')) {
-			$parentClass = $classReflection->getTagValues('parentClass');
-			$value = trim($parentClass[0]);
-			return $value === '' ? FALSE : $value;
-		}
-		return FALSE;
+		return ReflectionUtility::getFirstTagValue($modelClassName, 'parentClass');
 	}
 
 	/**

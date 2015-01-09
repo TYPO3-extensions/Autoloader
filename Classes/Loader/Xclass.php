@@ -13,6 +13,7 @@ use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\ExtendedUtility;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -47,12 +48,9 @@ class Xclass implements LoaderInterface {
 			if (!$loader->isInstantiableClass($xclassName)) {
 				continue;
 			}
-			/** @var $xclassReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-			$xclassReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $xclassName);
-			$originalName = $xclassReflection->getParentClass()
-				->getName();
+
 			$return[] = array(
-				'source' => $originalName,
+				'source' => ReflectionUtility::getParentClassName($xclassName),
 				'target' => $xclassName,
 			);
 		}

@@ -12,6 +12,7 @@ namespace HDNET\Autoloader\Loader;
 use HDNET\Autoloader\Loader;
 use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\Utility\FileUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -46,8 +47,7 @@ class AlternativeImplementations implements LoaderInterface {
 				continue;
 			}
 
-			/** @var $classReflection \TYPO3\CMS\Extbase\Reflection\ClassReflection */
-			$classReflection = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ClassReflection', $aicClass);
+			$classReflection = ReflectionUtility::createReflectionClass($aicClass);
 			$originalName = $classReflection->getParentClass()
 				->getName();
 			$classNames[] = array(
