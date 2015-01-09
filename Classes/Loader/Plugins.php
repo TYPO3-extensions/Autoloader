@@ -60,7 +60,7 @@ class Plugins implements LoaderInterface {
 					$actionName = str_replace('Action', '', $method->getName());
 
 					foreach ($pluginKeys as $pluginKey) {
-						$this->addPluginInformation($pluginInformation, $pluginKey, $controllerKey, $actionName, $method->isTaggedWith('noCache'));
+						$pluginInformation = $this->addPluginInformation($pluginInformation, $pluginKey, $controllerKey, $actionName, $method->isTaggedWith('noCache'));
 
 					}
 				}
@@ -73,13 +73,15 @@ class Plugins implements LoaderInterface {
 	/**
 	 * Add the given plugin information to the plugin information array
 	 *
-	 * @param $pluginInformation
-	 * @param $pluginKey
-	 * @param $controllerKey
-	 * @param $actionName
-	 * @param $noCache
+	 * @param array  $pluginInformation
+	 * @param string $pluginKey
+	 * @param string $controllerKey
+	 * @param string $actionName
+	 * @param bool   $noCache
+	 *
+	 * @return array
 	 */
-	protected function addPluginInformation(&$pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache) {
+	protected function addPluginInformation(array $pluginInformation, $pluginKey, $controllerKey, $actionName, $noCache) {
 		if (!isset($pluginInformation[$pluginKey])) {
 			$pluginInformation[$pluginKey] = array(
 				'cache'   => array(),
@@ -87,21 +89,19 @@ class Plugins implements LoaderInterface {
 			);
 		}
 
-		// cache
-		if (!isset($pluginInformation[$pluginKey]['cache'][$controllerKey])) {
-			$pluginInformation[$pluginKey]['cache'][$controllerKey] = $actionName;
-		} else {
-			$pluginInformation[$pluginKey]['cache'][$controllerKey] .= ',' . $actionName;
-		}
+		$parts = $noCache ? array(
+			'cache',
+			'noCache'
+		) : array('cache');
 
-		// no Cache
-		if ($noCache) {
-			if (!isset($pluginInformation[$pluginKey]['noCache'][$controllerKey])) {
-				$pluginInformation[$pluginKey]['noCache'][$controllerKey] = $actionName;
+		foreach ($parts as $part) {
+			if (!isset($pluginInformation[$pluginKey][$part][$controllerKey])) {
+				$pluginInformation[$pluginKey][$part][$controllerKey] .= $actionName;
 			} else {
-				$pluginInformation[$pluginKey]['noCache'][$controllerKey] .= ',' . $actionName;
+				$pluginInformation[$pluginKey][$part][$controllerKey] .= ',' . $actionName;
 			}
 		}
+		return $pluginInformation;
 	}
 
 	/**
