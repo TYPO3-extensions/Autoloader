@@ -47,12 +47,9 @@ class AlternativeImplementations implements LoaderInterface {
 				continue;
 			}
 
-			$classReflection = ReflectionUtility::createReflectionClass($aicClass);
-			$originalName = $classReflection->getParentClass()
-				->getName();
 			$classNames[] = array(
-				'originalName'    => $originalName,
-				'classReflection' => $classReflection,
+				'originalName'         => ReflectionUtility::getParentClassName($aicClass),
+				'alternativeClassName' => $aicClass,
 			);
 		}
 		return $classNames;
@@ -83,7 +80,7 @@ class AlternativeImplementations implements LoaderInterface {
 		/** @var \TYPO3\CMS\Extbase\Object\Container\Container $objectManager */
 		$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\Container\\Container');
 		foreach ($loaderInformation as $classInformation) {
-			$objectManager->registerImplementation($classInformation['originalName'], $classInformation['classReflection']);
+			$objectManager->registerImplementation($classInformation['originalName'], $classInformation['alternativeClassName']);
 		}
 		return NULL;
 	}
