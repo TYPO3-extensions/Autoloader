@@ -39,13 +39,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableNameByModelReflectionAnnotation($modelClassName) {
-		$classReflection = ReflectionUtility::createReflectionClass($modelClassName);
-		if ($classReflection->isTaggedWith('db')) {
-			$databaseAnnotation = $classReflection->getTagValues('db');
-			$value = trim($databaseAnnotation[0]);
-			return $value === '' ? FALSE : $value;
-		}
-		return FALSE;
+		return ReflectionUtility::getFirstTagValue($modelClassName, 'db');
 	}
 
 	/**

@@ -93,8 +93,8 @@ class SmartObjectManager implements SingletonInterface {
 			$extensionKey = ClassNamingUtility::getExtensionKeyByModel($model);
 			$basePath = ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TCA/';
 
-			if (ModelUtility::getTableNameByModelReflectionAnnotation($model)) {
-				$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
+			$tableName = ModelUtility::getTableNameByModelReflectionAnnotation($model);
+			if ($tableName) {
 				$tcaFileName = $basePath . 'Overrides/' . $tableName . '.php';
 				$template = $overrideTemplate;
 			} else {
