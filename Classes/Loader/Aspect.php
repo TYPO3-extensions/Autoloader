@@ -61,7 +61,9 @@ class Aspect implements LoaderInterface {
 						$aspectJoinPoint = trim($methodTags['aspectJoinPoint'][0]);
 
 						// check only if class exists
-						$loader->isInstantiableClass($aspectClassName);
+						if (!$loader->isInstantiableClass($aspectClassName)) {
+							continue;
+						}
 
 						$aspectJpArguments = $this->getMethodArgumentsFromClassMethod($aspectClassName, $aspectJoinPoint);
 
