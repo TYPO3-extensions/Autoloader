@@ -108,4 +108,25 @@ class ReflectionUtility {
 		return FALSE;
 	}
 
+	/**
+	 * Get properties of the given class, that are als declared in the given class
+	 *
+	 * @param string $className
+	 *
+	 * @return array
+	 */
+	static public function getDeclaringProperties($className) {
+		$properties = array();
+		$classReflection = self::createReflectionClass($className);
+		foreach ($classReflection->getProperties() as $property) {
+			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
+			if ($property->getDeclaringClass()
+					->getName() === $classReflection->getName()
+			) {
+				$properties[] = $property->getName();
+			}
+		}
+		return $properties;
+	}
+
 }

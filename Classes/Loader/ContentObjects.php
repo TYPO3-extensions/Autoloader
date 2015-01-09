@@ -106,17 +106,20 @@ class ContentObjects implements LoaderInterface {
 	 * @param Loader $loader
 	 */
 	protected function checkAndCreateDummyTemplates(array $loaderInformation, Loader $loader) {
+		$siteRelPath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey());
 		foreach ($loaderInformation as $configuration) {
-			$templatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
-			$beTemplatePath = ExtensionManagementUtility::siteRelPath($loader->getExtensionKey()) . 'Resources/Private/Templates/Content/' . $configuration['model'] . 'Backend.html';
+			$templatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . '.html';
 			$absoluteTemplatePath = GeneralUtility::getFileAbsFileName($templatePath);
-			$absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
-			if (!file_exists($absoluteTemplatePath)) {
+			if (!is_file($absoluteTemplatePath)) {
+				$beTemplatePath = $siteRelPath . 'Resources/Private/Templates/Content/' . $configuration['model'] . 'Backend.html';
+				$absoluteBeTemplatePath = GeneralUtility::getFileAbsFileName($beTemplatePath);
+
 				$templateContent = 'Use object to get access to your domain model: <f:debug>{object}</f:debug>';
 				FileUtility::writeFileAndCreateFolder($absoluteTemplatePath, $templateContent);
 
 				$beTemplateContent = 'The ContentObject Preview is configurable in the ContentObject Backend Template.<br />
-<code>File: ' . $beTemplatePath . '</code><br /><strong>Alternative you can delete this file to go back to the old behavior.</strong><br />';
+<code>File: ' . $beTemplatePath . '</code><br />
+<strong>Alternative you can delete this file to go back to the old behavior.</strong><br />';
 				FileUtility::writeFileAndCreateFolder($absoluteBeTemplatePath, $beTemplateContent);
 			}
 		}
@@ -128,36 +131,11 @@ class ContentObjects implements LoaderInterface {
 	 * @param $className
 	 *
 	 * @return array
-	 * @see getClassProperties
 	 */
 	protected function getClassPropertiesInLowerCaseUnderscored($className) {
-		$properties = $this->getClassProperties($className);
-		foreach ($properties as $key => $value) {
-			$properties[$key] = GeneralUtility::camelCaseToLowerCaseUnderscored($value);
-		}
-		return $properties;
-	}
-
-	/**
-	 * Basic configuration for the properties.
-	 * You have to add e.g. a RTE yourself (please check the TCA documentation)
-	 *
-	 * @param string $className
-	 *
-	 * @return array
-	 */
-	protected function getClassProperties($className) {
-		$properties = array();
-		$classReflection = ReflectionUtility::createReflectionClass($className);
-		foreach ($classReflection->getProperties() as $property) {
-			/** @var \TYPO3\CMS\Extbase\Reflection\PropertyReflection $property */
-			if ($property->getDeclaringClass()
-					->getName() === $classReflection->getName()
-			) {
-				$properties[] = $property->getName();
-			}
-		}
-		return $properties;
+		return array_map(function ($value) {
+			return GeneralUtility::camelCaseToLowerCaseUnderscored($value);
+		}, ReflectionUtility::getDeclaringProperties($className));
 	}
 
 	/**
