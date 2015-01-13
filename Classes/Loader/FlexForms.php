@@ -50,7 +50,7 @@ class FlexForms implements LoaderInterface {
 		// Content
 		$flexFormsFiles = FileUtility::getBaseFilesInDir($flexFormPath . 'Content/', 'xml');
 		foreach ($flexFormsFiles as $fileKey) {
-			$contentSignature = strtolower($loader->getExtensionKey() . '_' . $fileKey);
+			$contentSignature = strtolower($loader->getExtensionKey() . '_' . GeneralUtility::camelCaseToLowerCaseUnderscored($fileKey));
 			$flexForms[] = array(
 				'contentSignature' => $contentSignature,
 				'path'             => 'FILE:EXT:' . $loader->getExtensionKey() . '/Configuration/FlexForms/Content/' . $fileKey . '.xml',
