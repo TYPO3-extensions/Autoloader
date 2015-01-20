@@ -56,6 +56,26 @@ class FileUtility {
 
 	/**
 	 * Get all base file names in the given directory with the given file extension
+	 * Check also if the directory exists
+	 *
+	 * @param string $dirPath
+	 * @param string $fileExtension
+	 *
+	 * @return array
+	 */
+	static public function getBaseFilesWithExtensionInDir($dirPath, $fileExtension) {
+		if (!is_dir($dirPath)) {
+			return array();
+		}
+		$files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
+		foreach ($files as $key => $file) {
+			$files[$key] = pathinfo($file, PATHINFO_BASENAME);
+		}
+		return array_values($files);
+	}
+
+	/**
+	 * Get all base file names in the given directory with the given file extension
 	 * Check also if the directory exists. If you scan the dir recursively you get
 	 * also the folder name. The filename is also "basename" only.
 	 *

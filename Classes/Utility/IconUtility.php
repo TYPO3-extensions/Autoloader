@@ -65,7 +65,7 @@ class IconUtility {
 	 *
 	 * @return string
 	 */
-	static protected function getIconFileExtension($absolutePathWithoutExtension) {
+	static public function getIconFileExtension($absolutePathWithoutExtension) {
 		$fileExtensions = array(
 			'svg',
 			'png',
