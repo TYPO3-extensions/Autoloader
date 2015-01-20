@@ -44,8 +44,6 @@ class Hooks implements LoaderInterface {
 		$extKey = GeneralUtility::underscoredToUpperCamelCase($loader->getExtensionKey());
 		foreach ($files as $hookFile) {
 			$hookClass = $loader->getVendorName() . '\\' . $extKey . '\\Hooks\\' . $hookFile;
-			$hookBase = 'EXT:' . $loader->getExtensionKey() . '/Classes/Hooks/' . $hookFile . '.php:' . $hookClass;
-
 			if (!$loader->isInstantiableClass($hookClass)) {
 				continue;
 			}
@@ -61,7 +59,7 @@ class Hooks implements LoaderInterface {
 				$classTags['hook'] = GeneralUtility::trimExplode(' ', $classTags['hook'], TRUE);
 				$hooks[] = array(
 					'locations'     => $classTags['hook'],
-					'configuration' => $hookBase,
+					'configuration' => $hookClass,
 				);
 			}
 
@@ -76,7 +74,7 @@ class Hooks implements LoaderInterface {
 					$methodTags['hook'] = GeneralUtility::trimExplode(' ', $methodTags['hook'], TRUE);
 					$hooks[] = array(
 						'locations'     => $methodTags['hook'],
-						'configuration' => $hookBase . '->' . $methodReflection->getName(),
+						'configuration' => $hookClass . '->' . $methodReflection->getName(),
 					);
 				}
 			}
