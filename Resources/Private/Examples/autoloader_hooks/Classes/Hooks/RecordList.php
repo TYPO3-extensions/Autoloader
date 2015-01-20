@@ -2,9 +2,9 @@
 /**
  * RecordList
  *
- * @category   Extension
- * @package    AutoloaderHooks\Hooks
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderHooks\Hooks
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\AutoloaderHooks\Hooks;
@@ -12,7 +12,7 @@ namespace HDNET\AutoloaderHooks\Hooks;
 /**
  * RecordList
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class RecordList {
 

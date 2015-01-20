@@ -2,9 +2,9 @@
 /**
  * General loading interface
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  * General loading interface
  * All Loader are singletons
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 interface LoaderInterface extends SingletonInterface {
 

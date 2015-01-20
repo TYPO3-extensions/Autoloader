@@ -2,9 +2,9 @@
 /**
  * $EM_CONF
  *
- * @category   Extension
- * @package    AutoloaderSmart
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderSmart
+ * @author   Tim Lochmüller
  */
 
 /** @var $_EXTKEY string */

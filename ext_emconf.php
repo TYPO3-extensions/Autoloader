@@ -2,9 +2,9 @@
 /**
  * $EM_CONF
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 /** @var $_EXTKEY string */
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'state'              => 'stable',
 	'clearcacheonload'   => 1,
 	'author'             => 'Tim Lochmüller',
-	'author_email'       => 'tl@hdnet.de',
+	'author_email'       => 'tim.lochmueller@hdnet.de',
 	'author_company'     => 'hdnet.de',
 	'constraints'        => array(
 		'depends'   => array(

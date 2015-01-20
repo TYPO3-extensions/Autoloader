@@ -3,9 +3,9 @@
  * This Example test the aspects before & after.
  * This example show, that not all 'AFTER' aspects works as expected.
  *
- * @category   Extension
- * @package    AutoloaderAspect\Aspect
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderAspect\Aspect
+ * @author   Carsten Biebricher
  */
 
 namespace HDNET\AutoloaderAspect\Aspect;
@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This Example test the aspects before & after.
  *
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author Carsten Biebricher
  */
 class RecordList {
 

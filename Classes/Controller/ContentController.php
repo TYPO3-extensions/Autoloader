@@ -2,9 +2,9 @@
 /**
  * Content Controller
  *
- * @category   Extension
- * @package    Autoloader\Controller
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Controller
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Controller;
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Content Controller
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class ContentController extends ActionController {
 

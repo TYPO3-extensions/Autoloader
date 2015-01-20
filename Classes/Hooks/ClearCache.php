@@ -2,9 +2,9 @@
 /**
  * Clear Cache hook for the Backend
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Hooks;
@@ -13,14 +13,13 @@ use HDNET\Autoloader\Utility\IconUtility;
 use TYPO3\CMS\Backend\Toolbar\ClearCacheActionsHookInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\AjaxRequestHandler;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Clear Cache hook for the Backend
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
- * @hook       TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
+ * @author Tim Lochmüller
+ * @hook   TYPO3_CONF_VARS|SC_OPTIONS|additionalBackendItems|cacheActions
  */
 class ClearCache implements ClearCacheActionsHookInterface {
 

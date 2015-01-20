@@ -2,9 +2,9 @@
 /**
  * TranslateUtility.php
  *
- * @category   Extension
- * @package    Autoloader\Utility
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Utility
+ * @author   Carsten Biebricher
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * TranslateUtility
  *
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author Carsten Biebricher
  */
 class TranslateUtility {
 

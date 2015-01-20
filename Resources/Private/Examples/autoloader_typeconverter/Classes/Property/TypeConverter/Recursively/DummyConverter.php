@@ -2,9 +2,9 @@
 /**
  * Dummy Type Converter (second level)
  *
- * @category   Extension
- * @package    AutoloaderTypeconverter\Property\TypeConverter
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderTypeconverter\Property\TypeConverter
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\AutoloaderTypeconverter\Property\TypeConverter\Recursively;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 /**
  * Dummy Type Converter (second level)
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class DummyConverter extends AbstractTypeConverter {
 

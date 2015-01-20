@@ -2,9 +2,9 @@
 /**
  * Slot for the Login controller
  *
- * @category   Extension
- * @package    AutoloaderSlots\Slots
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderSlots\Slots
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\AutoloaderSlots\Slots;
@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Slot for the Login controller
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class LoginController {
 

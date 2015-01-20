@@ -2,9 +2,9 @@
 /**
  * Exception.php
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Spiekerkoetter
  */
 
 namespace HDNET\Autoloader;
@@ -12,7 +12,7 @@ namespace HDNET\Autoloader;
 /**
  * Exception
  *
- * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ * @author Tim Spiekerkoetter
  */
 class Exception extends \Exception {
 

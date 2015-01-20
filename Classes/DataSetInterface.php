@@ -2,9 +2,9 @@
 /**
  * data set interface
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * data set interface
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 interface DataSetInterface extends SingletonInterface {
 

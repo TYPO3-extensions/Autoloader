@@ -2,9 +2,9 @@
 /**
  * SmartObjectInformationService.php
  *
- * @category   Extension
- * @package    Autoloader\Service
- * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Service
+ * @author   Tim Spiekerkoetter
  */
 
 namespace HDNET\Autoloader\Service;
@@ -18,13 +18,12 @@ use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * SmartObjectInformationService
  *
- * @author     Tim Spiekerkoetter <tim.spiekerkoetter@hdnet.de>
+ * @author Tim Spiekerkoetter
  */
 class SmartObjectInformationService {
 

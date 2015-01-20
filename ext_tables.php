@@ -2,9 +2,9 @@
 /**
  * General ext_tables file and also an example for your own extension
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 if (!defined('TYPO3_MODE')) {

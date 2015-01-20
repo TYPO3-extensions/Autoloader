@@ -2,9 +2,9 @@
 /**
  * Loading CommandController
  *
- * @category   Extension
- * @package    Autoloader\Loader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Loader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Loading CommandController
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class CommandController implements LoaderInterface {
 

@@ -2,9 +2,9 @@
 /**
  * Loading Plugins
  *
- * @category   Extension
- * @package    Autoloader\Loader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Loader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Loader;
@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 /**
  * Loading Plugins
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class Plugins implements LoaderInterface {
 

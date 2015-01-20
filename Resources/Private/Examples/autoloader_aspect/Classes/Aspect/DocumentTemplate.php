@@ -2,9 +2,9 @@
 /**
  * This Example test the aspects before & after.
  *
- * @category   Extension
- * @package    AutoloaderAspect\Aspect
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderAspect\Aspect
+ * @author   Carsten Biebricher
  */
 
 namespace HDNET\AutoloaderAspect\Aspect;
@@ -12,7 +12,7 @@ namespace HDNET\AutoloaderAspect\Aspect;
 /**
  * This Example test the aspects before & after.
  *
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author Carsten Biebricher
  */
 class DocumentTemplate {
 

@@ -2,9 +2,9 @@
 /**
  * Advanced relation model
  *
- * @category   Extension
- * @package    Autoloader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Domain\Model;

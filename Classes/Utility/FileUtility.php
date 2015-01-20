@@ -2,9 +2,9 @@
 /**
  * FileUtility
  *
- * @category   Extension
- * @package    Autoloader\Utility
- * @author     Tim Lochmüller <tim.locahmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Utility
+ * @author   Tim Lochmüller
  */
 
 namespace HDNET\Autoloader\Utility;
@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * FileUtility
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class FileUtility {
 

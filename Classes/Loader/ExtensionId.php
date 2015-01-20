@@ -2,9 +2,9 @@
 /**
  * Loading eID
  *
- * @category   Extension
- * @package    Autoloader\Loader
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Loader
+ * @author   Tim Lochmüller
  */
 
 
@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 /**
  * Loading eID
  *
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author Tim Lochmüller
  */
 class ExtensionId implements LoaderInterface {
 

@@ -3,9 +3,9 @@
  * TemplavoilaPreviewDefault.php
  * This aspect make ContentObject BackendPreview for templavoila possible.
  *
- * @category   Extension
- * @package    AutoloaderAspect\Aspect
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderAspect\Aspect
+ * @author   Carsten Biebricher
  */
 
 namespace HDNET\AutoloaderAspect\Aspect;
@@ -15,8 +15,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * TemplavoilaPreviewDefault
  *
- * @see        tx_templavoila_preview_default
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @see    tx_templavoila_preview_default
+ * @author Carsten Biebricher
  */
 class TemplavoilaPreviewDefault {
 

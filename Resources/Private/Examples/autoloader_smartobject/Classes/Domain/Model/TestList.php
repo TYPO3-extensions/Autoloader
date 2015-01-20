@@ -2,9 +2,9 @@
 /**
  * TestList Model
  *
- * @category   Extension
- * @package    AutoloaderSmartobject
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  AutoloaderSmartobject
+ * @author   Carsten Biebricher
  */
 
 namespace HDNET\AutoloaderSmartobject\Domain\Model;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * TestList Model
  * Container for the test-model.
  *
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author Carsten Biebricher
  * @db
  */
 class TestList extends AbstractEntity {

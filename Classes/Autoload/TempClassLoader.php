@@ -2,9 +2,9 @@
 /**
  * TempClassAutoloader.php
  *
- * @category   Extension
- * @package    Autoloader\Autoload
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @category Extension
+ * @package  Autoloader\Autoload
+ * @author   Carsten Biebricher
  */
 namespace HDNET\Autoloader\Autoload;
 
@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class TempClassLoader
  * Thx to SJBR
  *
- * @author     Carsten Biebricher <carsten.biebricher@hdnet.de>
+ * @author Carsten Biebricher
  */
 class TempClassLoader {
 
@@ -68,7 +68,8 @@ class TempClassLoader {
 			$cacheIdentifier = 'XCLASS_' . $optimizedClassName;
 
 			/** @var $cache \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend */
-			$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('autoloader');
+			$cache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')
+				->getCache('autoloader');
 			if ($cache->has($cacheIdentifier)) {
 				$cache->requireOnce($cacheIdentifier);
 			}
