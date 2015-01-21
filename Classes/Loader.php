@@ -46,7 +46,7 @@ class Loader implements SingletonInterface {
 		'StaticTyposcript',
 		'ExtensionId',
 		'TypeConverter',
-		#'BackendLayout',
+		'BackendLayout',
 	);
 
 	/**

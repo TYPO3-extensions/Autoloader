@@ -143,7 +143,6 @@ class ModelUtility {
 		$query->getQuerySettings()
 			->setRespectStoragePage(FALSE);
 
-
 		$query->matching($query->equals('uid', $data['uid']));
 
 		if ($ignoreEnableFields) {
