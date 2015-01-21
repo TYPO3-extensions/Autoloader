@@ -63,7 +63,7 @@ class ContextSensitiveHelps implements LoaderInterface {
 		foreach ($register as $class) {
 			$parts = ClassNamingUtility::explodeObjectModelName($class);
 			if (GeneralUtility::camelCaseToLowerCaseUnderscored($parts['extensionName']) === $extensionKey) {
-				if (ModelUtility::getTableNameByModelReflectionAnnotation($class) === FALSE) {
+				if (ModelUtility::getTableNameByModelReflectionAnnotation($class) === '') {
 					$information[] = array(
 						'table' => ModelUtility::getTableNameByModelName($class),
 						'class' => $class

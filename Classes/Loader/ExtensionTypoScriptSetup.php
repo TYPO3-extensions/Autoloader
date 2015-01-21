@@ -15,6 +15,7 @@ use HDNET\Autoloader\LoaderInterface;
 use HDNET\Autoloader\SmartObjectRegister;
 use HDNET\Autoloader\Utility\ClassNamingUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Autoloader\Utility\ReflectionUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
@@ -97,15 +98,15 @@ class ExtensionTypoScriptSetup implements LoaderInterface {
 		$setup = array();
 		foreach ($this->getSmartObjectsForExtensionKey($extensionKey) as $className) {
 			$table = ModelUtility::getTableNameByModelReflectionAnnotation($className);
-			$recordType = ModelUtility::getRecordTypeFieldByModelReflection($className);
-			$parentClass = ModelUtility::getParentClassByModelReflection($className);
-			if ($table) {
+			$recordType = (string)ReflectionUtility::getFirstTagValue($className, 'recordType');
+			$parentClass = (string)ReflectionUtility::getFirstTagValue($className, 'parentClass');
+			if ($table !== '') {
 				$setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.tableName = ' . $table;
 			}
-			if ($recordType) {
+			if ($recordType !== '') {
 				$setup[] = 'config.tx_extbase.persistence.classes.' . $className . '.mapping.recordType = ' . $recordType;
 			}
-			if ($parentClass) {
+			if ($parentClass !== '') {
 				$setup[] = 'config.tx_extbase.persistence.classes.' . $parentClass . '.subclasses.' . $className . ' = ' . $className;
 			}
 		}

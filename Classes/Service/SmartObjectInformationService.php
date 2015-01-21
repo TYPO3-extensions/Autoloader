@@ -49,7 +49,7 @@ class SmartObjectInformationService {
 
 		// disable complete table generation
 		// for extending existing tables
-		if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName)) {
+		if (ModelUtility::getTableNameByModelReflectionAnnotation($modelClassName) !== '') {
 			return $this->generateSqlQuery($tableName, $custom);
 		}
 		return $this->generateCompleteSqlQuery($modelClassName, $tableName, $custom);
@@ -107,7 +107,7 @@ class SmartObjectInformationService {
 		$searchFields = array();
 		$customFields = $this->getCustomModelFieldTca($modelClassName, $searchFields);
 
-		if ($reflectionTableName !== FALSE) {
+		if ($reflectionTableName !== '') {
 			$customConfiguration = array(
 				'columns' => $customFields,
 			);

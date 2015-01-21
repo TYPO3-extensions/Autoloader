@@ -28,7 +28,8 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableName($modelClassName) {
-		return self::getTableNameByModelReflectionAnnotation($modelClassName) ?: self::getTableNameByModelName($modelClassName);
+		$reflectionName = self::getTableNameByModelReflectionAnnotation($modelClassName);
+		return $reflectionName !== '' ? $reflectionName : self::getTableNameByModelName($modelClassName);
 	}
 
 	/**
@@ -39,7 +40,7 @@ class ModelUtility {
 	 * @return string
 	 */
 	static public function getTableNameByModelReflectionAnnotation($modelClassName) {
-		return ReflectionUtility::getFirstTagValue($modelClassName, 'db');
+		return (string)ReflectionUtility::getFirstTagValue($modelClassName, 'db');
 	}
 
 	/**
@@ -77,29 +78,7 @@ class ModelUtility {
 	 * @return array
 	 */
 	static public function getSmartExcludesByModelName($name) {
-		return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'));
-	}
-
-	/**
-	 * Get the record_type name by reflection
-	 *
-	 * @param string $modelClassName
-	 *
-	 * @return string
-	 */
-	static public function getRecordTypeFieldByModelReflection($modelClassName) {
-		return ReflectionUtility::getFirstTagValue($modelClassName, 'recordType');
-	}
-
-	/**
-	 * Get the parent class name by reflection
-	 *
-	 * @param string $modelClassName
-	 *
-	 * @return string
-	 */
-	static public function getParentClassByModelReflection($modelClassName) {
-		return ReflectionUtility::getFirstTagValue($modelClassName, 'parentClass');
+		return GeneralUtility::trimExplode(',', (string)ReflectionUtility::getFirstTagValue($name, 'smartExclude'), TRUE);
 	}
 
 	/**
