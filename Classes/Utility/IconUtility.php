@@ -69,7 +69,8 @@ class IconUtility {
 		$fileExtensions = array(
 			'svg',
 			'png',
-			'gif'
+			'gif',
+			'jpg',
 		);
 		foreach ($fileExtensions as $fileExtension) {
 			if (is_file($absolutePathWithoutExtension . $fileExtension)) {
