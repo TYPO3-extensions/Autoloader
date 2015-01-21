@@ -32,13 +32,13 @@ class ArrayUtility {
 				$array[$name] = $value;
 			} else {
 				$keys = explode($separator, $name);
-				$optTree = & $array;
+				$optTree = &$array;
 				while (($key = array_shift($keys))) {
 					if ($keys) {
 						if (!isset($optTree[$key]) || !is_array($optTree[$key])) {
 							$optTree[$key] = array();
 						}
-						$optTree = & $optTree[$key];
+						$optTree = &$optTree[$key];
 					} else {
 						$optTree[$key] = $value;
 					}

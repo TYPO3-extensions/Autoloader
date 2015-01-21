@@ -79,9 +79,9 @@ class FileUtility {
 	 * Check also if the directory exists. If you scan the dir recursively you get
 	 * also the folder name. The filename is also "basename" only.
 	 *
-	 * @param string  $dirPath
-	 * @param string  $fileExtension
-	 * @param bool $recursively
+	 * @param string $dirPath
+	 * @param string $fileExtension
+	 * @param bool   $recursively
 	 *
 	 * @return array
 	 * @todo migrate this into the getBaseFilesInDir or rethink the fetch handling

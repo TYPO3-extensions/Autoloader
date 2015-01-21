@@ -8,13 +8,15 @@
  */
 namespace HDNET\Autoloader\Persistence;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
+
 /**
  * Exclude the IdentityMap in the regular data map for backend selection
  * We need on object in different languages and the IdentityMap do not respect that!
  *
  * @author Tim Lochmüller
  */
-class ExcludeIdentityMapDataMapper extends \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper {
+class ExcludeIdentityMapDataMapper extends DataMapper {
 
 	/**
 	 * Maps a single row on an object of the given class
@@ -25,6 +27,7 @@ class ExcludeIdentityMapDataMapper extends \TYPO3\CMS\Extbase\Persistence\Generi
 	 * @return object An object of the given class
 	 */
 	protected function mapSingleRow($className, array $row) {
+		/** @var \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface $object */
 		$object = $this->createEmptyObject($className);
 		$this->identityMap->registerObject($object, $row['uid']);
 		$this->thawProperties($object, $row);

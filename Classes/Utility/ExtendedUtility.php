@@ -11,7 +11,6 @@ namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Utility functions for the Autoloader
@@ -123,7 +122,7 @@ class ExtendedUtility {
 		$templatePath = GeneralUtility::getFileAbsFileName($templatePath);
 
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
-		$view = ExtendedUtility::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$view = self::create('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$view->setTemplatePathAndFilename($templatePath);
 
 		$partialPath = $siteRelPath . 'Resources/Private/Partials';

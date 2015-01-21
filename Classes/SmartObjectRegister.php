@@ -28,7 +28,7 @@ class SmartObjectRegister {
 	 *
 	 * @param $modelName
 	 *
-	 * @return null
+	 * @return void
 	 */
 	static public function register($modelName) {
 		if (!in_array($modelName, self::$smartObjectRegistry)) {

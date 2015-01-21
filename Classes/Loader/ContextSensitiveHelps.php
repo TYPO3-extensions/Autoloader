@@ -80,6 +80,8 @@ class ContextSensitiveHelps implements LoaderInterface {
 	 *
 	 * @param $path
 	 * @param $modelClass
+	 *
+	 * @return void
 	 */
 	protected function checkCshFile($path, $modelClass) {
 		if (is_file($path)) {

@@ -132,7 +132,6 @@ class ModelUtility {
 	 * @param string $modelName
 	 * @param array  $data
 	 * @param bool   $ignoreEnableFields
-	 * @param int    $overwriteLanguage
 	 *
 	 * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	 */

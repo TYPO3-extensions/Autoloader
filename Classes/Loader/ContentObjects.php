@@ -194,7 +194,6 @@ class ContentObjects implements LoaderInterface {
 				$loader->getExtensionKey() . '_' . $e
 			), 'CType');
 
-
 			$typeKey = $loader->getExtensionKey() . '_' . $e;
 			if (!isset($GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'])) {
 				$baseTcaConfiguration = $this->wrapDefaultTcaConfiguration($config['fieldConfiguration']);

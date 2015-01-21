@@ -46,7 +46,7 @@ class ElementBackendPreview implements PageLayoutViewDrawItemHookInterface {
 
 		if (!ExtensionManagementUtility::isLoaded('css_styled_content')) {
 			// @todo avoid exception in the backend. Check why the backend is broken
-			return '';
+			return;
 		}
 
 		$itemContent = $this->getBackendPreview($row);

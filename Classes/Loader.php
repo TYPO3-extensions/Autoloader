@@ -105,6 +105,8 @@ class Loader implements SingletonInterface {
 	 * @param string $vendorName
 	 * @param string $extensionKey
 	 * @param array  $implementations
+	 *
+	 * @return void
 	 */
 	static public function extTables($vendorName, $extensionKey, array $implementations = array()) {
 		/** @var \HDNET\Autoloader\Loader $loader */
@@ -118,6 +120,8 @@ class Loader implements SingletonInterface {
 	 * @param string $vendorName
 	 * @param string $extensionKey
 	 * @param array  $implementations
+	 *
+	 * @return void
 	 */
 	static public function extLocalconf($vendorName, $extensionKey, array $implementations = array()) {
 		/** @var \HDNET\Autoloader\Loader $loader */
@@ -131,6 +135,8 @@ class Loader implements SingletonInterface {
 	 * @param string $vendorName
 	 * @param string $extensionKey
 	 * @param array  $implementations
+	 *
+	 * @return void
 	 */
 	public function loadExtTables($vendorName, $extensionKey, array $implementations = array()) {
 		if ($this->disableFirstCall) {
@@ -138,7 +144,6 @@ class Loader implements SingletonInterface {
 		}
 		$this->extensionKey = $extensionKey;
 		$this->vendorName = $vendorName;
-
 
 		$autoLoaderObjects = $this->buildAutoLoaderObjects($implementations);
 		$information = $this->prepareAutoLoaderObjects($autoLoaderObjects, LoaderInterface::EXT_TABLES);
@@ -157,6 +162,8 @@ class Loader implements SingletonInterface {
 	 * @param string $vendorName
 	 * @param string $extensionKey
 	 * @param array  $implementations
+	 *
+	 * @return void
 	 */
 	public function loadExtLocalconf($vendorName, $extensionKey, array $implementations = array()) {
 		if ($this->disableFirstCall) {

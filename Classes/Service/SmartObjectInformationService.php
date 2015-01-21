@@ -130,6 +130,7 @@ class SmartObjectInformationService {
 		try {
 			TranslateUtility::assureLabel($tableName, $extensionName);
 		} catch (\Exception $ex) {
+			// @todo handle
 		}
 
 		$baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
@@ -192,7 +193,7 @@ class SmartObjectInformationService {
 				try {
 					$info['db'] = $this->getDatabaseMappingByVarType($info['db']);
 				} catch (\Exception $ex) {
-
+					// @todo handle
 				}
 			}
 			$fields[] = $info['name'] . ' ' . $info['db'];
