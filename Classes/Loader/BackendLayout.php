@@ -38,7 +38,7 @@ class BackendLayout implements LoaderInterface {
 	public function prepareLoader(Loader $loader, $type) {
 		$backendLayouts = array();
 		$commandPath = ExtensionManagementUtility::extPath($loader->getExtensionKey()) . 'Resources/Private/BackendLayouts/';
-		$backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'tx,txt');
+		$backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt');
 
 		foreach ($backendLayoutFiles as $file) {
 			$iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/BackendLayouts/' . pathinfo($file, PATHINFO_FILENAME) . '.';
