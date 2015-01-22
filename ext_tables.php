@@ -11,4 +11,4 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader', array('Hooks', 'Slots'));
+\HDNET\Autoloader\Loader::extTables('HDNET', 'autoloader', array('Hooks', 'Slots', 'StaticTyposcript'));
