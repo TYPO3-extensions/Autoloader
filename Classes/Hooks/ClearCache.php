@@ -82,6 +82,8 @@ class ClearCache implements ClearCacheActionsHookInterface {
 	}
 
 	/**
+	 * Return the Backend user authentication
+	 *
 	 * @return BackendUserAuthentication
 	 */
 	protected function getBackendUserAuthentication() {

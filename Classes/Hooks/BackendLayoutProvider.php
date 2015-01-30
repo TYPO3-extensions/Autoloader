@@ -71,6 +71,8 @@ class BackendLayoutProvider implements DataProviderInterface {
 	}
 
 	/**
+	 * Create a backend layout with the given information
+	 *
 	 * @param $info
 	 *
 	 * @return mixed
