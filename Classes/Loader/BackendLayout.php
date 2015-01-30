@@ -17,6 +17,7 @@ use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * BackendLayout loader
@@ -41,14 +42,15 @@ class BackendLayout implements LoaderInterface {
 		$backendLayoutFiles = FileUtility::getBaseFilesWithExtensionInDir($commandPath, 'ts,txt');
 
 		foreach ($backendLayoutFiles as $file) {
-			$iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/BackendLayouts/' . pathinfo($file, PATHINFO_FILENAME) . '.';
+			$pathInfo = PathUtility::pathinfo($file);
+			$iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/BackendLayouts/' . $pathInfo['filename'] . '.';
 			$extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
 			$backendLayouts[] = array(
 				'path'      => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
-				'filename'  => pathinfo($file, PATHINFO_FILENAME),
+				'filename'  => $pathInfo['filename'],
 				'icon'      => $extension ? $iconPath . $extension : FALSE,
-				'label'     => TranslateUtility::assureLabel('backendLayout.' . pathinfo($file, PATHINFO_BASENAME), $loader->getExtensionKey(), pathinfo($file, PATHINFO_FILENAME)),
+				'label'     => TranslateUtility::assureLabel('backendLayout.' . $pathInfo['basename'], $loader->getExtensionKey(), $pathInfo['filename']),
 				'extension' => $loader->getExtensionKey(),
 			);
 

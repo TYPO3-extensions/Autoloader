@@ -10,6 +10,7 @@
 namespace HDNET\Autoloader\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * FileUtility
@@ -27,7 +28,7 @@ class FileUtility {
 	 * @return bool
 	 */
 	static public function writeFileAndCreateFolder($absoluteFileName, $content) {
-		$dir = dirname($absoluteFileName) . '/';
+		$dir = PathUtility::dirname($absoluteFileName) . '/';
 		if (!is_dir($dir)) {
 			GeneralUtility::mkdir_deep($dir);
 		}
@@ -49,7 +50,7 @@ class FileUtility {
 		}
 		$files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
 		foreach ($files as $key => $file) {
-			$files[$key] = pathinfo($file, PATHINFO_FILENAME);
+			$files[$key] = PathUtility::pathinfo($file, PATHINFO_FILENAME);
 		}
 		return array_values($files);
 	}
@@ -69,7 +70,7 @@ class FileUtility {
 		}
 		$files = GeneralUtility::getFilesInDir($dirPath, $fileExtension);
 		foreach ($files as $key => $file) {
-			$files[$key] = pathinfo($file, PATHINFO_BASENAME);
+			$files[$key] = PathUtility::pathinfo($file, PATHINFO_BASENAME);
 		}
 		return array_values($files);
 	}
@@ -93,7 +94,7 @@ class FileUtility {
 		$recursively = $recursively ? 99 : 0;
 		$files = GeneralUtility::getAllFilesAndFoldersInPath(array(), $dirPath, $fileExtension, FALSE, $recursively);
 		foreach ($files as $key => $file) {
-			$pathInfo = pathinfo($file);
+			$pathInfo = PathUtility::pathinfo($file);
 			$files[$key] = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
 		}
 		$files = GeneralUtility::removePrefixPathFromList($files, $dirPath);
