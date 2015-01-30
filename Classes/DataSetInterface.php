@@ -10,7 +10,6 @@
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Loader;
-use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * data set interface

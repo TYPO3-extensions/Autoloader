@@ -10,7 +10,6 @@
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ReflectionUtility;
-use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

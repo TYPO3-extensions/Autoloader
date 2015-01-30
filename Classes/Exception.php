@@ -14,6 +14,6 @@ namespace HDNET\Autoloader;
  *
  * @author Tim Spiekerkoetter
  */
-class Exception extends \Exception {
+class Exception extends \TYPO3\CMS\Extbase\Exception {
 
 }

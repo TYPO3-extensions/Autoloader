@@ -9,8 +9,6 @@
 
 namespace HDNET\Autoloader;
 
-use TYPO3\CMS\Core\SingletonInterface;
-
 /**
  * Mapper Interface
  *

@@ -8,6 +8,7 @@
  */
 namespace HDNET\Autoloader\Autoload;
 
+use HDNET\Autoloader\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -16,7 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Carsten Biebricher
  */
-class TempClassLoader {
+class TempClassLoader implements SingletonInterface {
 
 	/**
 	 * Cached class loader class name.

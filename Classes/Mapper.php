@@ -10,7 +10,6 @@
 namespace HDNET\Autoloader;
 
 use HDNET\Autoloader\Utility\ExtendedUtility;
-use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Mapper for variables types to TCA and DB information
