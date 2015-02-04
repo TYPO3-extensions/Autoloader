@@ -31,9 +31,10 @@ class Content extends AbstractEntity {
 	protected $bodytext;
 
 	/**
-	 * Other field
+	 * Other field (RTE)
 	 *
 	 * @var string
+	 * @enableRichText
 	 * @db
 	 */
 	protected $otherField;

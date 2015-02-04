@@ -83,8 +83,13 @@ class SmartObjectInformationService {
 			$mapper = ExtendedUtility::create('HDNET\\Autoloader\\Mapper');
 			$field = $mapper->getTcaConfiguration(trim($info['var'], '\\'), $info['name'], $label);
 
-			$searchFields[] = $info['name'];
+			// RTE
+			if ($info['rte']) {
+				$field['config']['type'] = 'text';
+				$field['defaultExtras'] = 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+			}
 
+			$searchFields[] = $info['name'];
 			$customFields[$info['name']] = $field;
 		}
 
@@ -238,6 +243,7 @@ class SmartObjectInformationService {
 				'name' => GeneralUtility::camelCaseToLowerCaseUnderscored($property->getName()),
 				'db'   => trim($dbInformation[0]),
 				'var'  => trim($var),
+				'rte'  => (bool)$property->isTaggedWith('enableRichText'),
 			);
 		}
 		return $fields;
