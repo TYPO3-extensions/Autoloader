@@ -198,7 +198,7 @@ class SmartObjectInformationService {
 				try {
 					$info['db'] = $this->getDatabaseMappingByVarType($info['db']);
 				} catch (\Exception $ex) {
-					continue;
+					
 				}
 			}
 			$fields[] = $info['name'] . ' ' . $info['db'];
