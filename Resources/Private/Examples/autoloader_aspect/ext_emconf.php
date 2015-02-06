@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => '',
 	'constraints' => array(
 		'depends' => array(
-			'autoloader' => '1.5.4-9.9.9',
+			'autoloader' => '1.5.5-9.9.9',
 		),
 	),
 );
