@@ -18,6 +18,7 @@ use HDNET\Autoloader\Utility\ReflectionUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\PropertyReflection;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 /**
@@ -58,6 +59,18 @@ class ContentObjects implements LoaderInterface {
 				$fieldConfiguration = $this->getClassPropertiesInLowerCaseUnderscored($className);
 				$defaultFields = $this->getDefaultTcaFields();
 				$fieldConfiguration = array_diff($fieldConfiguration, $defaultFields);
+
+				// RTE manipulation
+				$classReflection = ReflectionUtility::createReflectionClass($className);
+				foreach ($classReflection->getProperties() as $property) {
+					/** @var $property PropertyReflection */
+					if ($property->isTaggedWith('enableRichText')) {
+						$search = array_search($property->getName(), $fieldConfiguration);
+						if ($search !== FALSE) {
+							$fieldConfiguration[$search] .= ';;;richtext:rte_transform[flag=rte_enabled|mode=ts_css]';
+						}
+					}
+				}
 			}
 
 			$entry = array(

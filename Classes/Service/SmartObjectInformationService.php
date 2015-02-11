@@ -141,7 +141,7 @@ class SmartObjectInformationService {
 		$baseTca['columns'] = ArrayUtility::mergeRecursiveDistinct($baseTca['columns'], $customFields);
 
 		// items
-		$showitem = array_keys($customFields);
+		$showitem = $fields;
 		if (!in_array('language', $excludes)) {
 			$showitem[] = '--palette--;LLL:EXT:lang/locallang_general.xlf:LGL.language;language';
 		}
@@ -198,7 +198,7 @@ class SmartObjectInformationService {
 				try {
 					$info['db'] = $this->getDatabaseMappingByVarType($info['db']);
 				} catch (\Exception $ex) {
-					
+
 				}
 			}
 			$fields[] = $info['name'] . ' ' . $info['db'];
