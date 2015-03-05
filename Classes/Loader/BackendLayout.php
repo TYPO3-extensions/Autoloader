@@ -46,11 +46,15 @@ class BackendLayout implements LoaderInterface {
 			$iconPath = 'EXT:' . $loader->getExtensionKey() . '/Resources/Public/Icons/BackendLayouts/' . $pathInfo['filename'] . '.';
 			$extension = IconUtility::getIconFileExtension(GeneralUtility::getFileAbsFileName($iconPath));
 
+			$translationKey = 'backendLayout.' . $pathInfo['basename'];
+			if ($type === LoaderInterface::EXT_TABLES) {
+				TranslateUtility::assureLabel($translationKey, $loader->getExtensionKey(), $pathInfo['filename']);
+			}
 			$backendLayouts[] = array(
 				'path'      => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/BackendLayouts/' . $file,
 				'filename'  => $pathInfo['filename'],
 				'icon'      => $extension ? $iconPath . $extension : FALSE,
-				'label'     => TranslateUtility::assureLabel('backendLayout.' . $pathInfo['basename'], $loader->getExtensionKey(), $pathInfo['filename']),
+				'label'     => TranslateUtility::getLllString($translationKey, $loader->getExtensionKey()),
 				'extension' => $loader->getExtensionKey(),
 			);
 
