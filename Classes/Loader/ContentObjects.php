@@ -79,6 +79,7 @@ class ContentObjects implements LoaderInterface {
 				'model'              => $model,
 				'icon'               => IconUtility::getByExtensionKey($loader->getExtensionKey()),
 				'noHeader'           => $this->isTaggedWithNoHeader($className),
+				'tabInformation'     => ReflectionUtility::getFirstTagValue($className, 'wizardTab')
 			);
 
 			SmartObjectRegister::register($entry['modelClass']);
@@ -218,15 +219,17 @@ class ContentObjects implements LoaderInterface {
 				$GLOBALS['TCA']['tt_content']['types'][$typeKey]['showitem'] = $baseTcaConfiguration;
 			}
 
+			$tabName = $config['tabInformation'] ? $config['tabInformation'] : $loader->getExtensionKey();
 			ExtensionManagementUtility::addPageTSConfig('
-mod.wizards.newContentElement.wizardItems.' . $loader->getExtensionKey() . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.elements.' . $loader->getExtensionKey() . '_' . $e . ' {
     icon = ' . IconUtility::getByExtensionKey($loader->getExtensionKey()) . '
     title = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e, $loader->getExtensionKey()) . '
     description = ' . TranslateUtility::getLllOrHelpMessage('tt_content.' . $e . '.description', $loader->getExtensionKey()) . '
     tt_content_defValues {
         CType = ' . $loader->getExtensionKey() . '_' . $e . '
     }
-}');
+}
+mod.wizards.newContentElement.wizardItems.' . $tabName . '.show := addToList(' . $loader->getExtensionKey() . '_' . $e . ')');
 			$cObjectConfiguration = array(
 				'extensionKey'        => $loader->getExtensionKey(),
 				'backendTemplatePath' => 'EXT:' . $loader->getExtensionKey() . '/Resources/Private/Templates/Content/' . $config['model'] . 'Backend.html',

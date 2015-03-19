@@ -16,6 +16,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * @author     Tim Lochmüller <tim@fruit-lab.de>
  * @db         tt_content
+ * @wizardTab  common
  */
 class ContentElement extends AbstractEntity {
 
