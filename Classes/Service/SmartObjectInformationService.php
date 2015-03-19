@@ -257,7 +257,7 @@ class SmartObjectInformationService {
 	 *
 	 * @return string
 	 */
-	protected function generateSqlQuery($tableName, $fields) {
+	protected function generateSqlQuery($tableName, array $fields) {
 		if (!$fields) {
 			return '';
 		}
@@ -273,7 +273,7 @@ class SmartObjectInformationService {
 	 *
 	 * @return string
 	 */
-	protected function generateCompleteSqlQuery($modelClassName, $tableName, $custom) {
+	protected function generateCompleteSqlQuery($modelClassName, $tableName, array $custom) {
 		$fields = array();
 		$fields[] = 'uid int(11) NOT NULL auto_increment';
 		$fields[] = 'pid int(11) DEFAULT \'0\' NOT NULL';
@@ -283,10 +283,8 @@ class SmartObjectInformationService {
 		$fields[] = 'deleted tinyint(4) unsigned DEFAULT \'0\' NOT NULL';
 		$fields[] = 'sorting int(11) DEFAULT \'0\' NOT NULL';
 
-		if ($custom) {
-			foreach ($custom as $field) {
-				$fields[] = $field;
-			}
+		foreach ($custom as $field) {
+			$fields[] = $field;
 		}
 
 		$excludes = ModelUtility::getSmartExcludesByModelName($modelClassName);
