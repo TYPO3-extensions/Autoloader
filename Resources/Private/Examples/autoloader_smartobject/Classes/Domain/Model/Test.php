@@ -44,9 +44,9 @@ class Test extends AbstractEntity {
 	protected $file;
 
 	/**
-	 * Custom (variable that can not be mapped)
+	 * Custom (variable that has a custom DB type)
 	 *
-	 * @var mixed
+	 * @var int
 	 * @db int(11) DEFAULT '0' NOT NULL
 	 */
 	protected $customField;
@@ -90,7 +90,7 @@ class Test extends AbstractEntity {
 	/**
 	 * Set custom field
 	 *
-	 * @param mixed $customField
+	 * @param int $customField
 	 */
 	public function setCustomField($customField) {
 		$this->customField = $customField;
@@ -99,7 +99,7 @@ class Test extends AbstractEntity {
 	/**
 	 * Get custom field
 	 *
-	 * @return mixed
+	 * @return int
 	 */
 	public function getCustomField() {
 		return $this->customField;
@@ -122,5 +122,4 @@ class Test extends AbstractEntity {
 	public function getFile() {
 		return $this->file;
 	}
-
-} 
+}
