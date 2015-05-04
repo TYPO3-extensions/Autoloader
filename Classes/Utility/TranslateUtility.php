@@ -86,7 +86,8 @@ class TranslateUtility {
 	 * @return string
 	 */
 	static public function getLll($key, $extensionKey) {
-		return LocalizationUtility::translate($key, $extensionKey);
+		$file = self::getLllString($key, $extensionKey);
+		return LocalizationUtility::translate($file, $extensionKey);
 	}
 
 }
